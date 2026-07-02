@@ -8,283 +8,29 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="img/a.png">
     <style>
-        .comunidade-container {
-            max-width: 800px;
-            margin: 30px auto 40px;
-            padding: 0 20px;
+        /* ===== RESET E BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .feed-post {
-            background: white;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        html, body {
+            height: 100%;
+            margin: 0;
         }
 
-        .post-header {
+        body {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 20px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .post-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #4CAF50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .post-user-info {
-            flex: 1;
-        }
-
-        .post-user-name {
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-
-        .follow-btn {
-            background: none;
-            border: 1px solid #4CAF50;
-            color: #4CAF50;
-            padding: 6px 15px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 60px;
+            background: #e9e9e9;
             font-family: "Poppins", sans-serif;
+            color: #222;
         }
 
-        .follow-btn i {
-            font-size: 16px;
-        }
-
-        .follow-btn.following {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .follow-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .post-content {
-            padding: 20px;
-        }
-
-        .post-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #1e293b;
-        }
-
-        .post-desc {
-            color: #475569;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .post-stats {
-            display: flex;
-            gap: 20px;
-            padding: 12px 20px;
-            border-top: 1px solid #f0f0f0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .stat-action {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #64748b;
-        }
-
-        .stat-action:hover {
-            color: #4CAF50;
-        }
-
-        .stat-action.liked {
-            color: #ef4444;
-        }
-
-        .stat-action i {
-            font-size: 20px;
-        }
-
-        .search-users-container {
-            background: white;
-            border-radius: 60px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .search-users-container i {
-            font-size: 22px;
-            color: #94a3b8;
-        }
-
-        .search-users-container input {
-            flex: 1;
-            padding: 8px 0;
-            border: none;
-            outline: none;
-            font-size: 15px;
-            background: transparent;
-            font-family: "Poppins", sans-serif;
-        }
-
-        .search-results {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .search-result-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .search-result-item:hover {
-            background: #f8fafc;
-        }
-
-        .search-result-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4CAF50, #2e7d32);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .search-result-info {
-            flex: 1;
-        }
-
-        .search-result-name {
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .search-follow-btn {
-            background: none;
-            border: 1px solid #4CAF50;
-            color: #4CAF50;
-            padding: 6px 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.2s;
-            font-family: "Poppins", sans-serif;
-        }
-
-        .search-follow-btn i {
-            font-size: 16px;
-        }
-
-        .search-follow-btn.following {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .search-follow-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .usuarios-sugeridos {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .usuarios-sugeridos h3 {
-            margin-bottom: 15px;
-            color: #1e293b;
-            font-size: 16px;
-        }
-
-        .usuario-sugerido {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .usuario-sugerido:last-child {
-            border-bottom: none;
-        }
-
-        .comunidade-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 25px;
-            background: #f1f5f9;
-            padding: 5px;
-            border-radius: 60px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            color: #64748b;
-            border-radius: 50px;
-            font-family: "Poppins", sans-serif;
-            transition: all 0.3s;
-        }
-
-        .tab-btn.active {
-            background: white;
-            color: #4CAF50;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
+        /* ===== TOAST ===== */
         .toast-msg {
             position: fixed;
             bottom: 30px;
@@ -303,40 +49,183 @@
             gap: 10px;
             pointer-events: none;
             font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast-msg.success { background: linear-gradient(135deg, #11998e, #38ef7d); }
         .toast-msg.error { background: linear-gradient(135deg, #cb2d3e, #ef473a); }
-        .toast-msg.warning { background: linear-gradient(135deg, #f7971e, #ffd200); color: #333; }
+        .toast-msg.warning { background: linear-gradient(135deg, #f2994a, #f2c94c); color: #333; }
+        .toast-msg i { font-size: 16px; }
 
-        .modal-logout {
+        /* ===== NAVBAR ===== */
+        nav {
+            background-color: #fff;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            height: 60px;
+        }
+
+        #logoimg {
+            width: auto;
+            height: 65px;
+            width: 65px;
+            margin-top: 1vh;
+        }
+
+        nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 24px;
+            color: white;
+        }
+
+        .sidebar-nav {
+            padding: 10px 0;
+            display: block;
+            flex: 1;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: block;
+        }
+
+        .sidebar-nav li {
+            display: block;
+            width: 100%;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+
+        .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left-color: white;
+            font-weight: bold;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: auto;
+        }
+
+        .sidebar-footer .sidebar-link {
+            color: #ff6b6b;
+        }
+
+        .sidebar-footer .sidebar-link:hover {
+            background: rgba(255, 107, 107, 0.2);
+            border-left-color: #ff6b6b;
+        }
+
+        /* ===== BOTAO SIDEBAR ===== */
+        .sidebar-toggle-btn {
+            position: fixed;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(4, 71, 0, 0.85);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(4px);
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: rgb(2, 51, 0);
+            transform: translateY(-50%) scale(1.05);
+            left: -12px;
+        }
+
+        .sidebar-toggle-btn.opened {
+            left: calc(75% - 15px);
+            background: rgb(2, 51, 0);
+        }
+
+        /* ===== OVERLAY ===== */
+        .sidebar-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 12000;
-            justify-content: center;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .modal-logout .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 300px;
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
         }
-        .modal-logout .modal-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .modal-logout .btn-confirm { background: #e74c3c; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; }
-        .modal-logout .btn-cancel { background: #95a5a6; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; }
 
+        /* ===== NOTIFICAÇÕES ===== */
         .notification-icon {
             position: relative;
             cursor: pointer;
@@ -345,7 +234,7 @@
             align-items: center;
             justify-content: center;
         }
-        .notification-icon i { font-size: 24px; color: #333; }
+        .notification-icon i { font-size: 24px; color: #333; transition: color 0.2s; }
         .notification-icon:hover i { color: #4CAF50; }
         .notification-badge {
             position: absolute;
@@ -377,9 +266,9 @@
             overflow: hidden;
         }
         .notification-dropdown.show { display: block; }
-        .notification-header { 
-            padding: 15px 20px; 
-            border-bottom: 1px solid #e2e8f0; 
+        .notification-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
@@ -445,7 +334,35 @@
             background: #fef2f2;
         }
 
-        /* ===== MODAL DE CONFIRMAÇÃO BALÃO ===== */
+        /* ===== MODAIS ===== */
+        .modal-logout {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 12000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-logout .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 300px;
+        }
+        .modal-logout .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .modal-logout .btn-confirm { background: #e74c3c; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; }
+        .modal-logout .btn-cancel { background: #95a5a6; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; }
+
         .modal-confirmacao {
             display: none;
             position: fixed;
@@ -459,9 +376,7 @@
             align-items: center;
             backdrop-filter: blur(4px);
         }
-        .modal-confirmacao.active {
-            display: flex;
-        }
+        .modal-confirmacao.active { display: flex; }
         .modal-confirmacao-content {
             background: white;
             border-radius: 24px;
@@ -473,31 +388,12 @@
             animation: modalPop 0.3s ease;
         }
         @keyframes modalPop {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
-        .modal-confirmacao-icon {
-            font-size: 48px;
-            color: #ef4444;
-            margin-bottom: 16px;
-        }
-        .modal-confirmacao-content h3 {
-            font-size: 20px;
-            color: #1e293b;
-            margin-bottom: 10px;
-        }
-        .modal-confirmacao-content p {
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
+        .modal-confirmacao-icon { font-size: 48px; color: #ef4444; margin-bottom: 16px; }
+        .modal-confirmacao-content h3 { font-size: 20px; color: #1e293b; margin-bottom: 10px; }
+        .modal-confirmacao-content p { font-size: 14px; color: #64748b; margin-bottom: 24px; line-height: 1.5; }
         .modal-confirmacao-buttons {
             display: flex;
             gap: 12px;
@@ -536,6 +432,437 @@
             transform: scale(1.05);
         }
 
+        /* ===== MODAL COMENTÁRIOS ===== */
+        .modal-comentarios {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 17000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+        .modal-comentarios.active { display: flex; }
+        .modal-comentarios-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            animation: modalPop 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .modal-comentarios-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .modal-comentarios-header h3 {
+            font-size: 18px;
+            color: #1a4a2e;
+            margin: 0;
+        }
+        .modal-comentarios-header h3 i {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        .modal-comentarios-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .modal-comentarios-close:hover { color: #ef4444; }
+        .modal-comentarios-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 25px;
+        }
+        .modal-comentarios-body .comentario-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .modal-comentarios-body .comentario-item:last-child {
+            border-bottom: none;
+        }
+        .modal-comentarios-body .comentario-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .modal-comentarios-body .comentario-info {
+            flex: 1;
+        }
+        .modal-comentarios-body .comentario-nome {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 13px;
+        }
+        .modal-comentarios-body .comentario-texto {
+            color: #475569;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+        .modal-comentarios-body .comentario-data {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .modal-comentarios-footer {
+            padding: 15px 25px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+        }
+        .modal-comentarios-footer input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 14px;
+            font-family: "Poppins", sans-serif;
+            transition: border-color 0.2s;
+        }
+        .modal-comentarios-footer input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .modal-comentarios-footer button {
+            padding: 10px 24px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .modal-comentarios-footer button:hover {
+            background: #43a047;
+            transform: scale(1.02);
+        }
+
+        /* ===== MODAL CRIAR DESAFIO ===== */
+        .modal-desafio {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 16000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+        .modal-desafio.active { display: flex; }
+        .modal-desafio-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px 35px;
+            animation: modalPop 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .modal-desafio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-desafio-header h2 {
+            font-size: 22px;
+            color: #1a4a2e;
+            font-family: "Staatliches", sans-serif;
+            margin: 0;
+        }
+        .modal-desafio-header h2 i {
+            color: #4CAF50;
+        }
+        .modal-desafio-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .modal-desafio-close:hover { color: #ef4444; }
+        .modal-desafio-body .input-group {
+            margin-bottom: 16px;
+        }
+        .modal-desafio-body .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a4a2e;
+            margin-bottom: 4px;
+        }
+        .modal-desafio-body .input-group label i {
+            color: #4CAF50;
+            margin-right: 4px;
+        }
+        .modal-desafio-body .input-group input,
+        .modal-desafio-body .input-group select,
+        .modal-desafio-body .input-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: "Poppins", sans-serif;
+            transition: border-color 0.2s;
+            background: #f8fafc;
+        }
+        .modal-desafio-body .input-group input:focus,
+        .modal-desafio-body .input-group select:focus,
+        .modal-desafio-body .input-group textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+            background: white;
+        }
+        .modal-desafio-body .input-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .btn-criar-desafio {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: "Poppins", sans-serif;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-criar-desafio:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        .btn-criar-desafio i { font-size: 20px; }
+
+        /* ===== CONTEÚDO DA COMUNIDADE ===== */
+        .comunidade-container {
+            max-width: 900px;
+            margin: 30px auto 40px;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+            flex: 1 0 auto;
+        }
+
+        .comunidade-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 25px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 60px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: #64748b;
+            border-radius: 50px;
+            font-family: "Poppins", sans-serif;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .tab-btn i { font-size: 18px; }
+
+        .tab-btn.active {
+            background: white;
+            color: #4CAF50;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* ===== FEED ===== */
+        .feed-post {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            flex-wrap: wrap;
+        }
+
+        .post-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .post-user-info {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .post-user-name {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .post-user-email {
+            font-size: 12px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .follow-btn {
+            background: none;
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+            padding: 6px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .follow-btn i { font-size: 16px; }
+        .follow-btn.following { background: #4CAF50; color: white; }
+        .follow-btn:hover { transform: scale(1.05); }
+
+        .post-content { padding: 20px; }
+        .post-title { font-size: 18px; font-weight: 600; margin-bottom: 10px; color: #1e293b; }
+        .post-desc { color: #475569; margin-bottom: 15px; line-height: 1.5; }
+
+        .post-tipo {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            background: #e2e8f0;
+            color: #475569;
+        }
+        .post-tipo.corrida { background: #dbeafe; color: #1d4ed8; }
+        .post-tipo.caminhada { background: #d1fae5; color: #059669; }
+        .post-tipo.ciclismo { background: #fef3c7; color: #d97706; }
+
+        .post-stats {
+            display: flex;
+            gap: 20px;
+            padding: 12px 20px;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .stat-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #64748b;
+            font-size: 14px;
+        }
+        .stat-action:hover { color: #4CAF50; }
+        .stat-action.liked { color: #ef4444; }
+        .stat-action i { font-size: 20px; }
+
+        .stat-action.comentario:hover { color: #4CAF50; }
+
+        /* ===== SEGUIDORES ===== */
+        .usuarios-sugeridos {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .usuarios-sugeridos h3 {
+            margin-bottom: 15px;
+            color: #1e293b;
+            font-size: 16px;
+        }
+        .usuarios-sugeridos h3 i {
+            color: #4CAF50;
+            margin-right: 6px;
+        }
+
+        .usuario-sugerido {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .usuario-sugerido:last-child { border-bottom: none; }
+
         .seguidores-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -551,10 +878,7 @@
             border-radius: 12px;
             transition: all 0.2s;
         }
-
-        .seguidor-item:hover {
-            background: #f1f5f9;
-        }
+        .seguidor-item:hover { background: #f1f5f9; }
 
         .seguidor-avatar {
             width: 45px;
@@ -570,447 +894,559 @@
             flex-shrink: 0;
         }
 
-        .seguidor-info {
-            flex: 1;
+        .seguidor-info { flex: 1; min-width: 0; }
+        .seguidor-nome { font-weight: 600; color: #1e293b; }
+        .seguidor-email { font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 4px; }
+
+        /* ===== LOADING SKELETON ===== */
+        .skeleton {
+            animation: shimmer 1.2s ease-in-out infinite;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            border-radius: 8px;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
-        .seguidor-nome {
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .seguidor-email {
-            font-size: 11px;
-            color: #94a3b8;
+        .skeleton-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 8px;
         }
+        .skeleton-item .skeleton-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+        .skeleton-item .skeleton-text {
+            flex: 1;
+            height: 16px;
+            border-radius: 4px;
+        }
+        .skeleton-item .skeleton-text-sm {
+            width: 60%;
+            height: 12px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+
+        /* ===== PESQUISA ===== */
+        .search-users-container {
+            background: white;
+            border-radius: 60px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .search-users-container i { font-size: 22px; color: #4CAF50; }
+        .search-users-container input {
+            flex: 1;
+            padding: 8px 0;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            background: transparent;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .search-results {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .search-result-item:hover { background: #f8fafc; }
+
+        .search-result-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .search-result-info { flex: 1; min-width: 0; }
+        .search-result-name { font-weight: 600; color: #1e293b; }
+
+        .search-follow-btn {
+            background: none;
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+            padding: 6px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+        }
+        .search-follow-btn i { font-size: 16px; }
+        .search-follow-btn.following { background: #4CAF50; color: white; }
+        .search-follow-btn:hover { transform: scale(1.05); }
 
         .loading-spinner {
             text-align: center;
             padding: 40px;
             color: #94a3b8;
         }
-
         .loading-spinner i {
             font-size: 30px;
             animation: spin 1s linear infinite;
+            color: #4CAF50;
         }
-
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        .post-user-email {
-            font-size: 12px;
-            color: #94a3b8;
+        /* ===== DESAFIOS ===== */
+        .desafio-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
         }
 
-        .post-tipo {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 500;
-            background: #e2e8f0;
+        .desafio-card .desafio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .desafio-card .desafio-titulo {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a4a2e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desafio-card .desafio-criador {
+            font-size: 13px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .desafio-card .desafio-criador i { color: #4CAF50; }
+
+        .desafio-card .desafio-desc {
+            color: #475569;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .desafio-card .desafio-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 13px;
             color: #475569;
         }
 
-        .post-tipo.corrida { background: #dbeafe; color: #1d4ed8; }
-        .post-tipo.caminhada { background: #d1fae5; color: #059669; }
-        .post-tipo.ciclismo { background: #fef3c7; color: #d97706; }
+        .desafio-card .desafio-participantes {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .desafio-card .desafio-participantes i { color: #4CAF50; }
 
-        .comunidade-container {
-            max-width: 800px;
-            margin: 30px auto 40px;
-            padding: 0 20px;
+        .desafio-card .progresso-container {
             width: 100%;
-            box-sizing: border-box;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
         }
 
-        .sidebar-toggle-btn {
-            position: fixed;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(4, 71, 0, 0.85);
-            color: white;
-            border: none;
-            border-radius: 0 50% 50% 0;
-            width: 28px;
-            height: 40px;
-            font-size: 14px;
-            cursor: pointer;
-            z-index: 1003;
-            display: none;
+        .desafio-card .progresso-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+        }
+
+        .desafio-card .desafio-acoes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        /* ÍCONES DE DESAFIO */
+        .desafio-icon {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .desafio-icon-corrida { background: #dbeafe; color: #1d4ed8; }
+        .desafio-icon-caminhada { background: #d1fae5; color: #059669; }
+        .desafio-icon-ciclismo { background: #fef3c7; color: #d97706; }
+
+        .desafio-meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #475569;
+        }
+        .desafio-meta-item i { color: #4CAF50; font-size: 16px; }
+
+        .btn-participar {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+        }
+        .btn-participar:hover { 
+            background: #43a047; 
+            transform: scale(1.02); 
+        }
+        .btn-participar i { font-size: 16px; }
+
+        .btn-participar.participando {
+            background: #e2e8f0;
+            color: #475569;
+            cursor: default;
+        }
+        .btn-participar.participando:hover { transform: none; }
+        .btn-participar.participando i { color: #4CAF50; }
+
+        .btn-sair-desafio {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+        }
+        .btn-sair-desafio:hover { 
+            background: #dc2626; 
+            transform: scale(1.02); 
+        }
+        .btn-sair-desafio i { font-size: 16px; }
+
+        .btn-criar-desafio-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #4CAF50, #43a047);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+            margin-bottom: 20px;
+        }
+        .btn-criar-desafio-main:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        .btn-criar-desafio-main i { font-size: 20px; }
+
+        .desafio-status {
+            font-size: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .desafio-status.ativo { background: #d1fae5; color: #059669; }
+        .desafio-status.ativo i { color: #059669; }
+        .desafio-status.concluido { background: #dbeafe; color: #1d4ed8; }
+        .desafio-status.concluido i { color: #1d4ed8; }
+        .desafio-status.expirado { background: #fef2f2; color: #dc2626; }
+        .desafio-status.expirado i { color: #dc2626; }
+
+        .desafio-progresso-text {
+            font-size: 13px;
+            color: #475569;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .desafio-progresso-text i { color: #4CAF50; }
+
+        /* ===== FOOTER MODERNO MINIMALISTA ===== */
+        .footer {
+            background: #ffffff;
+            padding: 48px 20px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            flex-shrink: 0;
+            width: 100%;
         }
 
-        .sidebar-toggle-btn.opened {
-            left: calc(75% - 28px);
-            border-radius: 50% 0 0 50%;
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
-       /* ===== FOOTER MODERNO MINIMALISTA - FIXADO NO FINAL ===== */
-html, body {
-    height: 100%;
-    margin: 0;
-}
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding-top: 60px;
-}
+        .footer-brand h2 {
+            font-family: "Staatliches", sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a4a2e;
+            letter-spacing: 1px;
+            margin: 0;
+        }
 
-/* Conteúdo principal deve crescer */
-.main-content-perfil,
-.comunidade-container {
-    flex: 1 0 auto;
-}
+        .footer-brand p {
+            font-size: 13px;
+            color: #6b8a76;
+            line-height: 1.5;
+            max-width: 280px;
+            margin: 0;
+        }
 
-.footer {
-    background: #ffffff;
-    padding: 32px 20px 16px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    flex-shrink: 0;
-    margin-top: auto;
-    width: 100%;
-}
+        .footer-column h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a4a2e;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin: 0 0 12px 0;
+        }
 
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-.footer-brand h2 {
-    font-family: "Staatliches", sans-serif;
-    font-size: 24px;
-    color: #1a4a2e;
-    margin: 0 0 4px 0;
-    letter-spacing: 0.5px;
-}
+        .footer-column ul li a {
+            color: #6b8a76;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+            display: inline-block;
+        }
 
-.footer-brand p {
-    font-size: 13px;
-    color: #6b8a76;
-    margin: 0 0 12px 0;
-    line-height: 1.4;
-    max-width: 260px;
-}
+        .footer-column ul li a:hover {
+            color: #1a4a2e;
+        }
 
-.footer-social {
-    display: flex;
-    gap: 8px;
-}
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 6px;
+        }
 
-.footer-social a {
-    color: #6b8a76;
-    font-size: 18px;
-    transition: color 0.2s;
-    text-decoration: none;
-    padding: 4px;
-}
+        .footer-social a {
+            color: #6b8a76;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
 
-.footer-social a:hover {
-    color: #1a4a2e;
-}
+        .footer-social a:hover {
+            color: #1a4a2e;
+            background: rgba(0, 0, 0, 0.04);
+        }
 
-.footer-column h4 {
-    font-size: 12px;
-    font-weight: 600;
-    color: #1a4a2e;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 0 0 10px 0;
-}
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
 
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
+        .footer-bottom p {
+            font-size: 12px;
+            color: #8aa596;
+            margin: 0;
+        }
 
-.footer-column ul li a {
-    color: #6b8a76;
-    text-decoration: none;
-    font-size: 13px;
-    transition: color 0.2s;
-}
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
 
-.footer-column ul li a:hover {
-    color: #1a4a2e;
-}
+        .footer-bottom-links a {
+            font-size: 12px;
+            color: #8aa596;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
 
-.footer-bottom {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px;
-}
+        .footer-bottom-links a:hover {
+            color: #1a4a2e;
+        }
 
-.footer-bottom p {
-    font-size: 12px;
-    color: #8aa596;
-    margin: 0;
-}
-
-.footer-bottom-links {
-    display: flex;
-    gap: 16px;
-}
-
-.footer-bottom-links a {
-    font-size: 12px;
-    color: #8aa596;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.footer-bottom-links a:hover {
-    color: #1a4a2e;
-}
-
-/* ===== FOOTER RESPONSIVO ===== */
-@media (max-width: 1024px) {
-    .footer-container {
-        grid-template-columns: 1.5fr 1fr 1fr;
-        gap: 28px;
-    }
-}
-
-@media (max-width: 768px) {
-    .footer {
-        padding: 24px 16px 12px;
-    }
-
-    .footer-container {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        padding-bottom: 16px;
-    }
-
-    .footer-brand {
-        grid-column: 1 / -1;
-        text-align: center;
-    }
-
-    .footer-brand p {
-        max-width: 100%;
-        font-size: 12px;
-        margin: 0 auto 8px;
-    }
-
-    .footer-brand h2 {
-        font-size: 20px;
-    }
-
-    .footer-social {
-        justify-content: center;
-    }
-
-    .footer-column {
-        text-align: center;
-    }
-
-    .footer-column h4 {
-        font-size: 11px;
-        margin-bottom: 6px;
-    }
-
-    .footer-column ul li a {
-        font-size: 12px;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-        gap: 4px;
-        padding-top: 10px;
-    }
-
-    .footer-bottom p {
-        font-size: 11px;
-    }
-
-    .footer-bottom-links {
-        gap: 12px;
-    }
-
-    .footer-bottom-links a {
-        font-size: 11px;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer {
-        padding: 16px 12px 10px;
-    }
-
-    .footer-container {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        padding-bottom: 12px;
-    }
-
-    .footer-brand h2 {
-        font-size: 18px;
-    }
-
-    .footer-brand p {
-        font-size: 11px;
-    }
-
-    .footer-social a {
-        font-size: 16px;
-    }
-
-    .footer-column h4 {
-        font-size: 10px;
-        margin-bottom: 4px;
-    }
-
-    .footer-column ul li a {
-        font-size: 11px;
-    }
-
-    .footer-bottom p {
-        font-size: 10px;
-    }
-
-    .footer-bottom-links a {
-        font-size: 10px;
-    }
-
-    .footer-bottom-links {
-        gap: 10px;
-    }
-}
-
-/* ===== DESKTOP COM SIDEBAR ===== */
-@media (min-width: 769px) {
-    body {
-        padding-left: 250px;
-    }
-    
-    .footer {
-        width: calc(100% - 250px);
-        max-width: calc(100% - 250px);
-        margin-left: 0;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding-left: 0;
-    }
-    
-    .footer {
-        width: 100%;
-        max-width: 100%;
-        margin-left: 0;
-    }
-}
-
-        /* Desktop com sidebar */
-        @media (min-width: 769px) {
-            .sidebar {
-                transform: translateX(0) !important;
-                top: 0;
-            }
-            .sidebar-toggle-btn {
-                display: none !important;
-            }
-            nav {
-                width: calc(100% - 250px);
-                margin-left: 250px;
-            }
-            .comunidade-container {
-                margin-left: 270px;
-                width: calc(100% - 270px);
-                max-width: 900px;
-            }
-            .footer {
-                margin-left: 250px;
-                width: calc(100% - 250px);
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 1024px) {
+            .footer-container {
+                grid-template-columns: 1.5fr 1fr 1fr;
+                gap: 28px;
             }
         }
 
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                width: 75%;
-                max-width: 300px;
-                top: 60px;
-                height: calc(100vh - 60px);
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 1002;
-                position: fixed;
-                left: 0;
-                background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
-                color: white;
-                overflow-y: auto;
-            }
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            
-            .sidebar-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 1001;
-            }
-            .sidebar-overlay.active {
-                display: block;
+            .footer {
+                padding: 32px 16px 16px;
+                margin-top: 24px;
             }
 
-            .sidebar-toggle-btn {
-                display: flex;
-            }
-            .sidebar-toggle-btn.opened {
-                left: calc(75% - 28px);
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                padding-bottom: 20px;
             }
 
-            nav {
-                width: 100%;
-                margin-left: 0;
+            .footer-brand {
+                grid-column: 1 / -1;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+                font-size: 12px;
+                margin: 0 auto 8px;
+            }
+
+            .footer-brand h2 {
+                font-size: 22px;
+            }
+
+            .footer-social {
                 justify-content: center;
-                z-index: 1001;
+            }
+
+            .footer-column {
+                text-align: center;
+            }
+
+            .footer-column h4 {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .footer-column ul {
+                gap: 4px;
+            }
+
+            .footer-column ul li a {
+                font-size: 12px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 6px;
+                padding-top: 12px;
+            }
+
+            .footer-bottom p {
+                font-size: 11px;
+            }
+
+            .footer-bottom-links {
+                gap: 14px;
+            }
+
+            .footer-bottom-links a {
+                font-size: 11px;
             }
 
             .comunidade-container {
-                margin-left: 0;
-                padding: 15px 12px;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            .footer {
-                margin-left: 0;
-                width: 100%;
+                margin: 20px auto 30px;
+                padding: 0 12px;
             }
 
             .comunidade-tabs {
@@ -1021,6 +1457,7 @@ body {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
+
             .tab-btn {
                 padding: 10px 12px;
                 font-size: 12px;
@@ -1028,6 +1465,7 @@ body {
                 flex: 1 0 auto;
                 min-width: 60px;
             }
+            .tab-btn i { font-size: 16px; }
 
             .feed-post {
                 border-radius: 16px;
@@ -1037,7 +1475,6 @@ body {
             .post-header {
                 padding: 12px 14px;
                 gap: 10px;
-                flex-wrap: wrap;
             }
 
             .post-avatar {
@@ -1121,24 +1558,10 @@ body {
                 font-size: 14px;
             }
 
-            .search-follow-btn {
-                padding: 4px 14px;
-                font-size: 11px;
+            .seguidores-grid {
+                grid-template-columns: 1fr !important;
             }
 
-            .search-follow-btn i {
-                font-size: 14px;
-            }
-
-            .toast-msg {
-                padding: 10px 18px;
-                font-size: 12px;
-                max-width: 90vw;
-                white-space: normal;
-                text-align: center;
-                bottom: 20px;
-            }
-            
             .notification-dropdown {
                 right: 10px;
                 width: calc(100% - 20px);
@@ -1151,11 +1574,94 @@ body {
             .modal-confirmacao-content h3 {
                 font-size: 18px;
             }
+
+            .toast-msg {
+                padding: 10px 18px;
+                font-size: 12px;
+                max-width: 90vw;
+                white-space: normal;
+                text-align: center;
+                bottom: 20px;
+            }
+
+            .modal-desafio-content {
+                padding: 20px;
+            }
+
+            .desafio-card .desafio-header {
+                flex-direction: column;
+            }
+
+            .desafio-card .desafio-titulo {
+                font-size: 16px;
+            }
+
+            .modal-comentarios-content {
+                max-height: 90vh;
+            }
+            .modal-comentarios-body {
+                padding: 15px;
+            }
+            .modal-comentarios-footer {
+                padding: 12px 15px;
+                flex-direction: column;
+            }
+            .modal-comentarios-footer button {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
+            .footer {
+                padding: 24px 12px 12px;
+                margin-top: 16px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+                padding-bottom: 14px;
+            }
+
+            .footer-brand h2 {
+                font-size: 20px;
+            }
+
+            .footer-brand p {
+                font-size: 11px;
+            }
+
+            .footer-column h4 {
+                font-size: 10px;
+                letter-spacing: 0.5px;
+                margin-bottom: 6px;
+            }
+
+            .footer-column ul li a {
+                font-size: 11px;
+            }
+
+            .footer-social a {
+                font-size: 16px;
+                width: 28px;
+                height: 28px;
+            }
+
+            .footer-bottom p {
+                font-size: 10px;
+            }
+
+            .footer-bottom-links a {
+                font-size: 10px;
+            }
+
+            .footer-bottom-links {
+                gap: 10px;
+            }
+
             .comunidade-container {
-                padding: 10px 8px;
+                padding: 0 8px;
+                margin: 15px auto 20px;
             }
 
             .tab-btn {
@@ -1163,6 +1669,7 @@ body {
                 padding: 8px 10px;
                 min-width: 50px;
             }
+            .tab-btn i { font-size: 14px; }
 
             .post-header {
                 padding: 10px 10px;
@@ -1211,13 +1718,6 @@ body {
                 font-size: 12px;
             }
 
-            .sidebar {
-                width: 80%;
-            }
-            .sidebar-toggle-btn.opened {
-                left: calc(80% - 28px);
-            }
-
             .toast-msg {
                 font-size: 11px;
                 padding: 8px 14px;
@@ -1236,188 +1736,217 @@ body {
                 padding: 8px 20px;
                 font-size: 13px;
             }
-        }
 
-        @media (min-width: 481px) and (max-width: 768px) {
+            .modal-desafio-content {
+                padding: 16px;
+            }
+
             .seguidores-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr !important;
+            }
+
+            .desafio-card {
+                padding: 14px;
+            }
+            .desafio-card .desafio-meta {
+                gap: 6px;
+            }
+            .desafio-meta-item {
+                font-size: 12px;
+                padding: 3px 10px;
+            }
+
+            .modal-comentarios-content {
+                max-height: 95vh;
+            }
+            .modal-comentarios-body {
+                padding: 12px;
+            }
+            .modal-comentarios-footer {
+                padding: 10px 12px;
+            }
+            .modal-comentarios-footer input {
+                font-size: 13px;
+                padding: 8px 14px;
+            }
+            .modal-comentarios-footer button {
+                font-size: 13px;
+                padding: 8px 16px;
             }
         }
 
-        /* ===== MODAL POLÍTICA DE PRIVACIDADE ===== */
-        .modal-privacidade {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 20000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
-            animation: fadeIn 0.3s ease;
-            padding: 20px;
+        @media (min-width: 769px) {
+            .seguidores-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
         }
 
-        .modal-privacidade.active {
-            display: flex;
-        }
+        /* ===== DESKTOP COM SIDEBAR ===== */
+        @media (min-width: 769px) {
+            body {
+                padding-left: 0;
+            }
 
-        .modal-privacidade-content {
-            background: white;
-            border-radius: 24px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 40px 45px;
-            position: relative;
-            animation: modalPop 0.3s ease;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
+            .sidebar {
+                transform: translateX(0) !important;
+                top: 0;
+            }
 
-        .modal-privacidade-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        .modal-privacidade-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .modal-privacidade-content::-webkit-scrollbar-thumb {
-            background: #4CAF50;
-            border-radius: 10px;
-        }
+            .sidebar-toggle-btn {
+                display: none !important;
+            }
 
-        .modal-privacidade-close {
-            position: sticky;
-            top: 0;
-            float: right;
-            background: rgba(0,0,0,0.05);
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #666;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            margin-bottom: 10px;
-        }
+            nav {
+                width: calc(100% - 250px);
+                margin-left: 250px;
+            }
 
-        .modal-privacidade-close:hover {
-            background: #ef4444;
-            color: white;
-            transform: scale(1.05);
-        }
+            #logoimg {
+                height: 60px;
+                width: 60px;
+            }
 
-        .modal-privacidade-content h1 {
-            font-size: 28px;
-            color: #1a4a2e;
-            margin: 0 0 5px 0;
-            font-family: "Staatliches", sans-serif;
-            letter-spacing: 1px;
-        }
+            .comunidade-container {
+                margin-left: 270px;
+                width: calc(100% - 270px);
+                max-width: 900px;
+                margin-right: auto;
+                margin-left: auto;
+                padding: 0 20px;
+            }
 
-        .modal-privacidade-content .subtitle {
-            font-size: 14px;
-            color: #6b8a76;
-            margin-bottom: 25px;
-            display: block;
-        }
+            .footer {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+            }
 
-        .modal-privacidade-content h2 {
-            font-size: 18px;
-            color: #1a4a2e;
-            margin: 25px 0 10px 0;
-            font-weight: 600;
-        }
-
-        .modal-privacidade-content p {
-            font-size: 14px;
-            color: #444;
-            line-height: 1.7;
-            margin: 0 0 10px 0;
-        }
-
-        .modal-privacidade-content .last-update {
-            font-size: 13px;
-            color: #8aa596;
-            font-style: italic;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #e8ece8;
-        }
-
-        .modal-privacidade-content .btn-fechar-modal-priv {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            font-family: "Poppins", sans-serif;
-            width: 100%;
-        }
-
-        .modal-privacidade-content .btn-fechar-modal-priv:hover {
-            background: #2e7d52;
-            transform: scale(1.02);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            .sidebar-overlay {
+                display: none !important;
+            }
         }
 
         @media (max-width: 768px) {
-            .modal-privacidade-content {
-                padding: 25px 20px;
-                max-height: 85vh;
+            body {
+                padding-left: 0;
             }
-            .modal-privacidade-content h1 {
-                font-size: 22px;
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: 75%;
+                max-width: 300px;
+                top: 60px;
+                height: calc(100vh - 60px);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1002;
+                position: fixed;
+                left: 0;
+                background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
+                color: white;
+                overflow-y: auto;
             }
-            .modal-privacidade-content h2 {
-                font-size: 16px;
+
+            .sidebar.active {
+                transform: translateX(0);
             }
-            .modal-privacidade-content p {
-                font-size: 13px;
+
+            .sidebar-toggle-btn {
+                display: flex;
+                left: -15px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+                border-radius: 50%;
+                background: rgba(4, 71, 0, 0.9);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                z-index: 1003;
             }
-            .modal-privacidade-close {
-                width: 32px;
-                height: 32px;
-                font-size: 22px;
+
+            .sidebar-toggle-btn.opened {
+                left: calc(75% - 15px);
+                background: rgb(2, 51, 0);
+                transform: translateY(-50%);
+                border-radius: 50%;
+            }
+
+            nav {
+                width: 100%;
+                margin-left: 0;
+                justify-content: space-between;
+                padding: 8px 16px;
+                z-index: 1001;
+            }
+
+            #logoimg {
+                height: 55px;
+                width: 55px;
+            }
+
+            .comunidade-container {
+                margin-left: 0;
+                padding: 15px 12px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .footer {
+                margin-left: 0;
+                width: 100%;
             }
         }
 
         @media (max-width: 480px) {
-            .modal-privacidade-content {
-                padding: 20px 16px;
-                max-height: 80vh;
+            .sidebar {
+                width: 80%;
+                top: 60px;
+                height: calc(100vh - 60px);
             }
-            .modal-privacidade-content h1 {
-                font-size: 19px;
-            }
-            .modal-privacidade-content h2 {
-                font-size: 15px;
-            }
-            .modal-privacidade-content p {
+
+            .sidebar-toggle-btn {
+                left: -12px;
+                width: 28px;
+                height: 28px;
                 font-size: 12px;
             }
+
+            .sidebar-toggle-btn.opened {
+                left: calc(80% - 14px);
+            }
+
+            #logoimg {
+                height: 45px;
+                width: 45px;
+            }
+
+            .comunidade-container {
+                padding: 10px 8px;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #055e08;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #054608;
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== NAVBAR ===== -->
     <nav>
         <a href="home.html">
             <div class="bar_n"><img id="logoimg" src="img/Figura estilizada em movimento.png" alt=""></div>
@@ -1430,6 +1959,7 @@ body {
         </div>
     </nav>
 
+    <!-- ===== NOTIFICAÇÕES ===== -->
     <div class="notification-dropdown" id="notificationDropdown">
         <div class="notification-header">
             <span>Notificações</span>
@@ -1440,6 +1970,7 @@ body {
         </div>
     </div>
 
+    <!-- ===== SIDEBAR ===== -->
     <button class="sidebar-toggle-btn" id="sidebarToggleBtn">▶</button>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -1457,6 +1988,7 @@ body {
         </div>
     </div>
 
+    <!-- ===== MODAL LOGOUT ===== -->
     <div id="modalLogout" class="modal-logout">
         <div class="modal-content">
             <p>Tem certeza que deseja sair?</p>
@@ -1467,7 +1999,7 @@ body {
         </div>
     </div>
 
-    <!-- ===== MODAL DE CONFIRMAÇÃO BALÃO ===== -->
+    <!-- ===== MODAL DE CONFIRMAÇÃO ===== -->
     <div id="modalConfirmacao" class="modal-confirmacao">
         <div class="modal-confirmacao-content">
             <div class="modal-confirmacao-icon">⚠️</div>
@@ -1480,109 +2012,116 @@ body {
         </div>
     </div>
 
-    <!-- ===== MODAL POLÍTICA DE PRIVACIDADE ===== -->
-    <div id="modalPrivacidade" class="modal-privacidade">
-        <div class="modal-privacidade-content">
-            <button class="modal-privacidade-close" id="fecharModalPrivacidade">&times;</button>
-            <h1>ESCORPHY</h1>
-            <span class="subtitle">Política de Privacidade e Termos de Uso</span>
-
-            <p style="color: #8aa596; font-size: 13px; margin-bottom: 20px;">Última atualização: 23 de junho de 2026.</p>
-
-            <h2>1. INTRODUÇÃO</h2>
-            <p>Este documento estabelece a Política de Privacidade e os Termos de Uso da plataforma Escorphy, projeto educacional desenvolvido por Ikaro Lorenzo Oliveira e Antonela Schneider para registro, acompanhamento e compartilhamento de atividades físicas.</p>
-
-            <h2>2. CONTROLADORES DOS DADOS</h2>
-            <p>Os responsáveis pelo tratamento dos dados pessoais coletados pela plataforma são Ikaro Lorenzo Oliveira e Antonela Schneider.</p>
-            <p><strong>Contato:</strong> escorphyail@gmail.com</p>
-
-            <h2>3. DADOS COLETADOS</h2>
-            <p>A plataforma poderá coletar nome, endereço de e-mail, senha criptografada, foto de perfil, dados de atividades físicas, localização por GPS, informações de autenticação por conta Google e dados técnicos de navegação.</p>
-
-            <h2>4. FINALIDADE DO TRATAMENTO</h2>
-            <p>Os dados são utilizados para criação de contas, autenticação, cálculo de estatísticas, exibição de rankings, personalização da experiência do usuário e manutenção da segurança da plataforma.</p>
-
-            <h2>5. DADOS DE LOCALIZAÇÃO</h2>
-            <p>O Escorphy utiliza geolocalização por GPS para registro das atividades físicas. A localização exata é acessível apenas ao próprio usuário e não é disponibilizada publicamente.</p>
-
-            <h2>6. PUBLICAÇÕES E PRIVACIDADE</h2>
-            <p>Os usuários poderão publicar atividades físicas e fotografias. As publicações poderão ser classificadas como públicas ou privadas, conforme escolha do usuário.</p>
-
-            <h2>7. RANKINGS</h2>
-            <p>O sistema poderá exibir rankings públicos baseados na quilometragem percorrida e na pontuação acumulada, incluindo nome de usuário, foto de perfil e pontuação.</p>
-
-            <h2>8. USO POR MENORES DE IDADE</h2>
-            <p>Usuários menores de 18 anos poderão utilizar a plataforma mediante autorização de seus responsáveis legais.</p>
-
-            <h2>9. COOKIES E TECNOLOGIAS SEMELHANTES</h2>
-            <p>A plataforma utiliza cookies para autenticação, segurança, análise de desempenho e melhoria dos serviços oferecidos.</p>
-
-            <h2>10. SEGURANÇA DA INFORMAÇÃO</h2>
-            <p>São adotadas medidas técnicas e administrativas razoáveis para proteção dos dados pessoais contra acessos não autorizados, perda, alteração ou divulgação indevida.</p>
-
-            <h2>11. DIREITOS DOS TITULARES</h2>
-            <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), os usuários poderão solicitar acesso, correção ou exclusão de seus dados pessoais mediante contato pelo endereço eletrônico informado.</p>
-
-            <h2>12. EXCLUSÃO DE CONTA</h2>
-            <p>A exclusão de contas deverá ser solicitada por e-mail. Após validação da solicitação, os dados serão removidos permanentemente, observadas as exigências legais aplicáveis.</p>
-
-            <h2>13. PROPRIEDADE INTELECTUAL</h2>
-            <p>Os conteúdos publicados permanecem de propriedade de seus respectivos autores. Ao publicar conteúdo na plataforma, o usuário autoriza sua exibição dentro do ambiente do Escorphy.</p>
-
-            <h2>14. CONDUTAS PROIBIDAS</h2>
-            <p>É vedado publicar conteúdo ilícito, fraudar pontuações, utilizar informações falsas, acessar contas de terceiros ou praticar qualquer atividade que comprometa o funcionamento da plataforma.</p>
-
-            <h2>15. LIMITAÇÃO DE RESPONSABILIDADE</h2>
-            <p>As informações de desempenho, distância e calorias possuem caráter informativo. O Escorphy não garante precisão absoluta dos cálculos apresentados.</p>
-
-            <h2>16. ALTERAÇÕES</h2>
-            <p>Este documento poderá ser atualizado periodicamente. A continuidade do uso da plataforma após alterações implicará concordância com os termos atualizados.</p>
-
-            <h2>17. LEGISLAÇÃO APLICÁVEL</h2>
-            <p>Este documento é regido pela legislação brasileira, especialmente pela Lei Geral de Proteção de Dados (LGPD).</p>
-
-            <div class="last-update">📄 Documento atualizado em 23 de junho de 2026.</div>
-
-            <button class="btn-fechar-modal-priv" id="fecharModalPrivacidadeBtn">Li e concordo</button>
+    <!-- ===== MODAL CRIAR DESAFIO ===== -->
+    <div id="modalCriarDesafio" class="modal-desafio">
+        <div class="modal-desafio-content">
+            <div class="modal-desafio-header">
+                <h2><i class="bx bx-trophy"></i> Criar Desafio</h2>
+                <button class="modal-desafio-close" id="fecharModalDesafio">&times;</button>
+            </div>
+            <div class="modal-desafio-body">
+                <div class="input-group">
+                    <label><i class="bx bx-text"></i> Título do Desafio</label>
+                    <input type="text" id="desafio-titulo" placeholder="Ex: Corrida dos 100km" maxlength="100">
+                </div>
+                <div class="input-group">
+                    <label><i class="bx bx-detail"></i> Descrição</label>
+                    <textarea id="desafio-descricao" placeholder="Descreva o desafio..." rows="2"></textarea>
+                </div>
+                <div class="input-group">
+                    <label><i class="bx bx-run"></i> Modalidade (Esporte)</label>
+                    <select id="desafio-modalidade">
+                        <option value="corrida">Corrida</option>
+                        <option value="caminhada">Caminhada</option>
+                        <option value="ciclismo">Ciclismo</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label><i class="bx bx-target"></i> Meta (km)</label>
+                    <input type="number" id="desafio-meta" placeholder="Ex: 50" min="1" step="1">
+                </div>
+                <div class="input-group">
+                    <label><i class="bx bx-calendar"></i> Data de Início</label>
+                    <input type="date" id="desafio-data-inicio">
+                </div>
+                <div class="input-group">
+                    <label><i class="bx bx-calendar-check"></i> Data de Fim</label>
+                    <input type="date" id="desafio-data-fim">
+                </div>
+                <button class="btn-criar-desafio" id="btnCriarDesafio">
+                    <i class="bx bx-plus-circle"></i> Criar Desafio
+                </button>
+            </div>
         </div>
     </div>
 
+    <!-- ===== MODAL COMENTÁRIOS ===== -->
+    <div id="modalComentarios" class="modal-comentarios">
+        <div class="modal-comentarios-content">
+            <div class="modal-comentarios-header">
+                <h3><i class="bx bx-message-dots"></i> Comentários</h3>
+                <button class="modal-comentarios-close" id="fecharModalComentarios">&times;</button>
+            </div>
+            <div class="modal-comentarios-body" id="comentariosBody">
+                <div class="loading-spinner"><i class="bx bx-loader-alt"></i><br>Carregando comentários...</div>
+            </div>
+            <div class="modal-comentarios-footer">
+                <input type="text" id="comentarioInput" placeholder="Escreva um comentário...">
+                <button id="btnEnviarComentario"><i class="bx bx-send"></i> Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toastMessage" class="toast-msg">
+        <i class="bx"></i>
+        <span id="toastText"></span>
+    </div>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <div class="comunidade-container">
+        <!-- Tabs -->
         <div class="comunidade-tabs">
-            <button class="tab-btn active" data-tab="feed">Feed</button>
-            <button class="tab-btn" data-tab="seguidores">Seguidores</button>
-            <button class="tab-btn" data-tab="desafios">Desafios</button>
+            <button class="tab-btn active" data-tab="feed"><i class="bx bx-news"></i> Feed</button>
+            <button class="tab-btn" data-tab="seguidores"><i class="bx bx-group"></i> Seguidores</button>
+            <button class="tab-btn" data-tab="desafios"><i class="bx bx-trophy"></i> Desafios</button>
         </div>
 
+        <!-- Feed -->
         <div id="feedTab" class="tab-content">
             <div id="feedList"></div>
         </div>
 
+        <!-- Seguidores -->
         <div id="seguidoresTab" class="tab-content" style="display: none;">
             <div class="usuarios-sugeridos">
-                <h3>Todos os usuarios</h3>
+                <h3><i class="bx bx-search"></i> Todos os usuários</h3>
                 <div class="search-users-container">
                     <i class="bx bx-search"></i>
                     <input type="text" id="searchUserInput" placeholder="Buscar por nome...">
                 </div>
                 <div id="searchResults" class="search-results" style="display: none;"></div>
-                
-                <h3 style="margin-top: 20px;">Usuarios sugeridos</h3>
+
+                <h3 style="margin-top: 20px;"><i class="bx bx-user-plus"></i> Usuários sugeridos</h3>
                 <div id="usuariosList" class="seguidores-grid"></div>
             </div>
             <div class="usuarios-sugeridos">
-                <h3>Seguindo</h3>
+                <h3><i class="bx bx-user-check"></i> Seguindo</h3>
                 <div id="seguindoList" class="seguidores-grid"></div>
             </div>
             <div class="usuarios-sugeridos">
-                <h3>Seguidores</h3>
+                <h3><i class="bx bx-user"></i> Seguidores</h3>
                 <div id="seguidoresList" class="seguidores-grid"></div>
             </div>
         </div>
 
+        <!-- Desafios -->
         <div id="desafiosTab" class="tab-content" style="display: none;">
+            <button class="btn-criar-desafio-main" id="btnAbrirCriarDesafio">
+                <i class="bx bx-plus-circle"></i> Criar Desafio
+            </button>
             <div id="desafiosList">
-                <div style="text-align: center; padding: 40px; color: #94a3b8;">Em breve mais desafios!</div>
+                <div class="loading-spinner"><i class="bx bx-loader-alt"></i><br>Carregando desafios...</div>
             </div>
         </div>
     </div>
@@ -1590,7 +2129,6 @@ body {
     <!-- ===== FOOTER MODERNO MINIMALISTA ===== -->
     <footer class="footer">
         <div class="footer-container">
-            <!-- Brand -->
             <div class="footer-brand">
                 <h2>ESCORPHY</h2>
                 <p>Transformando vidas através do esporte.</p>
@@ -1601,7 +2139,6 @@ body {
                 </div>
             </div>
 
-            <!-- Colunas -->
             <div class="footer-column">
                 <h4>Sobre</h4>
                 <ul>
@@ -1610,7 +2147,6 @@ body {
                     <li><a href="#" id="linkPrivacidade">Privacidade</a></li>
                 </ul>
             </div>
-
 
             <div class="footer-column">
                 <h4>Ajuda</h4>
@@ -1622,7 +2158,6 @@ body {
             </div>
         </div>
 
-        <!-- Bottom bar -->
         <div class="footer-bottom">
             <p>&copy; 2025 Escorphy</p>
             <div class="footer-bottom-links">
@@ -1635,52 +2170,21 @@ body {
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ===== CONFIGURAÇÃO SUPABASE =====
+        // ============================================================
+        // CONFIGURAÇÃO SUPABASE
+        // ============================================================
         const supabaseUrl = "https://yuupbtrljazrrwizzafd.supabase.co";
         const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXBidHJsamF6cnJ3aXp6YWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MjIzMzMsImV4cCI6MjA3NjQ5ODMzM30.trZvyDgPnhenuPiKxChZbVLcBQI3rOm8OsjtgAzoAm0";
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
         let usuarioAtual = null;
         var acaoConfirmacao = null;
+        var carregandoDesafios = false;
+        var atividadeComentarioId = null;
 
-        // ===== MODAL PRIVACIDADE =====
-        function abrirModalPrivacidade() {
-            document.getElementById('modalPrivacidade').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function fecharModalPrivacidade() {
-            document.getElementById('modalPrivacidade').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        document.getElementById('linkPrivacidade')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkPrivacidade2')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkPrivacidade3')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkTermos')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkCookies')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-
-        document.getElementById('fecharModalPrivacidade')?.addEventListener('click', fecharModalPrivacidade);
-        document.getElementById('fecharModalPrivacidadeBtn')?.addEventListener('click', fecharModalPrivacidade);
-        document.getElementById('modalPrivacidade')?.addEventListener('click', function(e) {
-            if (e.target === this) fecharModalPrivacidade();
-        });
-
+        // ============================================================
+        // TOAST
+        // ============================================================
         function showToast(message, type) {
             type = type || "success";
             let toast = document.getElementById('toastMessage');
@@ -1694,7 +2198,7 @@ body {
             const toastText = document.getElementById('toastText');
             const toastIcon = toast.querySelector('i');
             toast.classList.remove('show', 'success', 'error', 'warning');
-            
+
             if (type === 'success') {
                 toastIcon.className = 'bx bx-check-circle';
                 toast.classList.add('success');
@@ -1705,13 +2209,15 @@ body {
                 toastIcon.className = 'bx bx-info-circle';
                 toast.classList.add('warning');
             }
-            
+
             toastText.textContent = message;
             toast.classList.add('show');
             setTimeout(function() { toast.classList.remove('show'); }, 3000);
         }
 
-        // ===== MODAL DE CONFIRMAÇÃO =====
+        // ============================================================
+        // MODAL DE CONFIRMAÇÃO
+        // ============================================================
         function mostrarModalConfirmacao(titulo, mensagem, aoConfirmar) {
             document.getElementById('modalConfirmacaoTitulo').textContent = titulo;
             document.getElementById('modalConfirmacaoMensagem').textContent = mensagem;
@@ -1735,7 +2241,202 @@ body {
             if (e.target === this) fecharModalConfirmacao();
         });
 
-        // ===== FUNÇÃO PARA BUSCAR CONTAGEM DE SEGUIDORES =====
+        // ============================================================
+        // MODAL DESAFIO
+        // ============================================================
+        document.getElementById('btnAbrirCriarDesafio')?.addEventListener('click', function() {
+            if (!usuarioAtual) {
+                showToast("Faça login para criar um desafio!", "error");
+                return;
+            }
+            document.getElementById('modalCriarDesafio').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.getElementById('fecharModalDesafio')?.addEventListener('click', function() {
+            document.getElementById('modalCriarDesafio').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        document.getElementById('modalCriarDesafio')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                document.getElementById('modalCriarDesafio').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ============================================================
+        // MODAL COMENTÁRIOS
+        // ============================================================
+        function abrirModalComentarios(atividadeId) {
+            atividadeComentarioId = atividadeId;
+            document.getElementById('modalComentarios').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            carregarComentarios(atividadeId);
+        }
+
+        function fecharModalComentarios() {
+            document.getElementById('modalComentarios').classList.remove('active');
+            document.body.style.overflow = '';
+            atividadeComentarioId = null;
+        }
+
+        document.getElementById('fecharModalComentarios')?.addEventListener('click', fecharModalComentarios);
+        document.getElementById('modalComentarios')?.addEventListener('click', function(e) {
+            if (e.target === this) fecharModalComentarios();
+        });
+
+        // ============================================================
+        // CARREGAR COMENTÁRIOS
+        // ============================================================
+        async function carregarComentarios(atividadeId) {
+            var body = document.getElementById('comentariosBody');
+            body.innerHTML = '<div class="loading-spinner"><i class="bx bx-loader-alt"></i><br>Carregando comentários...</div>';
+
+            var { data: comentarios, error } = await supabaseClient
+                .from('comentarios')
+                .select('*, usuario:usuarios(id, nome)')
+                .eq('atividade_id', atividadeId)
+                .order('created_at', { ascending: true });
+
+            if (error) {
+                console.error("Erro ao carregar comentários:", error);
+                body.innerHTML = '<div style="text-align: center; padding: 20px; color: #94a3b8;">Erro ao carregar comentários</div>';
+                return;
+            }
+
+            if (!comentarios || comentarios.length === 0) {
+                body.innerHTML = '<div style="text-align: center; padding: 30px; color: #94a3b8;">Nenhum comentário ainda. Seja o primeiro!</div>';
+                return;
+            }
+
+            body.innerHTML = '';
+            for (var c of comentarios) {
+                var nome = c.usuario?.nome || 'Usuário';
+                var inicial = nome.charAt(0).toUpperCase();
+                var data = new Date(c.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+                var div = document.createElement('div');
+                div.className = 'comentario-item';
+                div.innerHTML = `
+                    <div class="comentario-avatar">${inicial}</div>
+                    <div class="comentario-info">
+                        <div class="comentario-nome">${nome}</div>
+                        <div class="comentario-texto">${c.texto}</div>
+                        <div class="comentario-data">${data}</div>
+                    </div>
+                `;
+                body.appendChild(div);
+            }
+        }
+
+        // ============================================================
+        // ENVIAR COMENTÁRIO
+        // ============================================================
+        document.getElementById('btnEnviarComentario')?.addEventListener('click', async function() {
+            if (!usuarioAtual) {
+                showToast("Faça login para comentar!", "error");
+                return;
+            }
+
+            var input = document.getElementById('comentarioInput');
+            var texto = input.value.trim();
+
+            if (!texto) {
+                showToast("Digite um comentário!", "warning");
+                return;
+            }
+
+            if (!atividadeComentarioId) {
+                showToast("Erro: atividade não identificada!", "error");
+                return;
+            }
+
+            this.disabled = true;
+            this.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i>';
+
+            var { data: novoComentario, error } = await supabaseClient
+                .from('comentarios')
+                .insert({
+                    atividade_id: atividadeComentarioId,
+                    usuario_id: usuarioAtual.id,
+                    texto: texto
+                })
+                .select()
+                .single();
+
+            this.disabled = false;
+            this.innerHTML = '<i class="bx bx-send"></i> Enviar';
+
+            if (error) {
+                console.error("Erro ao enviar comentário:", error);
+                showToast("Erro ao enviar comentário!", "error");
+                return;
+            }
+
+            input.value = '';
+            showToast("Comentário enviado!", "success");
+
+            // Enviar notificação para o dono da atividade
+            var { data: atividade } = await supabaseClient
+                .from('atividades')
+                .select('usuario_id, email_usuario')
+                .eq('id', atividadeComentarioId)
+                .single();
+
+            if (atividade) {
+                var donoId = atividade.usuario_id;
+                if (!donoId && atividade.email_usuario) {
+                    var { data: userInfo } = await supabaseClient
+                        .from('usuarios')
+                        .select('id')
+                        .eq('email', atividade.email_usuario)
+                        .maybeSingle();
+                    donoId = userInfo?.id;
+                }
+
+                if (donoId && donoId !== usuarioAtual.id) {
+                    await supabaseClient.from('notificacoes').insert({
+                        usuario_id: donoId,
+                        tipo: 'comentario',
+                        remetente_id: usuarioAtual.id,
+                        atividade_id: atividadeComentarioId,
+                        lida: false
+                    });
+                    carregarNotificacoes();
+                }
+            }
+
+            carregarComentarios(atividadeComentarioId);
+        });
+
+        document.getElementById('comentarioInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('btnEnviarComentario')?.click();
+            }
+        });
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+        var modalLogout = document.getElementById('modalLogout');
+        document.getElementById('logoutBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            modalLogout.style.display = 'flex';
+        });
+        document.getElementById('confirmLogout')?.addEventListener('click', async function() {
+            await supabaseClient.auth.signOut();
+            localStorage.clear();
+            modalLogout.style.display = 'none';
+            window.location.href = "index.html";
+        });
+        document.getElementById('cancelLogout')?.addEventListener('click', function() {
+            modalLogout.style.display = 'none';
+        });
+
+        // ============================================================
+        // FUNÇÃO PARA BUSCAR CONTAGEM DE SEGUIDORES
+        // ============================================================
         async function getSeguidoresCount(usuarioId) {
             var result = await supabaseClient
                 .from('seguidores')
@@ -1745,7 +2446,9 @@ body {
             return result.count || 0;
         }
 
-        // ===== FUNÇÃO PARA FORMATAR TEMPO =====
+        // ============================================================
+        // FUNÇÃO PARA FORMATAR TEMPO
+        // ============================================================
         function formatarTempo(data) {
             var agora = new Date();
             var notif = new Date(data);
@@ -1756,19 +2459,21 @@ body {
             return Math.floor(diff / 86400) + ' d';
         }
 
-        // ===== CARREGAR NOTIFICAÇÕES =====
+        // ============================================================
+        // CARREGAR NOTIFICAÇÕES
+        // ============================================================
         async function carregarNotificacoes() {
             if (!usuarioAtual) return;
-            
+
             var result = await supabaseClient
                 .from('notificacoes')
                 .select('*, remetente:remetente_id(id, nome, foto_perfil_url)')
                 .eq('usuario_id', usuarioAtual.id)
                 .order('created_at', { ascending: false })
                 .limit(30);
-            
+
             if (result.error) return;
-            
+
             var notificacoes = result.data;
             var naoLidas = 0;
             if (notificacoes) {
@@ -1776,7 +2481,7 @@ body {
                     if (!notificacoes[i].lida) naoLidas++;
                 }
             }
-            
+
             var badge = document.getElementById('notificationBadge');
             if (naoLidas > 0) {
                 badge.style.display = 'flex';
@@ -1784,13 +2489,13 @@ body {
             } else {
                 badge.style.display = 'none';
             }
-            
+
             var listDiv = document.getElementById('notificationList');
             if (!notificacoes || notificacoes.length === 0) {
                 listDiv.innerHTML = '<div class="notification-empty">Nenhuma notificação</div>';
                 return;
             }
-            
+
             var html = '';
             for (var j = 0; j < notificacoes.length; j++) {
                 var n = notificacoes[j];
@@ -1800,11 +2505,12 @@ body {
                     case 'seguidor': texto = nomeRemetente + ' começou a te seguir!'; break;
                     case 'curtida': texto = nomeRemetente + ' curtiu seu treino!'; break;
                     case 'comentario': texto = nomeRemetente + ' comentou no seu treino!'; break;
+                    case 'desafio': texto = nomeRemetente + ' criou um desafio!'; break;
                     default: texto = 'Nova notificação';
                 }
                 var unreadClass = n.lida ? '' : 'unread';
                 var inicial = nomeRemetente.charAt(0).toUpperCase();
-                
+
                 html += '<div class="notification-item ' + unreadClass + '" data-id="' + n.id + '">';
                 html += '<div class="notification-avatar">' + inicial + '</div>';
                 html += '<div class="notification-content">';
@@ -1815,7 +2521,7 @@ body {
                 html += '</div>';
             }
             listDiv.innerHTML = html;
-            
+
             var items = document.querySelectorAll('.notification-item');
             for (var k = 0; k < items.length; k++) {
                 (function(item) {
@@ -1827,7 +2533,7 @@ body {
                     });
                 })(items[k]);
             }
-            
+
             var deleteBtns = document.querySelectorAll('.btn-delete-notificacao');
             for (var l = 0; l < deleteBtns.length; l++) {
                 (function(btn) {
@@ -1844,7 +2550,9 @@ body {
             }
         }
 
-        // ===== APAGAR NOTIFICAÇÃO INDIVIDUAL =====
+        // ============================================================
+        // APAGAR NOTIFICAÇÃO INDIVIDUAL
+        // ============================================================
         async function apagarNotificacao(id) {
             if (!usuarioAtual) return;
             var result = await supabaseClient
@@ -1852,7 +2560,7 @@ body {
                 .delete()
                 .eq('id', id)
                 .eq('usuario_id', usuarioAtual.id);
-            
+
             if (!result.error) {
                 showToast('Notificação apagada!', 'success');
                 carregarNotificacoes();
@@ -1861,10 +2569,12 @@ body {
             }
         }
 
-        // ===== APAGAR TODAS AS NOTIFICAÇÕES =====
+        // ============================================================
+        // APAGAR TODAS AS NOTIFICAÇÕES
+        // ============================================================
         async function apagarTodasNotificacoes() {
             if (!usuarioAtual) return;
-            
+
             mostrarModalConfirmacao(
                 'Apagar todas as notificações?',
                 'Tem certeza que deseja apagar todas as notificações? Esta ação não pode ser desfeita.',
@@ -1873,7 +2583,7 @@ body {
                         .from('notificacoes')
                         .delete()
                         .eq('usuario_id', usuarioAtual.id);
-                    
+
                     if (!result.error) {
                         showToast('Todas as notificações foram apagadas!', 'success');
                         carregarNotificacoes();
@@ -1900,105 +2610,126 @@ body {
             if (dropdown) dropdown.classList.remove('show');
         });
 
-        // ===== LOGOUT =====
-        var modalLogout = document.getElementById('modalLogout');
-        document.getElementById('logoutBtn')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            modalLogout.style.display = 'flex';
-        });
-        document.getElementById('confirmLogout')?.addEventListener('click', async function() {
-            await supabaseClient.auth.signOut();
-            localStorage.clear();
-            modalLogout.style.display = 'none';
-            window.location.href = "index.html";
-        });
-        document.getElementById('cancelLogout')?.addEventListener('click', function() {
-            modalLogout.style.display = 'none';
-        });
-
-        // ===== FUNÇÃO PARA CRIAR BOTÃO DE SEGUIR =====
+        // ============================================================
+        // FUNÇÃO PARA CRIAR BOTÃO DE SEGUIR
+        // ============================================================
         function criarBotaoSeguir(usuarioId, isFollowing, tamanho) {
             isFollowing = isFollowing || false;
             tamanho = tamanho || 'normal';
             var btn = document.createElement('button');
             btn.className = 'follow-btn' + (isFollowing ? ' following' : '');
             btn.dataset.userId = usuarioId;
-            
+
             if (isFollowing) {
                 btn.innerHTML = '<i class="bx bxs-user-check"></i> Seguindo';
             } else {
                 btn.innerHTML = '<i class="bx bx-user-plus"></i> Seguir';
             }
-            
+
             if (tamanho === 'small') {
                 btn.style.padding = '4px 12px';
                 btn.style.fontSize = '11px';
             }
-            
+
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 toggleSeguir(usuarioId, btn);
             });
-            
+
             return btn;
         }
 
-        // ===== FUNÇÃO PARA SEGUIR/DEIXAR DE SEGUIR =====
+        // ============================================================
+        // FUNÇÃO PARA SEGUIR/DEIXAR DE SEGUIR
+        // ============================================================
         async function toggleSeguir(usuarioId, btnElement) {
             if (!usuarioAtual) {
-                showToast("Faca login para seguir!", "error");
+                showToast("Faça login para seguir!", "error");
                 return;
             }
-            
+
             if (usuarioId === usuarioAtual.id) {
-                showToast("Voce nao pode seguir a si mesmo!", "warning");
+                showToast("Você não pode seguir a si mesmo!", "warning");
                 return;
             }
-            
+
             var isFollowing = btnElement.classList.contains('following');
-            
+
             if (isFollowing) {
                 var result = await supabaseClient
                     .from('seguidores')
                     .delete()
                     .eq('seguidor_id', usuarioAtual.id)
                     .eq('seguindo_id', usuarioId);
-                
+
                 if (!result.error) {
                     btnElement.classList.remove('following');
                     btnElement.innerHTML = '<i class="bx bx-user-plus"></i> Seguir';
-                    showToast("Voce deixou de seguir este usuario", "success");
-                    
-                    await carregarUsuarios();
-                    await carregarSeguindo();
-                    await carregarSeguidores();
+                    showToast("Você deixou de seguir este usuário", "success");
+
+                    await recarregarSeguidoresComSkeleton();
                 }
             } else {
                 var result2 = await supabaseClient
                     .from('seguidores')
                     .insert({ seguidor_id: usuarioAtual.id, seguindo_id: usuarioId });
-                
+
                 if (!result2.error) {
                     btnElement.classList.add('following');
                     btnElement.innerHTML = '<i class="bx bxs-user-check"></i> Seguindo';
-                    showToast("Agora voce esta seguindo este usuario!", "success");
-                    
+                    showToast("Agora você está seguindo este usuário!", "success");
+
                     await supabaseClient.from('notificacoes').insert({
                         usuario_id: usuarioId,
                         tipo: 'seguidor',
                         remetente_id: usuarioAtual.id,
                         lida: false
                     });
-                    
+
                     carregarNotificacoes();
-                    await carregarUsuarios();
-                    await carregarSeguindo();
-                    await carregarSeguidores();
+
+                    await recarregarSeguidoresComSkeleton();
                 }
             }
         }
 
-        // ===== CARREGAR USUÁRIO ATUAL =====
+        // ============================================================
+        // RECARREGAR SEGUIDORES COM SKELETON
+        // ============================================================
+        async function recarregarSeguidoresComSkeleton() {
+            mostrarSkeletons();
+
+            await carregarUsuarios();
+            await carregarSeguindo();
+            await carregarSeguidores();
+        }
+
+        function mostrarSkeletons() {
+            var lists = ['usuariosList', 'seguindoList', 'seguidoresList'];
+            for (var listId of lists) {
+                var container = document.getElementById(listId);
+                if (container) {
+                    container.innerHTML = '';
+                    for (var i = 0; i < 4; i++) {
+                        var skeleton = document.createElement('div');
+                        skeleton.className = 'skeleton-item';
+                        skeleton.innerHTML = `
+                            <div class="skeleton-avatar skeleton"></div>
+                            <div style="flex:1;">
+                                <div class="skeleton-text skeleton"></div>
+                                <div class="skeleton-text-sm skeleton"></div>
+                            </div>
+                            <div style="width:80px; height:32px;" class="skeleton" style="border-radius:50px;"></div>
+                        `;
+                        container.appendChild(skeleton);
+                    }
+                }
+            }
+        }
+
+        // ============================================================
+        // CARREGAR USUÁRIO ATUAL
+        // ============================================================
         async function carregarUsuarioAtual() {
             var { data: { user } } = await supabaseClient.auth.getUser();
             if (user) {
@@ -2007,9 +2738,9 @@ body {
                     .select('id, nome, email')
                     .eq('id', user.id)
                     .maybeSingle();
-                
+
                 if (error) {
-                    console.error("Erro ao buscar usuario:", error);
+                    console.error("Erro ao buscar usuário:", error);
                 } else if (data) {
                     usuarioAtual = data;
                 } else {
@@ -2024,21 +2755,23 @@ body {
             return usuarioAtual;
         }
 
-        // ===== BUSCAR TODOS OS USUÁRIOS =====
+        // ============================================================
+        // BUSCAR TODOS OS USUÁRIOS
+        // ============================================================
         async function carregarTodosUsuarios() {
             if (!usuarioAtual) return [];
-            
+
             try {
                 var { data: usuarios, error } = await supabaseClient
                     .from('usuarios')
                     .select('id, nome, email')
                     .order('nome');
-                
+
                 if (error) {
-                    console.error("Erro ao buscar usuarios:", error);
+                    console.error("Erro ao buscar usuários:", error);
                     return [];
                 }
-                
+
                 var filtrados = [];
                 if (usuarios) {
                     for (var i = 0; i < usuarios.length; i++) {
@@ -2049,211 +2782,322 @@ body {
                 }
                 return filtrados;
             } catch (error) {
-                console.error("Erro ao carregar usuarios:", error);
+                console.error("Erro ao carregar usuários:", error);
                 return [];
             }
         }
 
-        // ===== CARREGAR FEED =====
+        // ============================================================
+        // CARREGAR FEED - CORRIGIDO
+        // ============================================================
         async function carregarFeed() {
             var feedDiv = document.getElementById('feedList');
             feedDiv.innerHTML = '<div class="loading-spinner"><i class="bx bx-loader-alt"></i><br>Carregando...</div>';
-            
-            var { data: atividades, error } = await supabaseClient
-                .from('atividades')
-                .select('*')
-                .eq('visibilidade', 'publico')
-                .order('data', { ascending: false })
-                .limit(30);
-            
-            if (error) {
-                console.error("Erro ao carregar atividades:", error);
-                feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Erro ao carregar feed</div>';
+
+            if (!usuarioAtual) {
+                feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Faça login para ver o feed!</div>';
                 return;
             }
-            
-            if (!atividades || atividades.length === 0) {
-                feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhum treino publico ainda.</div>';
-                return;
-            }
-            
-            feedDiv.innerHTML = '';
-            
-            for (var a = 0; a < atividades.length; a++) {
-                var atividade = atividades[a];
-                var nomeUsuario = 'Usuario';
-                var usuarioId = null;
-                
-                if (atividade.email_usuario) {
-                    var { data: usuarioInfo, error: userError } = await supabaseClient
-                        .from('usuarios')
-                        .select('id, nome')
-                        .eq('email', atividade.email_usuario)
-                        .maybeSingle();
-                    
-                    if (usuarioInfo && !userError) {
-                        nomeUsuario = usuarioInfo.nome || 'Usuario';
-                        usuarioId = usuarioInfo.id;
+
+            console.log("📡 Carregando feed para usuário:", usuarioAtual.email);
+
+            try {
+                // Buscar IDs dos usuários que a pessoa segue
+                var { data: seguindo, error: followError } = await supabaseClient
+                    .from('seguidores')
+                    .select('seguindo_id')
+                    .eq('seguidor_id', usuarioAtual.id);
+
+                if (followError) {
+                    console.error("Erro ao buscar seguindo:", followError);
+                    feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Erro ao carregar feed</div>';
+                    return;
+                }
+
+                var seguindoIds = [];
+                if (seguindo) {
+                    for (var s of seguindo) {
+                        seguindoIds.push(s.seguindo_id);
                     }
                 }
-                
-                var { count: curtidasCount } = await supabaseClient
-                    .from('curtidas')
-                    .select('*', { count: 'exact', head: true })
-                    .eq('atividade_id', atividade.id);
-                
-                var isLiked = false;
-                if (usuarioAtual) {
-                    var { data: curtida } = await supabaseClient
+
+                // Adicionar o próprio usuário
+                seguindoIds.push(usuarioAtual.id);
+
+                console.log("👥 IDs seguidos:", seguindoIds);
+
+                if (seguindoIds.length === 0) {
+                    feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Siga outros usuários para ver o feed!</div>';
+                    return;
+                }
+
+                // Buscar emails dos usuários seguidos
+                var { data: usuariosInfo, error: usersError } = await supabaseClient
+                    .from('usuarios')
+                    .select('id, email')
+                    .in('id', seguindoIds);
+
+                if (usersError) {
+                    console.error("Erro ao buscar emails:", usersError);
+                }
+
+                var emailsSeguidos = [];
+                if (usuariosInfo) {
+                    for (var ui of usuariosInfo) {
+                        emailsSeguidos.push(ui.email);
+                    }
+                }
+
+                console.log("📧 Emails seguidos:", emailsSeguidos);
+
+                // Buscar atividades públicas
+                var query = supabaseClient
+                    .from('atividades')
+                    .select('*, usuario:usuarios(id, nome, email)')
+                    .eq('visibilidade', 'publico')
+                    .order('data', { ascending: false })
+                    .limit(50);
+
+                // Filtrar por email_usuario
+                if (emailsSeguidos.length > 0) {
+                    var orConditions = emailsSeguidos.map(function(email) {
+                        return 'email_usuario.eq.' + email;
+                    }).join(',');
+
+                    var idConditions = seguindoIds.map(function(id) {
+                        return 'usuario_id.eq.' + id;
+                    }).join(',');
+
+                    query = query.or(orConditions + ',' + idConditions);
+                } else {
+                    query = query.eq('email_usuario', usuarioAtual.email);
+                }
+
+                var { data: atividades, error } = await query;
+
+                if (error) {
+                    console.error("Erro ao carregar atividades:", error);
+                    feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Erro ao carregar feed</div>';
+                    return;
+                }
+
+                console.log("📊 Atividades encontradas:", atividades?.length || 0);
+
+                if (!atividades || atividades.length === 0) {
+                    feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhum treino público dos seus seguidores.</div>';
+                    return;
+                }
+
+                feedDiv.innerHTML = '';
+
+                for (var a = 0; a < atividades.length; a++) {
+                    var atividade = atividades[a];
+
+                    var nomeUsuario = 'Usuário';
+                    var usuarioId = atividade.usuario_id;
+
+                    if (!usuarioId && atividade.email_usuario) {
+                        var { data: userInfo } = await supabaseClient
+                            .from('usuarios')
+                            .select('id, nome')
+                            .eq('email', atividade.email_usuario)
+                            .maybeSingle();
+
+                        if (userInfo) {
+                            usuarioId = userInfo.id;
+                            nomeUsuario = userInfo.nome || 'Usuário';
+                        } else {
+                            nomeUsuario = atividade.email_usuario.split('@')[0] || 'Usuário';
+                        }
+                    } else if (atividade.usuario) {
+                        nomeUsuario = atividade.usuario.nome || 'Usuário';
+                        usuarioId = atividade.usuario.id;
+                    }
+
+                    // Contar curtidas
+                    var { count: curtidasCount } = await supabaseClient
                         .from('curtidas')
-                        .select('id')
-                        .eq('usuario_id', usuarioAtual.id)
-                        .eq('atividade_id', atividade.id)
-                        .maybeSingle();
-                    isLiked = !!curtida;
-                }
-                
-                var isFollowing = false;
-                if (usuarioAtual && usuarioId && usuarioId !== usuarioAtual.id) {
-                    var { data: followCheck } = await supabaseClient
-                        .from('seguidores')
-                        .select('id')
-                        .eq('seguidor_id', usuarioAtual.id)
-                        .eq('seguindo_id', usuarioId)
-                        .maybeSingle();
-                    isFollowing = !!followCheck;
-                }
-                
-                var seguidoresCount = 0;
-                if (usuarioId) {
-                    seguidoresCount = await getSeguidoresCount(usuarioId);
-                }
-                
-                var distancia = '0';
-                if (atividade.trajeto?.summary?.distance) {
-                    distancia = (atividade.trajeto.summary.distance / 1000).toFixed(2);
-                } else if (atividade.trajeto?.distance) {
-                    distancia = (atividade.trajeto.distance / 1000).toFixed(2);
-                }
-                
-                var tipoClasse = atividade.tipo || '';
-                
-                var postDiv = document.createElement('div');
-                postDiv.className = 'feed-post';
-                postDiv.dataset.atividadeId = atividade.id;
-                postDiv.dataset.usuarioId = usuarioId || '';
-                
-                var followBtnHtml = '';
-                if (usuarioAtual && usuarioId && usuarioId !== usuarioAtual.id) {
-                    var btn = criarBotaoSeguir(usuarioId, isFollowing);
-                    followBtnHtml = btn.outerHTML;
-                }
-                
-                var dataFormatada = atividade.data ? new Date(atividade.data).toLocaleDateString('pt-BR') : '';
-                
-                postDiv.innerHTML = `
-                    <div class="post-header">
-                        <div class="post-avatar">${nomeUsuario.charAt(0).toUpperCase()}</div>
-                        <div class="post-user-info">
-                            <div class="post-user-name">${nomeUsuario}</div>
-                            <div class="post-user-email"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
+                        .select('*', { count: 'exact', head: true })
+                        .eq('atividade_id', atividade.id);
+
+                    var isLiked = false;
+                    if (usuarioAtual) {
+                        var { data: curtida } = await supabaseClient
+                            .from('curtidas')
+                            .select('id')
+                            .eq('usuario_id', usuarioAtual.id)
+                            .eq('atividade_id', atividade.id)
+                            .maybeSingle();
+                        isLiked = !!curtida;
+                    }
+
+                    var isFollowing = false;
+                    if (usuarioAtual && usuarioId && usuarioId !== usuarioAtual.id) {
+                        var { data: followCheck } = await supabaseClient
+                            .from('seguidores')
+                            .select('id')
+                            .eq('seguidor_id', usuarioAtual.id)
+                            .eq('seguindo_id', usuarioId)
+                            .maybeSingle();
+                        isFollowing = !!followCheck;
+                    }
+
+                    var { count: comentariosCount } = await supabaseClient
+                        .from('comentarios')
+                        .select('*', { count: 'exact', head: true })
+                        .eq('atividade_id', atividade.id);
+
+                    var distancia = '0';
+                    if (atividade.trajeto?.summary?.distance) {
+                        distancia = (atividade.trajeto.summary.distance / 1000).toFixed(2);
+                    } else if (atividade.trajeto?.distance) {
+                        distancia = (atividade.trajeto.distance / 1000).toFixed(2);
+                    }
+
+                    var tipoClasse = atividade.tipo || '';
+
+                    var postDiv = document.createElement('div');
+                    postDiv.className = 'feed-post';
+                    postDiv.dataset.atividadeId = atividade.id;
+
+                    var followBtnHtml = '';
+                    if (usuarioAtual && usuarioId && usuarioId !== usuarioAtual.id) {
+                        var btn = criarBotaoSeguir(usuarioId, isFollowing);
+                        followBtnHtml = btn.outerHTML;
+                    }
+
+                    var dataFormatada = atividade.data ? new Date(atividade.data).toLocaleDateString('pt-BR') : '';
+
+                    postDiv.innerHTML = `
+                        <div class="post-header">
+                            <div class="post-avatar">${nomeUsuario.charAt(0).toUpperCase()}</div>
+                            <div class="post-user-info">
+                                <div class="post-user-name">${nomeUsuario}</div>
+                                <div class="post-user-email"><i class="bx bx-time"></i> ${dataFormatada}</div>
+                            </div>
+                            ${followBtnHtml}
                         </div>
-                        ${followBtnHtml}
-                    </div>
-                    <div class="post-content">
-                        <div class="post-title">${atividade.titulo || 'Treino'}</div>
-                        <div class="post-desc">${atividade.descricao || ''}</div>
-                        <div style="background: #f1f5f9; padding: 10px; border-radius: 12px;">
-                            <span>Distancia: ${distancia} km</span>
-                            ${atividade.tipo ? ` <span class="post-tipo ${tipoClasse}">${atividade.tipo}</span>` : ''}
-                            ${atividade.intensidade ? ` | Intensidade: ${atividade.intensidade}/10` : ''}
+                        <div class="post-content">
+                            <div class="post-title">${atividade.titulo || 'Treino'}</div>
+                            <div class="post-desc">${atividade.descricao || ''}</div>
+                            <div style="background: #f1f5f9; padding: 10px; border-radius: 12px;">
+                                <span>Distância: ${distancia} km</span>
+                                ${atividade.tipo ? ` <span class="post-tipo ${tipoClasse}">${atividade.tipo}</span>` : ''}
+                                ${atividade.intensidade ? ` | Intensidade: ${atividade.intensidade}/10` : ''}
+                            </div>
                         </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="stat-action like-btn ${isLiked ? 'liked' : ''}" data-id="${atividade.id}">
-                            <i class="bx ${isLiked ? 'bxs-heart' : 'bx-heart'}"></i>
-                            <span>${curtidasCount || 0}</span>
+                        <div class="post-stats">
+                            <div class="stat-action like-btn ${isLiked ? 'liked' : ''}" data-id="${atividade.id}">
+                                <i class="bx ${isLiked ? 'bxs-heart' : 'bx-heart'}"></i>
+                                <span>${curtidasCount || 0}</span>
+                            </div>
+                            <div class="stat-action comentario-btn" data-id="${atividade.id}">
+                                <i class="bx bx-message-dots"></i>
+                                <span>${comentariosCount || 0}</span>
+                            </div>
                         </div>
-                    </div>
-                `;
-                
-                feedDiv.appendChild(postDiv);
-                
-                var likeBtn = postDiv.querySelector('.like-btn');
-                if (likeBtn) {
-                    (function(btn, atividadeId) {
-                        btn.addEventListener('click', async function() {
-                            if (!usuarioAtual) {
-                                showToast("Faca login para curtir!", "error");
-                                return;
-                            }
-                            var isLikedNow = btn.classList.contains('liked');
-                            
-                            if (isLikedNow) {
-                                var { error } = await supabaseClient
-                                    .from('curtidas')
-                                    .delete()
-                                    .eq('usuario_id', usuarioAtual.id)
-                                    .eq('atividade_id', atividadeId);
-                                if (!error) {
-                                    btn.classList.remove('liked');
-                                    var span = btn.querySelector('span');
-                                    span.textContent = parseInt(span.textContent) - 1;
-                                    btn.innerHTML = '<i class="bx bx-heart"></i> <span>' + span.textContent + '</span>';
+                    `;
+
+                    feedDiv.appendChild(postDiv);
+
+                    // Curtir
+                    var likeBtn = postDiv.querySelector('.like-btn');
+                    if (likeBtn) {
+                        (function(btn, atividadeId) {
+                            btn.addEventListener('click', async function() {
+                                if (!usuarioAtual) {
+                                    showToast("Faça login para curtir!", "error");
+                                    return;
                                 }
-                            } else {
-                                var { error } = await supabaseClient
-                                    .from('curtidas')
-                                    .insert({ usuario_id: usuarioAtual.id, atividade_id: atividadeId });
-                                if (!error) {
-                                    btn.classList.add('liked');
-                                    var span = btn.querySelector('span');
-                                    span.textContent = parseInt(span.textContent) + 1;
-                                    btn.innerHTML = '<i class="bx bxs-heart"></i> <span>' + span.textContent + '</span>';
-                                    
-                                    var { data: atividade } = await supabaseClient
-                                        .from('atividades')
-                                        .select('email_usuario')
-                                        .eq('id', atividadeId)
-                                        .maybeSingle();
-                                    
-                                    if (atividade && atividade.email_usuario !== usuarioAtual.email) {
-                                        var { data: usuarioDono } = await supabaseClient
-                                            .from('usuarios')
-                                            .select('id')
-                                            .eq('email', atividade.email_usuario)
-                                            .maybeSingle();
-                                        
-                                        if (usuarioDono) {
-                                            await supabaseClient.from('notificacoes').insert({
-                                                usuario_id: usuarioDono.id,
-                                                tipo: 'curtida',
-                                                remetente_id: usuarioAtual.id,
-                                                atividade_id: atividadeId,
-                                                lida: false
-                                            });
-                                            carregarNotificacoes();
+                                var isLikedNow = btn.classList.contains('liked');
+
+                                if (isLikedNow) {
+                                    var { error } = await supabaseClient
+                                        .from('curtidas')
+                                        .delete()
+                                        .eq('usuario_id', usuarioAtual.id)
+                                        .eq('atividade_id', atividadeId);
+                                    if (!error) {
+                                        btn.classList.remove('liked');
+                                        var span = btn.querySelector('span');
+                                        span.textContent = parseInt(span.textContent) - 1;
+                                        btn.innerHTML = '<i class="bx bx-heart"></i> <span>' + span.textContent + '</span>';
+                                    }
+                                } else {
+                                    var { error } = await supabaseClient
+                                        .from('curtidas')
+                                        .insert({ usuario_id: usuarioAtual.id, atividade_id: atividadeId });
+                                    if (!error) {
+                                        btn.classList.add('liked');
+                                        var span = btn.querySelector('span');
+                                        span.textContent = parseInt(span.textContent) + 1;
+                                        btn.innerHTML = '<i class="bx bxs-heart"></i> <span>' + span.textContent + '</span>';
+
+                                        var { data: atividadeInfo } = await supabaseClient
+                                            .from('atividades')
+                                            .select('usuario_id, email_usuario')
+                                            .eq('id', atividadeId)
+                                            .single();
+
+                                        if (atividadeInfo) {
+                                            var donoId = atividadeInfo.usuario_id;
+                                            if (!donoId && atividadeInfo.email_usuario) {
+                                                var { data: userInfo } = await supabaseClient
+                                                    .from('usuarios')
+                                                    .select('id')
+                                                    .eq('email', atividadeInfo.email_usuario)
+                                                    .maybeSingle();
+                                                donoId = userInfo?.id;
+                                            }
+
+                                            if (donoId && donoId !== usuarioAtual.id) {
+                                                await supabaseClient.from('notificacoes').insert({
+                                                    usuario_id: donoId,
+                                                    tipo: 'curtida',
+                                                    remetente_id: usuarioAtual.id,
+                                                    atividade_id: atividadeId,
+                                                    lida: false
+                                                });
+                                                carregarNotificacoes();
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        });
-                    })(likeBtn, atividade.id);
+                            });
+                        })(likeBtn, atividade.id);
+                    }
+
+                    // Comentar
+                    var comentarioBtn = postDiv.querySelector('.comentario-btn');
+                    if (comentarioBtn) {
+                        (function(id) {
+                            comentarioBtn.addEventListener('click', function() {
+                                abrirModalComentarios(id);
+                            });
+                        })(atividade.id);
+                    }
                 }
+            } catch (err) {
+                console.error("Erro no feed:", err);
+                feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Erro ao carregar feed</div>';
             }
         }
 
-        // ===== CARREGAR USUÁRIOS SUGERIDOS =====
+        // ============================================================
+        // CARREGAR USUÁRIOS SUGERIDOS
+        // ============================================================
         async function carregarUsuarios() {
             if (!usuarioAtual) return;
-            
+
             var usuarios = await carregarTodosUsuarios();
-            
+
+            var usuariosDiv = document.getElementById('usuariosList');
+
             if (!usuarios || usuarios.length === 0) {
-                document.getElementById('usuariosList').innerHTML = '<div style="text-align: center; padding: 20px;">Nenhum usuario encontrado</div>';
+                usuariosDiv.innerHTML = '<div style="text-align: center; padding: 20px;">Nenhum usuário encontrado</div>';
                 return;
             }
-            
+
             var { data: seguindo } = await supabaseClient
                 .from('seguidores')
                 .select('seguindo_id')
@@ -2264,10 +3108,9 @@ body {
                     seguindoIds.push(seguindo[i].seguindo_id);
                 }
             }
-            
-            var usuariosDiv = document.getElementById('usuariosList');
+
             usuariosDiv.innerHTML = '';
-            
+
             var sugeridos = [];
             for (var j = 0; j < usuarios.length; j++) {
                 var u = usuarios[j];
@@ -2282,34 +3125,34 @@ body {
                     sugeridos.push(u);
                 }
             }
-            
+
             for (var m = sugeridos.length - 1; m > 0; m--) {
                 var n = Math.floor(Math.random() * (m + 1));
                 var temp = sugeridos[m];
                 sugeridos[m] = sugeridos[n];
                 sugeridos[n] = temp;
             }
-            
+
             sugeridos = sugeridos.slice(0, 5);
-            
+
             if (sugeridos.length === 0) {
-                usuariosDiv.innerHTML = '<div style="text-align: center; padding: 20px;">Voce ja segue todos os usuarios!</div>';
+                usuariosDiv.innerHTML = '<div style="text-align: center; padding: 20px;">Você já segue todos os usuários!</div>';
                 return;
             }
-            
+
             for (var p = 0; p < sugeridos.length; p++) {
                 var u2 = sugeridos[p];
                 var seguidoresCount = await getSeguidoresCount(u2.id);
-                
+
                 var div = document.createElement('div');
                 div.className = 'usuario-sugerido';
-                
+
                 var btn = criarBotaoSeguir(u2.id, false, 'small');
-                
+
                 div.innerHTML = `
                     <div class="post-avatar" style="width: 40px; height: 40px; font-size: 14px;">${u2.nome?.charAt(0).toUpperCase() || 'U'}</div>
                     <div style="flex:1;">
-                        <strong>${u2.nome || 'Usuario'}</strong>
+                        <strong>${u2.nome || 'Usuário'}</strong>
                         <div style="font-size: 11px; color: #94a3b8;"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
                     </div>
                 `;
@@ -2318,27 +3161,29 @@ body {
             }
         }
 
-        // ===== CARREGAR SEGUINDO =====
+        // ============================================================
+        // CARREGAR SEGUINDO
+        // ============================================================
         async function carregarSeguindo() {
             if (!usuarioAtual) return;
-            
+
             var { data: seguindo, error } = await supabaseClient
                 .from('seguidores')
                 .select('seguindo_id')
                 .eq('seguidor_id', usuarioAtual.id);
-            
+
             if (error) {
                 console.error("Erro ao carregar seguindo:", error);
                 return;
             }
-            
+
             var seguindoDiv = document.getElementById('seguindoList');
-            
+
             if (!seguindo || seguindo.length === 0) {
-                seguindoDiv.innerHTML = '<div style="text-align: center; padding: 20px; color: #94a3b8;">Voce ainda nao segue ninguem</div>';
+                seguindoDiv.innerHTML = '<div style="text-align: center; padding: 20px; color: #94a3b8;">Você ainda não segue ninguém</div>';
                 return;
             }
-            
+
             var usuariosSeguindo = [];
             for (var i = 0; i < seguindo.length; i++) {
                 var s = seguindo[i];
@@ -2351,22 +3196,22 @@ body {
                     usuariosSeguindo.push(user);
                 }
             }
-            
+
             seguindoDiv.innerHTML = '';
-            
+
             for (var j = 0; j < usuariosSeguindo.length; j++) {
                 var user = usuariosSeguindo[j];
                 var seguidoresCount = await getSeguidoresCount(user.id);
-                
+
                 var div = document.createElement('div');
                 div.className = 'seguidor-item';
-                
+
                 var btn = criarBotaoSeguir(user.id, true, 'small');
-                
+
                 div.innerHTML = `
                     <div class="seguidor-avatar">${user.nome?.charAt(0).toUpperCase() || 'U'}</div>
                     <div class="seguidor-info">
-                        <div class="seguidor-nome">${user.nome || 'Usuario'}</div>
+                        <div class="seguidor-nome">${user.nome || 'Usuário'}</div>
                         <div class="seguidor-email"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
                     </div>
                 `;
@@ -2375,27 +3220,29 @@ body {
             }
         }
 
-        // ===== CARREGAR SEGUIDORES =====
+        // ============================================================
+        // CARREGAR SEGUIDORES
+        // ============================================================
         async function carregarSeguidores() {
             if (!usuarioAtual) return;
-            
+
             var { data: seguidores, error } = await supabaseClient
                 .from('seguidores')
                 .select('seguidor_id')
                 .eq('seguindo_id', usuarioAtual.id);
-            
+
             if (error) {
                 console.error("Erro ao carregar seguidores:", error);
                 return;
             }
-            
+
             var seguidoresDiv = document.getElementById('seguidoresList');
-            
+
             if (!seguidores || seguidores.length === 0) {
                 seguidoresDiv.innerHTML = '<div style="text-align: center; padding: 20px; color: #94a3b8;">Nenhum seguidor ainda</div>';
                 return;
             }
-            
+
             var usuariosSeguidores = [];
             for (var i = 0; i < seguidores.length; i++) {
                 var s = seguidores[i];
@@ -2408,16 +3255,16 @@ body {
                     usuariosSeguidores.push(user);
                 }
             }
-            
+
             seguidoresDiv.innerHTML = '';
-            
+
             for (var j = 0; j < usuariosSeguidores.length; j++) {
                 var user = usuariosSeguidores[j];
                 var seguidoresCount = await getSeguidoresCount(user.id);
-                
+
                 var div = document.createElement('div');
                 div.className = 'seguidor-item';
-                
+
                 var isFollowing = false;
                 if (usuarioAtual && user.id !== usuarioAtual.id) {
                     var { data: followCheck } = await supabaseClient
@@ -2428,13 +3275,13 @@ body {
                         .maybeSingle();
                     isFollowing = !!followCheck;
                 }
-                
+
                 var btn = criarBotaoSeguir(user.id, isFollowing, 'small');
-                
+
                 div.innerHTML = `
                     <div class="seguidor-avatar">${user.nome?.charAt(0).toUpperCase() || 'U'}</div>
                     <div class="seguidor-info">
-                        <div class="seguidor-nome">${user.nome || 'Usuario'}</div>
+                        <div class="seguidor-nome">${user.nome || 'Usuário'}</div>
                         <div class="seguidor-email"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
                     </div>
                 `;
@@ -2443,7 +3290,9 @@ body {
             }
         }
 
-        // ===== PESQUISAR USUÁRIOS =====
+        // ============================================================
+        // PESQUISAR USUÁRIOS
+        // ============================================================
         var searchTimeout;
         async function pesquisarUsuarios(termo) {
             if (!termo || termo.length < 2) {
@@ -2451,15 +3300,15 @@ body {
                 return;
             }
             if (!usuarioAtual) return;
-            
+
             var usuarios = await carregarTodosUsuarios();
-            
+
             if (!usuarios || usuarios.length === 0) {
-                document.getElementById('searchResults').innerHTML = '<div style="text-align: center; padding: 20px;">Nenhum usuario encontrado</div>';
+                document.getElementById('searchResults').innerHTML = '<div style="text-align: center; padding: 20px;">Nenhum usuário encontrado</div>';
                 document.getElementById('searchResults').style.display = 'block';
                 return;
             }
-            
+
             var filtrados = [];
             for (var i = 0; i < usuarios.length; i++) {
                 var u = usuarios[i];
@@ -2469,15 +3318,15 @@ body {
                     filtrados.push(u);
                 }
             }
-            
+
             var resultsDiv = document.getElementById('searchResults');
-            
+
             if (filtrados.length === 0) {
-                resultsDiv.innerHTML = '<div style="text-align: center; padding: 20px;">Nenhum usuario encontrado</div>';
+                resultsDiv.innerHTML = '<div style="text-align: center; padding: 20px;">Nenhum usuário encontrado</div>';
                 resultsDiv.style.display = 'block';
                 return;
             }
-            
+
             var { data: seguindo } = await supabaseClient
                 .from('seguidores')
                 .select('seguindo_id')
@@ -2488,9 +3337,9 @@ body {
                     seguindoIds.push(seguindo[k].seguindo_id);
                 }
             }
-            
+
             resultsDiv.innerHTML = '';
-            
+
             for (var j = 0; j < filtrados.length; j++) {
                 var u2 = filtrados[j];
                 var seguidoresCount = await getSeguidoresCount(u2.id);
@@ -2502,25 +3351,27 @@ body {
                     }
                 }
                 var btn = criarBotaoSeguir(u2.id, isFollowing, 'small');
-                
+
                 var div = document.createElement('div');
                 div.className = 'search-result-item';
-                
+
                 div.innerHTML = `
                     <div class="search-result-avatar">${u2.nome?.charAt(0).toUpperCase() || 'U'}</div>
                     <div class="search-result-info">
-                        <div class="search-result-name">${u2.nome || 'Usuario'}</div>
+                        <div class="search-result-name">${u2.nome || 'Usuário'}</div>
                         <div style="font-size: 11px; color: #94a3b8;"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
                     </div>
                 `;
                 div.appendChild(btn);
                 resultsDiv.appendChild(div);
             }
-            
+
             resultsDiv.style.display = 'block';
         }
 
-        // ===== TABS =====
+        // ============================================================
+        // TABS
+        // ============================================================
         var tabBtns = document.querySelectorAll('.tab-btn');
         for (var t = 0; t < tabBtns.length; t++) {
             (function(btn) {
@@ -2530,12 +3381,12 @@ body {
                         allBtns[b].classList.remove('active');
                     }
                     btn.classList.add('active');
-                    
+
                     var tabs = document.querySelectorAll('.tab-content');
                     for (var tab = 0; tab < tabs.length; tab++) {
                         tabs[tab].style.display = 'none';
                     }
-                    
+
                     var tabId = btn.dataset.tab;
                     if (tabId === 'feed') {
                         document.getElementById('feedTab').style.display = 'block';
@@ -2543,24 +3394,28 @@ body {
                     }
                     if (tabId === 'seguidores') {
                         document.getElementById('seguidoresTab').style.display = 'block';
+                        mostrarSkeletons();
                         carregarUsuarios();
                         carregarSeguindo();
                         carregarSeguidores();
                     }
                     if (tabId === 'desafios') {
                         document.getElementById('desafiosTab').style.display = 'block';
+                        carregarDesafios();
                     }
                 });
             })(tabBtns[t]);
         }
 
-        // ===== SIDEBAR =====
+        // ============================================================
+        // SIDEBAR
+        // ============================================================
         var sidebar = document.getElementById('sidebar');
         var sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
         var overlay = document.getElementById('sidebarOverlay');
-        
+
         function isMobile() { return window.innerWidth <= 768; }
-        
+
         function toggleSidebar() {
             if (!isMobile()) return;
             sidebar.classList.toggle('active');
@@ -2574,10 +3429,10 @@ body {
                 if (overlay) overlay.classList.remove('active');
             }
         }
-        
+
         if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', toggleSidebar);
-        if (overlay) overlay.addEventListener('click', function() { 
-            if (isMobile() && sidebar.classList.contains('active')) toggleSidebar(); 
+        if (overlay) overlay.addEventListener('click', function() {
+            if (isMobile() && sidebar.classList.contains('active')) toggleSidebar();
         });
 
         var sidebarLinks = document.querySelectorAll('.sidebar-link');
@@ -2591,7 +3446,9 @@ body {
             })(sidebarLinks[sl]);
         }
 
-        // ===== SEARCH INPUT =====
+        // ============================================================
+        // SEARCH INPUT
+        // ============================================================
         var searchInput = document.getElementById('searchUserInput');
         if (searchInput) {
             searchInput.addEventListener('input', function(e) {
@@ -2607,10 +3464,544 @@ body {
             });
         }
 
-        // ===== INIT =====
+        // ============================================================
+        // ================ DESAFIOS ===================================
+        // ============================================================
+
+        // ============================================================
+        // CRIAR DESAFIO
+        // ============================================================
+        document.getElementById('btnCriarDesafio')?.addEventListener('click', async function() {
+            if (!usuarioAtual) {
+                showToast("Faça login para criar um desafio!", "error");
+                return;
+            }
+
+            var titulo = document.getElementById('desafio-titulo').value.trim();
+            var descricao = document.getElementById('desafio-descricao').value.trim();
+            var tipo = document.getElementById('desafio-modalidade').value;
+            var meta = parseInt(document.getElementById('desafio-meta').value);
+            var dataInicio = document.getElementById('desafio-data-inicio').value;
+            var dataFim = document.getElementById('desafio-data-fim').value;
+
+            if (!titulo) {
+                showToast("Digite um título para o desafio!", "warning");
+                return;
+            }
+            if (!meta || meta <= 0) {
+                showToast("Digite uma meta válida (km)!", "warning");
+                return;
+            }
+            if (!dataInicio || !dataFim) {
+                showToast("Selecione as datas de início e fim!", "warning");
+                return;
+            }
+
+            var inicio = new Date(dataInicio);
+            var fim = new Date(dataFim);
+            if (fim <= inicio) {
+                showToast("A data de fim deve ser após a data de início!", "warning");
+                return;
+            }
+
+            // Verificar se o usuário já criou um desafio este mês
+            var mesAtual = new Date().getMonth();
+            var anoAtual = new Date().getFullYear();
+
+            var { data: desafiosExistentes, error: checkError } = await supabaseClient
+                .from('desafios')
+                .select('id')
+                .eq('criador_id', usuarioAtual.id)
+                .gte('created_at', new Date(anoAtual, mesAtual, 1).toISOString())
+                .lt('created_at', new Date(anoAtual, mesAtual + 1, 1).toISOString());
+
+            if (checkError) {
+                console.error("Erro ao verificar desafios:", checkError);
+            }
+
+            if (desafiosExistentes && desafiosExistentes.length >= 1) {
+                showToast("Você já criou um desafio este mês! Limite de 1 por mês.", "warning");
+                return;
+            }
+
+            this.disabled = true;
+            this.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Criando...';
+
+            var dadosDesafio = {
+                criador_id: usuarioAtual.id,
+                titulo: titulo,
+                descricao: descricao || null,
+                tipo: tipo,
+                meta: meta,
+                data_inicio: dataInicio,
+                data_fim: dataFim
+            };
+
+            var { data: novoDesafio, error } = await supabaseClient
+                .from('desafios')
+                .insert(dadosDesafio)
+                .select();
+
+            this.disabled = false;
+            this.innerHTML = '<i class="bx bx-plus-circle"></i> Criar Desafio';
+
+            if (error) {
+                console.error("❌ Erro detalhado ao criar desafio:", error);
+                showToast("Erro ao criar desafio: " + (error.message || "Verifique os dados"), "error");
+                return;
+            }
+
+            if (!novoDesafio || novoDesafio.length === 0) {
+                showToast("Erro: desafio não foi criado.", "error");
+                return;
+            }
+
+            showToast("Desafio criado com sucesso! 🎉", "success");
+            document.getElementById('modalCriarDesafio').classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Limpar campos
+            document.getElementById('desafio-titulo').value = '';
+            document.getElementById('desafio-descricao').value = '';
+            document.getElementById('desafio-meta').value = '';
+            document.getElementById('desafio-data-inicio').value = '';
+            document.getElementById('desafio-data-fim').value = '';
+
+            // Notificar seguidores
+            var { data: seguidores } = await supabaseClient
+                .from('seguidores')
+                .select('seguidor_id')
+                .eq('seguindo_id', usuarioAtual.id);
+
+            if (seguidores && seguidores.length > 0) {
+                for (var seg of seguidores) {
+                    await supabaseClient.from('notificacoes').insert({
+                        usuario_id: seg.seguidor_id,
+                        tipo: 'desafio',
+                        remetente_id: usuarioAtual.id,
+                        lida: false
+                    });
+                }
+                carregarNotificacoes();
+            }
+
+            // Auto-participar
+            await participarDesafio(novoDesafio[0].id);
+            await carregarDesafios();
+        });
+
+        // ============================================================
+        // PARTICIPAR DE UM DESAFIO
+        // ============================================================
+        async function participarDesafio(desafioId) {
+            if (!usuarioAtual) {
+                showToast("Faça login para participar!", "error");
+                return false;
+            }
+
+            var { data: existe, error: checkError } = await supabaseClient
+                .from('desafio_participantes')
+                .select('id')
+                .eq('desafio_id', desafioId)
+                .eq('usuario_id', usuarioAtual.id)
+                .maybeSingle();
+
+            if (existe) {
+                showToast("Você já participa deste desafio!", "warning");
+                return false;
+            }
+
+            var { data: participacoes, error: countError } = await supabaseClient
+                .from('desafio_participantes')
+                .select('id, desafio:desafio_id(data_inicio, data_fim)')
+                .eq('usuario_id', usuarioAtual.id)
+                .eq('concluido', false);
+
+            if (!countError && participacoes) {
+                var ativos = 0;
+                var hoje = new Date();
+                for (var p of participacoes) {
+                    if (p.desafio && p.desafio.data_inicio && p.desafio.data_fim) {
+                        var inicio = new Date(p.desafio.data_inicio);
+                        var fim = new Date(p.desafio.data_fim);
+                        if (hoje >= inicio && hoje <= fim) {
+                            ativos++;
+                        }
+                    }
+                }
+                if (ativos >= 3) {
+                    showToast("Você já está participando de 3 desafios ativos!", "warning");
+                    return false;
+                }
+            }
+
+            var { error } = await supabaseClient
+                .from('desafio_participantes')
+                .insert({
+                    desafio_id: desafioId,
+                    usuario_id: usuarioAtual.id,
+                    progresso: 0,
+                    concluido: false
+                });
+
+            if (error) {
+                console.error("Erro ao participar:", error);
+                showToast("Erro ao participar do desafio!", "error");
+                return false;
+            }
+
+            showToast("Você entrou no desafio! 🏆", "success");
+            return true;
+        }
+
+        // ============================================================
+        // SAIR DE UM DESAFIO
+        // ============================================================
+        async function sairDesafio(desafioId) {
+            if (!usuarioAtual) {
+                showToast("Faça login para sair do desafio!", "error");
+                return;
+            }
+
+            mostrarModalConfirmacao(
+                'Sair do desafio?',
+                'Tem certeza que deseja sair deste desafio? Seu progresso será perdido.',
+                async function() {
+                    var { error } = await supabaseClient
+                        .from('desafio_participantes')
+                        .delete()
+                        .eq('desafio_id', desafioId)
+                        .eq('usuario_id', usuarioAtual.id);
+
+                    if (error) {
+                        console.error("Erro ao sair:", error);
+                        showToast("Erro ao sair do desafio!", "error");
+                        return;
+                    }
+
+                    showToast("Você saiu do desafio.", "success");
+                    await carregarDesafios();
+                }
+            );
+        }
+
+        // ============================================================
+        // CALCULAR PROGRESSO DO DESAFIO
+        // ============================================================
+        async function calcularProgressoDesafio(desafioId, usuarioId, tipo, meta, dataInicio, dataFim) {
+            var { data: userInfo } = await supabaseClient
+                .from('usuarios')
+                .select('email')
+                .eq('id', usuarioId)
+                .single();
+
+            if (!userInfo) {
+                console.error("Usuário não encontrado:", usuarioId);
+                return 0;
+            }
+
+            var emailUsuario = userInfo.email;
+
+            var { data: atividades, error } = await supabaseClient
+                .from('atividades')
+                .select('trajeto, data, tipo')
+                .eq('email_usuario', emailUsuario)
+                .eq('tipo', tipo)
+                .gte('data', new Date(dataInicio).toISOString())
+                .lte('data', new Date(dataFim).toISOString());
+
+            if (error) {
+                console.error("Erro ao buscar atividades:", error);
+                return 0;
+            }
+
+            var totalKm = 0;
+            if (atividades) {
+                for (var a of atividades) {
+                    var distancia = 0;
+                    if (a.trajeto?.summary?.distance) {
+                        distancia = a.trajeto.summary.distance / 1000;
+                    } else if (a.trajeto?.distance) {
+                        distancia = a.trajeto.distance / 1000;
+                    }
+                    totalKm += distancia;
+                }
+            }
+
+            var progresso = Math.min(Math.floor((totalKm / meta) * 100), 100);
+
+            if (progresso >= 100) {
+                var { error: updateError } = await supabaseClient
+                    .from('desafio_participantes')
+                    .update({ progresso: progresso, concluido: true })
+                    .eq('desafio_id', desafioId)
+                    .eq('usuario_id', usuarioId);
+
+                if (!updateError) {
+                    var { data: desafio } = await supabaseClient
+                        .from('desafios')
+                        .select('criador_id')
+                        .eq('id', desafioId)
+                        .single();
+
+                    if (desafio && desafio.criador_id !== usuarioId) {
+                        await supabaseClient.from('notificacoes').insert({
+                            usuario_id: desafio.criador_id,
+                            tipo: 'comentario',
+                            remetente_id: usuarioId,
+                            lida: false,
+                            mensagem: 'completou um desafio!'
+                        });
+                        carregarNotificacoes();
+                    }
+                }
+            } else {
+                await supabaseClient
+                    .from('desafio_participantes')
+                    .update({ progresso: progresso, concluido: false })
+                    .eq('desafio_id', desafioId)
+                    .eq('usuario_id', usuarioId);
+            }
+
+            return progresso;
+        }
+
+        // ============================================================
+        // CARREGAR DESAFIOS
+        // ============================================================
+        async function carregarDesafios() {
+            if (carregandoDesafios) return;
+            carregandoDesafios = true;
+
+            var container = document.getElementById('desafiosList');
+            container.innerHTML = '<div class="loading-spinner"><i class="bx bx-loader-alt"></i><br>Carregando desafios...</div>';
+
+            var { data: desafios, error } = await supabaseClient
+                .from('desafios')
+                .select('*, criador:usuarios(id, nome)')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error("Erro ao carregar desafios:", error);
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #94a3b8;">Erro ao carregar desafios</div>';
+                carregandoDesafios = false;
+                return;
+            }
+
+            if (!desafios || desafios.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #94a3b8;"><i class="bx bx-trophy" style="font-size: 40px; display: block; margin-bottom: 10px;"></i>Nenhum desafio criado ainda. Seja o primeiro!</div>';
+                carregandoDesafios = false;
+                return;
+            }
+
+            container.innerHTML = '';
+
+            var hoje = new Date();
+
+            var iconMap = {
+                'corrida': 'bx-run',
+                'caminhada': 'bx-walk',
+                'ciclismo': 'bx-bike'
+            };
+
+            var tipoNomeMap = {
+                'corrida': 'Corrida',
+                'caminhada': 'Caminhada',
+                'ciclismo': 'Ciclismo'
+            };
+
+            for (var d of desafios) {
+                var participa = false;
+                var progressoUsuario = 0;
+                var concluido = false;
+
+                if (usuarioAtual) {
+                    var { data: participacao } = await supabaseClient
+                        .from('desafio_participantes')
+                        .select('progresso, concluido')
+                        .eq('desafio_id', d.id)
+                        .eq('usuario_id', usuarioAtual.id)
+                        .maybeSingle();
+
+                    if (participacao) {
+                        participa = true;
+                        progressoUsuario = participacao.progresso || 0;
+                        concluido = participacao.concluido || false;
+                    }
+                }
+
+                var { count: totalParticipantes, error: countError } = await supabaseClient
+                    .from('desafio_participantes')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('desafio_id', d.id);
+
+                if (countError) console.error("Erro ao contar participantes:", countError);
+
+                var dataInicio = new Date(d.data_inicio);
+                var dataFim = new Date(d.data_fim);
+                var status = 'ativo';
+                var statusText = 'Ativo';
+                var statusClass = 'ativo';
+
+                if (hoje > dataFim) {
+                    status = 'expirado';
+                    statusText = 'Expirado';
+                    statusClass = 'expirado';
+                } else if (hoje < dataInicio) {
+                    status = 'pendente';
+                    statusText = 'Em breve';
+                    statusClass = 'ativo';
+                }
+
+                if (participa && concluido) {
+                    statusText = 'Concluído';
+                    statusClass = 'concluido';
+                }
+
+                var card = document.createElement('div');
+                card.className = 'desafio-card';
+
+                var iconClass = iconMap[d.tipo] || 'bx-run';
+                var tipoNome = tipoNomeMap[d.tipo] || d.tipo || 'Não especificado';
+                var tipoIconClass = d.tipo === 'corrida' ? 'desafio-icon-corrida' : d.tipo === 'caminhada' ? 'desafio-icon-caminhada' : 'desafio-icon-ciclismo';
+
+                var botoesHtml = '';
+                if (usuarioAtual) {
+                    if (participa) {
+                        botoesHtml += `
+                            <button class="btn-participar participando" disabled>
+                                <i class="bx bx-check-circle"></i> Participando
+                            </button>
+                            <button class="btn-sair-desafio" data-id="${d.id}">
+                                <i class="bx bx-log-out"></i> Sair
+                            </button>
+                        `;
+                    } else if (status === 'ativo' || status === 'pendente') {
+                        botoesHtml += `
+                            <button class="btn-participar" data-id="${d.id}">
+                                <i class="bx bx-group"></i> Participar
+                            </button>
+                        `;
+                    }
+                }
+
+                var nomeCriador = d.criador?.nome || 'Usuário';
+
+                var progressoHtml = '';
+                if (participa) {
+                    var corProgresso = progressoUsuario >= 100 ? '#4CAF50' : progressoUsuario >= 70 ? '#2196F3' : '#FF9800';
+                    progressoHtml = `
+                        <div class="progresso-container">
+                            <div class="progresso-fill" style="width: ${progressoUsuario}%; background: ${corProgresso};"></div>
+                        </div>
+                        <div class="desafio-progresso-text">
+                            <i class="bx bx-bar-chart"></i> Seu progresso: ${progressoUsuario}% ${progressoUsuario >= 100 ? '🎉' : ''}
+                        </div>
+                    `;
+                }
+
+                var statusIcon = statusClass === 'ativo' ? 'bx bx-play-circle' : statusClass === 'concluido' ? 'bx bx-check-circle' : 'bx bx-time';
+
+                card.innerHTML = `
+                    <div class="desafio-header">
+                        <div>
+                            <div class="desafio-titulo">
+                                <span class="desafio-icon ${tipoIconClass}">
+                                    <i class="bx ${iconClass}"></i>
+                                </span>
+                                ${d.titulo}
+                            </div>
+                            <div class="desafio-criador">
+                                <i class="bx bx-user"></i> Criado por ${nomeCriador}
+                            </div>
+                        </div>
+                        <span class="desafio-status ${statusClass}">
+                            <i class="${statusIcon}"></i> ${statusText}
+                        </span>
+                    </div>
+                    ${d.descricao ? `<div class="desafio-desc">${d.descricao}</div>` : ''}
+                    <div class="desafio-meta">
+                        <span class="desafio-meta-item">
+                            <i class="bx ${iconClass}"></i> ${tipoNome}
+                        </span>
+                        <span class="desafio-meta-item">
+                            <i class="bx bx-target"></i> ${d.meta} km
+                        </span>
+                        <span class="desafio-meta-item">
+                            <i class="bx bx-calendar"></i> ${new Date(d.data_inicio).toLocaleDateString('pt-BR')} - ${new Date(d.data_fim).toLocaleDateString('pt-BR')}
+                        </span>
+                    </div>
+                    <div class="desafio-participantes">
+                        <i class="bx bx-group"></i> ${totalParticipantes || 0} participante${(totalParticipantes || 0) > 1 ? 's' : ''}
+                    </div>
+                    ${progressoHtml}
+                    <div class="desafio-acoes">
+                        ${botoesHtml}
+                    </div>
+                `;
+
+                container.appendChild(card);
+
+                var btnParticipar = card.querySelector('.btn-participar:not(.participando)');
+                if (btnParticipar) {
+                    (function(id) {
+                        btnParticipar.addEventListener('click', async function() {
+                            await participarDesafio(id);
+                            await carregarDesafios();
+                        });
+                    })(d.id);
+                }
+
+                var btnSair = card.querySelector('.btn-sair-desafio');
+                if (btnSair) {
+                    (function(id) {
+                        btnSair.addEventListener('click', function() {
+                            sairDesafio(id);
+                        });
+                    })(d.id);
+                }
+            }
+
+            if (usuarioAtual) {
+                for (var d2 of desafios) {
+                    var { data: participacao2 } = await supabaseClient
+                        .from('desafio_participantes')
+                        .select('id, progresso, concluido')
+                        .eq('desafio_id', d2.id)
+                        .eq('usuario_id', usuarioAtual.id)
+                        .maybeSingle();
+
+                    if (participacao2) {
+                        var dataFim2 = new Date(d2.data_fim);
+                        if (new Date() <= dataFim2 && !participacao2.concluido) {
+                            await calcularProgressoDesafio(
+                                d2.id,
+                                usuarioAtual.id,
+                                d2.tipo,
+                                d2.meta,
+                                d2.data_inicio,
+                                d2.data_fim
+                            );
+                        }
+                    }
+                }
+            }
+
+            carregandoDesafios = false;
+        }
+
+        // ============================================================
+        // ================ INIT ======================================
+        // ============================================================
         async function init() {
             await carregarUsuarioAtual();
             await carregarFeed();
+
+            var tabAtiva = document.querySelector('.tab-btn.active');
+            if (tabAtiva && tabAtiva.dataset.tab === 'desafios') {
+                await carregarDesafios();
+            }
+
             if (usuarioAtual) {
                 await carregarUsuarios();
                 await carregarSeguindo();
@@ -2618,7 +4009,53 @@ body {
                 await carregarNotificacoes();
             }
         }
+
+        var observer = new MutationObserver(function() {
+            var tabAtiva = document.querySelector('.tab-btn.active');
+            if (tabAtiva && tabAtiva.dataset.tab === 'desafios') {
+                carregarDesafios();
+            }
+        });
+
+        var tabsContainer = document.querySelector('.comunidade-tabs');
+        if (tabsContainer) {
+            observer.observe(tabsContainer, { childList: true, subtree: true, attributes: true });
+        }
+
+        // ============================================================
+        // POLÍTICA DE PRIVACIDADE
+        // ============================================================
+        function abrirModalPrivacidade() {
+            showToast("Política de Privacidade disponível em breve.", "warning");
+        }
+
+        document.getElementById('linkPrivacidade')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPrivacidade();
+        });
+        document.getElementById('linkPrivacidade2')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPrivacidade();
+        });
+        document.getElementById('linkPrivacidade3')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPrivacidade();
+        });
+        document.getElementById('linkTermos')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPrivacidade();
+        });
+        document.getElementById('linkCookies')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPrivacidade();
+        });
+
+        // ============================================================
+        // INICIAR
+        // ============================================================
         init();
+
+        console.log("🚀 Comunidade carregada com sucesso!");
     </script>
 </body>
 </html>
