@@ -2329,86 +2329,125 @@
                 body.appendChild(div);
             }
         }
+// ============================================================
+// ENVIAR COMENTÁRIO - CORRIGIDO (com notificação)
+// ============================================================
+document.getElementById('btnEnviarComentario')?.addEventListener('click', async function() {
+    if (!usuarioAtual) {
+        showToast("Faça login para comentar!", "error");
+        return;
+    }
 
-        // ============================================================
-        // ENVIAR COMENTÁRIO
-        // ============================================================
-        document.getElementById('btnEnviarComentario')?.addEventListener('click', async function() {
-            if (!usuarioAtual) {
-                showToast("Faça login para comentar!", "error");
-                return;
-            }
+    var input = document.getElementById('comentarioInput');
+    var texto = input.value.trim();
 
-            var input = document.getElementById('comentarioInput');
-            var texto = input.value.trim();
+    if (!texto) {
+        showToast("Digite um comentário!", "warning");
+        return;
+    }
 
-            if (!texto) {
-                showToast("Digite um comentário!", "warning");
-                return;
-            }
+    if (!atividadeComentarioId) {
+        showToast("Erro: atividade não identificada!", "error");
+        return;
+    }
 
-            if (!atividadeComentarioId) {
-                showToast("Erro: atividade não identificada!", "error");
-                return;
-            }
+    this.disabled = true;
+    this.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i>';
 
-            this.disabled = true;
-            this.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i>';
+    var { data: novoComentario, error } = await supabaseClient
+        .from('comentarios')
+        .insert({
+            atividade_id: atividadeComentarioId,
+            usuario_id: usuarioAtual.id,
+            texto: texto
+        })
+        .select();
 
-            var { data: novoComentario, error } = await supabaseClient
-                .from('comentarios')
-                .insert({
-                    atividade_id: atividadeComentarioId,
-                    usuario_id: usuarioAtual.id,
-                    texto: texto
-                })
-                .select()
-                .single();
+    this.disabled = false;
+    this.innerHTML = '<i class="bx bx-send"></i> Enviar';
 
-            this.disabled = false;
-            this.innerHTML = '<i class="bx bx-send"></i> Enviar';
+    if (error) {
+        console.error("Erro ao enviar comentário:", error);
+        showToast("Erro ao enviar comentário!", "error");
+        return;
+    }
 
-            if (error) {
-                console.error("Erro ao enviar comentário:", error);
-                showToast("Erro ao enviar comentário!", "error");
-                return;
-            }
+    input.value = '';
+    showToast("Comentário enviado!", "success");
 
-            input.value = '';
-            showToast("Comentário enviado!", "success");
+    // ============================================================
+    // CORREÇÃO: Buscar o dono da atividade corretamente
+    // ============================================================
+    var { data: atividade, error: atividadeError } = await supabaseClient
+        .from('atividades')
+        .select('usuario_id, email_usuario')
+        .eq('id', atividadeComentarioId)
+        .single();
 
-            // Enviar notificação para o dono da atividade
-            var { data: atividade } = await supabaseClient
-                .from('atividades')
-                .select('usuario_id, email_usuario')
-                .eq('id', atividadeComentarioId)
-                .single();
+    if (atividadeError) {
+        console.error("Erro ao buscar atividade:", atividadeError);
+        carregarComentarios(atividadeComentarioId);
+        return;
+    }
 
-            if (atividade) {
-                var donoId = atividade.usuario_id;
-                if (!donoId && atividade.email_usuario) {
-                    var { data: userInfo } = await supabaseClient
-                        .from('usuarios')
-                        .select('id')
-                        .eq('email', atividade.email_usuario)
-                        .maybeSingle();
-                    donoId = userInfo?.id;
-                }
+    console.log("📝 Atividade encontrada:", atividade);
 
-                if (donoId && donoId !== usuarioAtual.id) {
-                    await supabaseClient.from('notificacoes').insert({
-                        usuario_id: donoId,
-                        tipo: 'comentario',
-                        remetente_id: usuarioAtual.id,
-                        atividade_id: atividadeComentarioId,
-                        lida: false
-                    });
-                    carregarNotificacoes();
-                }
-            }
+    var donoId = null;
 
-            carregarComentarios(atividadeComentarioId);
-        });
+    // Primeiro, tentar pegar o usuario_id da atividade
+    if (atividade.usuario_id) {
+        donoId = atividade.usuario_id;
+        console.log("✅ Dono encontrado por usuario_id:", donoId);
+    } 
+    // Se não tiver usuario_id, buscar pelo email
+    else if (atividade.email_usuario) {
+        var { data: userInfo, error: userError } = await supabaseClient
+            .from('usuarios')
+            .select('id')
+            .eq('email', atividade.email_usuario)
+            .maybeSingle();
+
+        if (userError) {
+            console.error("Erro ao buscar usuário por email:", userError);
+        }
+
+        if (userInfo) {
+            donoId = userInfo.id;
+            console.log("✅ Dono encontrado por email:", donoId);
+        } else {
+            console.log("⚠️ Usuário não encontrado para o email:", atividade.email_usuario);
+        }
+    }
+
+    // Enviar notificação se o dono for diferente do usuário que comentou
+    if (donoId && donoId !== usuarioAtual.id) {
+        console.log("📨 Enviando notificação para:", donoId);
+        
+        var { data: notificacao, error: notifError } = await supabaseClient
+            .from('notificacoes')
+            .insert({
+                usuario_id: donoId,
+                tipo: 'comentario',
+                remetente_id: usuarioAtual.id,
+                atividade_id: atividadeComentarioId,
+                lida: false
+            })
+            .select();
+
+        if (notifError) {
+            console.error("❌ Erro ao enviar notificação:", notifError);
+        } else {
+            console.log("✅ Notificação enviada:", notificacao);
+            carregarNotificacoes();
+        }
+    } else if (donoId === usuarioAtual.id) {
+        console.log("ℹ️ Você comentou no seu próprio post, não enviando notificação.");
+    } else {
+        console.log("⚠️ Não foi possível identificar o dono do post.");
+    }
+
+    carregarComentarios(atividadeComentarioId);
+});
 
         document.getElementById('comentarioInput')?.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -2788,7 +2827,7 @@
         }
 
         // ============================================================
-        // CARREGAR FEED - CORRIGIDO
+        // CARREGAR FEED - CORRIGIDO COM NOME DO USUÁRIO
         // ============================================================
         async function carregarFeed() {
             var feedDiv = document.getElementById('feedList');
@@ -2802,7 +2841,6 @@
             console.log("📡 Carregando feed para usuário:", usuarioAtual.email);
 
             try {
-                // Buscar IDs dos usuários que a pessoa segue
                 var { data: seguindo, error: followError } = await supabaseClient
                     .from('seguidores')
                     .select('seguindo_id')
@@ -2821,20 +2859,13 @@
                     }
                 }
 
-                // Adicionar o próprio usuário
                 seguindoIds.push(usuarioAtual.id);
 
                 console.log("👥 IDs seguidos:", seguindoIds);
 
-                if (seguindoIds.length === 0) {
-                    feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Siga outros usuários para ver o feed!</div>';
-                    return;
-                }
-
-                // Buscar emails dos usuários seguidos
                 var { data: usuariosInfo, error: usersError } = await supabaseClient
                     .from('usuarios')
-                    .select('id, email')
+                    .select('email')
                     .in('id', seguindoIds);
 
                 if (usersError) {
@@ -2844,44 +2875,69 @@
                 var emailsSeguidos = [];
                 if (usuariosInfo) {
                     for (var ui of usuariosInfo) {
-                        emailsSeguidos.push(ui.email);
+                        if (ui.email) {
+                            emailsSeguidos.push(ui.email);
+                        }
                     }
                 }
 
-                console.log("📧 Emails seguidos:", emailsSeguidos);
-
-                // Buscar atividades públicas
-                var query = supabaseClient
-                    .from('atividades')
-                    .select('*, usuario:usuarios(id, nome, email)')
-                    .eq('visibilidade', 'publico')
-                    .order('data', { ascending: false })
-                    .limit(50);
-
-                // Filtrar por email_usuario
-                if (emailsSeguidos.length > 0) {
-                    var orConditions = emailsSeguidos.map(function(email) {
-                        return 'email_usuario.eq.' + email;
-                    }).join(',');
-
-                    var idConditions = seguindoIds.map(function(id) {
-                        return 'usuario_id.eq.' + id;
-                    }).join(',');
-
-                    query = query.or(orConditions + ',' + idConditions);
-                } else {
-                    query = query.eq('email_usuario', usuarioAtual.email);
+                if (usuarioAtual.email && !emailsSeguidos.includes(usuarioAtual.email)) {
+                    emailsSeguidos.push(usuarioAtual.email);
                 }
 
-                var { data: atividades, error } = await query;
+                console.log("📧 Emails para buscar:", emailsSeguidos);
 
-                if (error) {
-                    console.error("Erro ao carregar atividades:", error);
-                    feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Erro ao carregar feed</div>';
+                if (emailsSeguidos.length === 0) {
+                    feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Siga outros usuários para ver o feed!</div>';
                     return;
                 }
 
-                console.log("📊 Atividades encontradas:", atividades?.length || 0);
+                // Buscar atividades com visibilidade = 'público' OU 'publico'
+                var { data: atividades1, error: error1 } = await supabaseClient
+                    .from('atividades')
+                    .select('*')
+                    .eq('visibilidade', 'público')
+                    .in('email_usuario', emailsSeguidos)
+                    .order('data', { ascending: false })
+                    .limit(50);
+
+                var { data: atividades2, error: error2 } = await supabaseClient
+                    .from('atividades')
+                    .select('*')
+                    .eq('visibilidade', 'publico')
+                    .in('email_usuario', emailsSeguidos)
+                    .order('data', { ascending: false })
+                    .limit(50);
+
+                if (error1) console.error("Erro ao buscar atividades com 'público':", error1);
+                if (error2) console.error("Erro ao buscar atividades com 'publico':", error2);
+
+                var atividades = [];
+                var ids = new Set();
+
+                if (atividades1) {
+                    for (var a of atividades1) {
+                        if (!ids.has(a.id)) {
+                            ids.add(a.id);
+                            atividades.push(a);
+                        }
+                    }
+                }
+
+                if (atividades2) {
+                    for (var a of atividades2) {
+                        if (!ids.has(a.id)) {
+                            ids.add(a.id);
+                            atividades.push(a);
+                        }
+                    }
+                }
+
+                atividades.sort(function(a, b) {
+                    return new Date(b.data) - new Date(a.data);
+                });
+
+                console.log("📊 Atividades encontradas:", atividades.length);
 
                 if (!atividades || atividades.length === 0) {
                     feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhum treino público dos seus seguidores.</div>';
@@ -2893,25 +2949,49 @@
                 for (var a = 0; a < atividades.length; a++) {
                     var atividade = atividades[a];
 
+                    // CORREÇÃO: Buscar nome do usuário corretamente
                     var nomeUsuario = 'Usuário';
                     var usuarioId = atividade.usuario_id;
 
-                    if (!usuarioId && atividade.email_usuario) {
+                    // Primeiro, tentar buscar pelo usuario_id
+                    if (usuarioId) {
                         var { data: userInfo } = await supabaseClient
+                            .from('usuarios')
+                            .select('id, nome')
+                            .eq('id', usuarioId)
+                            .maybeSingle();
+
+                        if (userInfo && userInfo.nome) {
+                            nomeUsuario = userInfo.nome;
+                        } else if (atividade.email_usuario) {
+                            // Se não encontrou pelo ID, tentar pelo email
+                            var { data: userInfo2 } = await supabaseClient
+                                .from('usuarios')
+                                .select('id, nome')
+                                .eq('email', atividade.email_usuario)
+                                .maybeSingle();
+
+                            if (userInfo2 && userInfo2.nome) {
+                                nomeUsuario = userInfo2.nome;
+                                usuarioId = userInfo2.id;
+                            } else {
+                                nomeUsuario = atividade.email_usuario.split('@')[0] || 'Usuário';
+                            }
+                        }
+                    } else if (atividade.email_usuario) {
+                        // Buscar pelo email
+                        var { data: userInfo3 } = await supabaseClient
                             .from('usuarios')
                             .select('id, nome')
                             .eq('email', atividade.email_usuario)
                             .maybeSingle();
 
-                        if (userInfo) {
-                            usuarioId = userInfo.id;
-                            nomeUsuario = userInfo.nome || 'Usuário';
+                        if (userInfo3 && userInfo3.nome) {
+                            nomeUsuario = userInfo3.nome;
+                            usuarioId = userInfo3.id;
                         } else {
                             nomeUsuario = atividade.email_usuario.split('@')[0] || 'Usuário';
                         }
-                    } else if (atividade.usuario) {
-                        nomeUsuario = atividade.usuario.nome || 'Usuário';
-                        usuarioId = atividade.usuario.id;
                     }
 
                     // Contar curtidas

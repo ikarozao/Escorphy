@@ -2,146 +2,1155 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sobre nós | Escorphy</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sobre nós | Escorphy</title>
+    <link rel="stylesheet" href="sobrenos/sobrenos.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="img/a.png" />
+    <style>
+        /* ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA COMUNIDADE) ===== */
+        .footer {
+            background: #ffffff;
+            padding: 48px 20px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            flex-shrink: 0;
+            width: 100%;
+        }
 
-  <link rel="stylesheet" href="sobrenos/sobrenos.css" />
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
 
-  <link rel="icon" type="image/png" href="img/a.png">
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-brand h2 {
+            font-family: "Staatliches", sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a4a2e;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            color: #6b8a76;
+            line-height: 1.5;
+            max-width: 280px;
+            margin: 0;
+        }
+
+        .footer-column h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a4a2e;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin: 0 0 12px 0;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .footer-column ul li a {
+            color: #6b8a76;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+            display: inline-block;
+        }
+
+        .footer-column ul li a:hover {
+            color: #1a4a2e;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .footer-social a {
+            color: #6b8a76;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        .footer-social a:hover {
+            color: #1a4a2e;
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .footer-bottom p {
+            font-size: 12px;
+            color: #8aa596;
+            margin: 0;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 12px;
+            color: #8aa596;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #1a4a2e;
+        }
+
+        /* ===== FOOTER RESPONSIVO ===== */
+        @media (max-width: 1024px) {
+            .footer-container {
+                grid-template-columns: 1.5fr 1fr 1fr;
+                gap: 28px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 32px 16px 16px;
+                margin-top: 24px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                padding-bottom: 20px;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+                font-size: 12px;
+                margin: 0 auto 8px;
+            }
+
+            .footer-brand h2 {
+                font-size: 22px;
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+
+            .footer-column {
+                text-align: center;
+            }
+
+            .footer-column h4 {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .footer-column ul {
+                gap: 4px;
+            }
+
+            .footer-column ul li a {
+                font-size: 12px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 6px;
+                padding-top: 12px;
+            }
+
+            .footer-bottom p {
+                font-size: 11px;
+            }
+
+            .footer-bottom-links {
+                gap: 14px;
+            }
+
+            .footer-bottom-links a {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                padding: 24px 12px 12px;
+                margin-top: 16px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+                padding-bottom: 14px;
+            }
+
+            .footer-brand h2 {
+                font-size: 20px;
+            }
+
+            .footer-brand p {
+                font-size: 11px;
+            }
+
+            .footer-column h4 {
+                font-size: 10px;
+                letter-spacing: 0.5px;
+                margin-bottom: 6px;
+            }
+
+            .footer-column ul li a {
+                font-size: 11px;
+            }
+
+            .footer-social a {
+                font-size: 16px;
+                width: 28px;
+                height: 28px;
+            }
+
+            .footer-bottom p {
+                font-size: 10px;
+            }
+
+            .footer-bottom-links a {
+                font-size: 10px;
+            }
+
+            .footer-bottom-links {
+                gap: 10px;
+            }
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            background-color: #fff;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            height: 60px;
+        }
+
+        #logoimg {
+            width: auto;
+            height: 65px;
+            width: 65px;
+            margin-top: 1vh;
+        }
+
+        nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-nav {
+            padding: 10px 0;
+            display: block;
+            flex: 1;
+            margin-top: 60px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: block;
+        }
+
+        .sidebar-nav li {
+            display: block;
+            width: 100%;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+
+        .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left-color: white;
+            font-weight: bold;
+        }
+
+        /* ===== BOTAO SIDEBAR ===== */
+        .sidebar-toggle-btn {
+            position: fixed;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(4, 71, 0, 0.85);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(4px);
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: rgb(2, 51, 0);
+            transform: translateY(-50%) scale(1.05);
+            left: -12px;
+        }
+
+        .sidebar-toggle-btn.opened {
+            left: calc(75% - 15px);
+            background: rgb(2, 51, 0);
+        }
+
+        /* ===== OVERLAY ===== */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .notification-icon i { font-size: 24px; color: #333; transition: color 0.2s; }
+        .notification-icon:hover i { color: #4CAF50; }
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        .notification-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 340px;
+            max-height: 450px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1100;
+            display: none;
+            overflow: hidden;
+        }
+        .notification-dropdown.show { display: block; }
+        .notification-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notification-header .btn-apagar-todas {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        .notification-header .btn-apagar-todas:hover {
+            background: #fef2f2;
+        }
+        .notification-list { max-height: 350px; overflow-y: auto; }
+        .notification-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            position: relative;
+        }
+        .notification-item:hover { background: #f8fafc; }
+        .notification-item.unread { background: #ecfdf5; }
+        .notification-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+        .notification-content { flex: 1; min-width: 0; }
+        .notification-text { font-size: 13px; color: #1e293b; margin-bottom: 4px; }
+        .notification-time { font-size: 10px; color: #94a3b8; }
+        .notification-empty { text-align: center; padding: 30px; color: #94a3b8; }
+        .btn-delete-notificacao {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .btn-delete-notificacao:hover {
+            color: #ef4444;
+            background: #fef2f2;
+        }
+
+        /* ===== MODAL LOGOUT ===== */
+        .modal-logout {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-logout .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .modal-logout .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .modal-logout .btn-confirm {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .modal-logout .btn-cancel {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1a1a2e;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast-msg.success { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .toast-msg.error { background: linear-gradient(135deg, #cb2d3e, #ef473a); }
+        .toast-msg.warning { background: linear-gradient(135deg, #f2994a, #f2c94c); color: #333; }
+        .toast-msg i { font-size: 16px; }
+
+        /* ===== DESKTOP COM SIDEBAR ===== */
+        @media (min-width: 769px) {
+            body {
+                padding-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(0) !important;
+                top: 0;
+            }
+
+            .sidebar-toggle-btn {
+                display: none !important;
+            }
+
+            nav {
+                width: calc(100% - 250px);
+                margin-left: 250px;
+            }
+
+            .main-wrapper {
+                margin-left: 270px;
+                width: calc(100% - 270px);
+            }
+
+            .footer {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+            }
+
+            .sidebar-overlay {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 75%;
+                max-width: 300px;
+                top: 60px;
+                height: calc(100vh - 60px);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1002;
+                position: fixed;
+                left: 0;
+                background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
+                color: white;
+                overflow-y: auto;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle-btn {
+                display: flex;
+                left: -15px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+                border-radius: 50%;
+                background: rgba(4, 71, 0, 0.9);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                z-index: 1003;
+            }
+
+            .sidebar-toggle-btn.opened {
+                left: calc(75% - 15px);
+                background: rgb(2, 51, 0);
+                transform: translateY(-50%);
+                border-radius: 50%;
+            }
+
+            nav {
+                width: 100%;
+                margin-left: 0;
+                justify-content: space-between;
+                padding: 8px 16px;
+                z-index: 1001;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+                padding: 15px 12px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .footer {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .notification-dropdown {
+                right: 10px;
+                width: calc(100% - 20px);
+                max-width: 340px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 80%;
+                top: 60px;
+                height: calc(100vh - 60px);
+            }
+
+            .sidebar-toggle-btn {
+                left: -12px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .sidebar-toggle-btn.opened {
+                left: calc(80% - 14px);
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-nav">
-      <ul>
-        <li><a href="home.html" class="sidebar-link">Home</a></li>
-        <li><a href="treino1.html" class="sidebar-link">Treinos</a></li>
-        <li><a href="progresso.html" class="sidebar-link">Progresso</a></li>
-        <li><a href="configuracoes.html" class="sidebar-link">Configurações</a></li>
-        <li><a href="#" onclick="logout()" class="sidebar-link">Sair</a></li>
-      </ul>
+    <!-- ===== SIDEBAR ===== -->
+    <button class="sidebar-toggle-btn" id="sidebarToggleBtn">▶</button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-nav">
+            <ul>
+                <li><a href="home.html" class="sidebar-link">Home</a></li>
+                <li><a href="treino1.html" class="sidebar-link">Treinos</a></li>
+                <li><a href="progresso.html" class="sidebar-link">Progresso</a></li>
+                <li><a href="sobrenos.html" class="sidebar-link active">Sobre Nós</a></li>
+                <li><a href="#" class="sidebar-link" id="logoutBtn">Sair</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 
-  <div class="main-wrapper">
+    <!-- ===== MODAL LOGOUT ===== -->
+    <div id="modalLogout" class="modal-logout">
+        <div class="modal-content">
+            <p>Tem certeza que deseja sair?</p>
+            <div class="modal-buttons">
+                <button class="btn-confirm" id="confirmLogout">Sim</button>
+                <button class="btn-cancel" id="cancelLogout">Não</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- NAVBAR - SEM SEARCH BOX -->
-    <nav>
-      <a href="home.html" class="bar_n" style="text-decoration:none; color:black; cursor:pointer;">Escorphy</a>
-      <div class="nav-right">
-        <!-- Caixa de pesquisa removida -->
-      </div>
-    </nav>
+    <!-- ===== TOAST ===== -->
+    <div id="toastMessage" class="toast-msg">
+        <i class="bx"></i>
+        <span id="toastText"></span>
+    </div>
 
-    <article class="hist">
-      <div class="textttt">
-        <h1>A Missão Escorphy</h1>
-        <p>A interface de monitoramento físico Escorphy surgiu com o intuito de impulsionar a ação de realizar esportes.
-          Atualmente, com o grande avanço da tecnologia e informação, a sociedade tornou-se cada vez menos praticante de
-          exercícios físicos, que contribuem
-          para a melhoria da condição do corpo humano e do desenvolvimente da mente. Portanto, o Escorphy tem como
-          principal objetivo auxiliar aqueles que desejam
-          iniciar sua caminhada no mundo esportivo e, também, auxiliar aqueles que já estão presentes nesse contexto.
-        </p>
+    <!-- ===== NOTIFICAÇÕES ===== -->
+    <div class="notification-dropdown" id="notificationDropdown">
+        <div class="notification-header">
+            <span>Notificações</span>
+            <button class="btn-apagar-todas" id="btnApagarTodasNotificacoes">🗑 Apagar todas</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <div class="notification-empty">Carregando...</div>
+        </div>
+    </div>
 
-        <h1 id="Clique">Descubra mais sobre o Escorphy acessando o link: <a href="http://bit.ly/4kAfZkR"> <br> Clique
-            Aqui!</a></h1>
-      </div>
-    </article>
+    <div class="main-wrapper">
 
-    <section class="cards-section" id="cards-section">
-      <article class="titulo">
-        <h1>Equipe Escorphy</h1>
-      </article>
-
-      <div class="cards">
-        <div class="card">
-          <div class="card-border">
-            <img src="img/Imagem do WhatsApp de 2025-06-09 à(s) 13.34.40_d744d49f.jpg" alt="" class="card-img">
-            <h3 class="card-name">Antonela Schneider</h3>
-            <p class="card-description">Estudante do terceiro ano do Centro de Referência IFPR - Biopark</p>
-            <a href="https://instagram.com/antonelasschneider" class="icon-button">
-              <img src="img/instagram.png" alt="Instagram" class="icon-img">
+        <!-- ===== NAVBAR ===== -->
+        <nav>
+            <a href="home.html">
+                <div class="bar_n"><img id="logoimg" src="img/Figura estilizada em movimento.png" alt="Logo Escorphy"></div>
             </a>
-          </div>
-        </div>
+            <div class="nav-right">
+                <div class="notification-icon" id="notificationIcon">
+                    <i class="bx bx-bell"></i>
+                    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                </div>
+            </div>
+        </nav>
 
-        <div class="card">
-          <div class="card-border">
-            <img src="img/Imagem do WhatsApp de 2025-06-09 à(s) 13.38.11_4f6c322a.jpg" alt="" class="card-img">
-            <h3 class="card-name">Ikaro L. Oliveira</h3>
-            <p class="card-description">Estudante do terceiro ano do Centro de Referência IFPR - Biopark</p>
-            <a href="https://instagram.com/ikarooliveiraaa" class="icon-button">
-              <img src="img/instagram.png" alt="Instagram" class="icon-img">
-            </a>
-          </div>
-        </div>
+        <article class="hist">
+            <div class="textttt">
+                <h1>A Missão Escorphy</h1>
+                <p>A interface de monitoramento físico Escorphy surgiu com o intuito de impulsionar a ação de realizar esportes.
+                    Atualmente, com o grande avanço da tecnologia e informação, a sociedade tornou-se cada vez menos praticante de
+                    exercícios físicos, que contribuem para a melhoria da condição do corpo humano e do desenvolvimento da mente.
+                    Portanto, o Escorphy tem como principal objetivo auxiliar aqueles que desejam iniciar sua caminhada no mundo
+                    esportivo e, também, auxiliar aqueles que já estão presentes nesse contexto.
+                </p>
 
-        <div class="card">
-          <div class="card-border">
-            <img src="img/Imagem do WhatsApp de 2025-06-09 à(s) 13.29.36_1fbf03ab.jpg" alt="" class="card-img">
-            <h3 class="card-name">Laísa V. S. Scholz</h3>
-            <p class="card-description">Estudante do terceiro ano do Centro de Referência IFPR - Biopark</p>
-            <a href="https://www.instagram.com/laisa_vitoria_scholz/profilecard/?igsh=cm5ia3cxc3M4ejZo" class="icon-button">
-              <img src="img/instagram.png" alt="Instagram" class="icon-img">
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+                <h1 id="Clique">Descubra mais sobre o Escorphy acessando o link: <a href="http://bit.ly/4kAfZkR"><br> Clique Aqui!</a></h1>
+            </div>
+        </article>
 
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-logo">
-          <h1>ESCORPHY</h1>
-          <p>© 2025 Escorphy</p>
-        </div>
+        <section class="cards-section" id="cards-section">
+            <article class="titulo">
+                <h1>Equipe Escorphy</h1>
+            </article>
 
-        <div class="footer-column">
-          <h3>Sobre</h3>
-          <ul>
-            <li><a href="sobrenos.html">Nossa Missão</a></li>
-            <li><a href="sobrenos.html">Equipe</a></li>
-            <li><a href="#">Privacidade</a></li>
-          </ul>
-        </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-border">
+                        <img src="img/Imagem do WhatsApp de 2025-06-09 à(s) 13.34.40_d744d49f.jpg" alt="Antonela Schneider" class="card-img">
+                        <h3 class="card-name">Antonela Schneider</h3>
+                        <p class="card-description">Estudante do terceiro ano do Centro de Referência IFPR - Biopark</p>
+                        <a href="https://instagram.com/antonelasschneider" class="icon-button">
+                            <img src="img/instagram.png" alt="Instagram" class="icon-img">
+                        </a>
+                    </div>
+                </div>
 
-        <div class="footer-column">
-          <h3>Explorar</h3>
-          <ul>
-            <li><a href="#">Funcionalidades</a></li>
-            <li><a href="#">Planos</a></li>
-            <li><a href="#">Blog</a></li>
-          </ul>
-        </div>
+                <div class="card">
+                    <div class="card-border">
+                        <img src="img/Imagem do WhatsApp de 2025-06-09 à(s) 13.38.11_4f6c322a.jpg" alt="Ikaro L. Oliveira" class="card-img">
+                        <h3 class="card-name">Ikaro L. Oliveira</h3>
+                        <p class="card-description">Estudante do terceiro ano do Centro de Referência IFPR - Biopark</p>
+                        <a href="https://instagram.com/ikarooliveiraaa" class="icon-button">
+                            <img src="img/instagram.png" alt="Instagram" class="icon-img">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="footer-column">
-          <h3>Redes</h3>
-          <ul class="social-icons">
-            <li><a href="https://www.instagram.com/escorphy"> Instagram</a></li>
-            <li><a href="https://www.youtube.com/escorphy"> YouTube</a></li>
-          </ul>
-        </div>
+        <!-- ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA COMUNIDADE) ===== -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <h2>ESCORPHY</h2>
+                    <p>Transformando vidas através do esporte.</p>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/escorphybr" target="_blank" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
+                        <a href="https://www.youtube.com/escorphy" target="_blank" aria-label="YouTube"><i class="bx bxl-youtube"></i></a>
+                        <a href="https://wa.me/+5544998121630" target="_blank" aria-label="WhatsApp"><i class="bx bxl-whatsapp"></i></a>
+                    </div>
+                </div>
 
-        <div class="footer-column">
-          <h3>Ajuda</h3>
-          <ul>
-            <li><a href="#">Suporte</a></li>
-            <li><a href="#">Fale Conosco</a></li>
-            <li><a href="#">Central de Ajuda</a></li>
-          </ul>
-        </div>
-      </div>
-    </footer>
+                <div class="footer-column">
+                    <h4>Sobre</h4>
+                    <ul>
+                        <li><a href="sobrenos.html">Missão</a></li>
+                        <li><a href="sobrenos.html#cards-section">Equipe</a></li>
+                        <li><a href="#" id="linkPrivacidade">Privacidade</a></li>
+                    </ul>
+                </div>
 
-    <!-- BOTÕES FLUTUANTES REMOVIDOS -->
+                <div class="footer-column">
+                    <h4>Ajuda</h4>
+                    <ul>
+                        <li><a href="suporte.html">Suporte</a></li>
+                        <li><a href="https://wa.me/+5544998121630">Fale Conosco</a></li>
+                        <li><a href="#" id="linkPrivacidade2">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
 
-  </div> <!-- FIM DO MAIN-WRAPPER -->
+            <div class="footer-bottom">
+                <p>&copy; 2025 Escorphy</p>
+                <div class="footer-bottom-links">
+                    <a href="#" id="linkPrivacidade3">Privacidade</a>
+                    <a href="#" id="linkTermos">Termos de Uso</a>
+                    <a href="#" id="linkCookies">Cookies</a>
+                </div>
+            </div>
+        </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="auth.js"></script>
+    </div> <!-- FIM DO MAIN-WRAPPER -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ============================================================
+        // CONFIGURAÇÃO SUPABASE
+        // ============================================================
+        const supabaseUrl = "https://yuupbtrljazrrwizzafd.supabase.co";
+        const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXBidHJsamF6cnJ3aXp6YWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MjIzMzMsImV4cCI6MjA3NjQ5ODMzM30.trZvyDgPnhenuPiKxChZbVLcBQI3rOm8OsjtgAzoAm0";
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        let usuarioAtual = null;
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type) {
+            type = type || "success";
+            let toast = document.getElementById('toastMessage');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toastMessage';
+                toast.className = 'toast-msg';
+                toast.innerHTML = '<i class="bx"></i><span id="toastText"></span>';
+                document.body.appendChild(toast);
+            }
+            const toastText = document.getElementById('toastText');
+            const toastIcon = toast.querySelector('i');
+            toast.classList.remove('show', 'success', 'error', 'warning');
+
+            if (type === 'success') {
+                toastIcon.className = 'bx bx-check-circle';
+                toast.classList.add('success');
+            } else if (type === 'error') {
+                toastIcon.className = 'bx bx-error-circle';
+                toast.classList.add('error');
+            } else {
+                toastIcon.className = 'bx bx-info-circle';
+                toast.classList.add('warning');
+            }
+
+            toastText.textContent = message;
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 3000);
+        }
+
+        // ============================================================
+        // NOTIFICAÇÕES
+        // ============================================================
+        function formatarTempo(data) {
+            var agora = new Date();
+            var notif = new Date(data);
+            var diff = Math.floor((agora - notif) / 1000);
+            if (diff < 60) return 'agora';
+            if (diff < 3600) return Math.floor(diff / 60) + ' min';
+            if (diff < 86400) return Math.floor(diff / 3600) + ' h';
+            return Math.floor(diff / 86400) + ' d';
+        }
+
+        async function carregarNotificacoes() {
+            if (!usuarioAtual) return;
+
+            var result = await supabaseClient
+                .from('notificacoes')
+                .select('*, remetente:remetente_id(id, nome, foto_perfil_url)')
+                .eq('usuario_id', usuarioAtual.id)
+                .order('created_at', { ascending: false })
+                .limit(30);
+
+            if (result.error) return;
+
+            var notificacoes = result.data;
+            var naoLidas = 0;
+            if (notificacoes) {
+                for (var i = 0; i < notificacoes.length; i++) {
+                    if (!notificacoes[i].lida) naoLidas++;
+                }
+            }
+
+            var badge = document.getElementById('notificationBadge');
+            if (naoLidas > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = naoLidas > 9 ? '9+' : naoLidas;
+            } else {
+                badge.style.display = 'none';
+            }
+
+            var listDiv = document.getElementById('notificationList');
+            if (!notificacoes || notificacoes.length === 0) {
+                listDiv.innerHTML = '<div class="notification-empty">Nenhuma notificação</div>';
+                return;
+            }
+
+            var html = '';
+            for (var j = 0; j < notificacoes.length; j++) {
+                var n = notificacoes[j];
+                var nomeRemetente = n.remetente?.nome || 'Alguém';
+                var texto = '';
+                switch(n.tipo) {
+                    case 'seguidor': texto = nomeRemetente + ' começou a te seguir!'; break;
+                    case 'curtida': texto = nomeRemetente + ' curtiu seu treino!'; break;
+                    case 'comentario': texto = nomeRemetente + ' comentou no seu treino!'; break;
+                    default: texto = 'Nova notificação';
+                }
+                var unreadClass = n.lida ? '' : 'unread';
+                var inicial = nomeRemetente.charAt(0).toUpperCase();
+
+                html += '<div class="notification-item ' + unreadClass + '" data-id="' + n.id + '">';
+                html += '<div class="notification-avatar">' + inicial + '</div>';
+                html += '<div class="notification-content">';
+                html += '<div class="notification-text">' + texto + '</div>';
+                html += '<div class="notification-time">' + formatarTempo(n.created_at) + '</div>';
+                html += '</div>';
+                html += '<button class="btn-delete-notificacao" data-id="' + n.id + '" title="Apagar notificação">✕</button>';
+                html += '</div>';
+            }
+            listDiv.innerHTML = html;
+
+            var items = document.querySelectorAll('.notification-item');
+            for (var k = 0; k < items.length; k++) {
+                (function(item) {
+                    item.addEventListener('click', function(e) {
+                        if (e.target.classList.contains('btn-delete-notificacao')) return;
+                        var id = item.dataset.id;
+                        supabaseClient.from('notificacoes').update({ lida: true }).eq('id', id);
+                        carregarNotificacoes();
+                    });
+                })(items[k]);
+            }
+
+            var deleteBtns = document.querySelectorAll('.btn-delete-notificacao');
+            for (var l = 0; l < deleteBtns.length; l++) {
+                (function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var id = btn.dataset.id;
+                        apagarNotificacao(id);
+                    });
+                })(deleteBtns[l]);
+            }
+        }
+
+        async function apagarNotificacao(id) {
+            if (!usuarioAtual) return;
+            var result = await supabaseClient
+                .from('notificacoes')
+                .delete()
+                .eq('id', id)
+                .eq('usuario_id', usuarioAtual.id);
+
+            if (!result.error) {
+                showToast('Notificação apagada!', 'success');
+                carregarNotificacoes();
+            } else {
+                showToast('Erro ao apagar notificação', 'error');
+            }
+        }
+
+        document.getElementById('notificationIcon')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var dropdown = document.getElementById('notificationDropdown');
+            dropdown.classList.toggle('show');
+            carregarNotificacoes();
+        });
+        document.addEventListener('click', function() {
+            var dropdown = document.getElementById('notificationDropdown');
+            if (dropdown) dropdown.classList.remove('show');
+        });
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+        var modalLogout = document.getElementById('modalLogout');
+        var confirmLogout = document.getElementById('confirmLogout');
+        var cancelLogout = document.getElementById('cancelLogout');
+
+        function showLogoutModal() {
+            modalLogout.style.display = 'flex';
+        }
+
+        function hideLogoutModal() {
+            modalLogout.style.display = 'none';
+        }
+
+        async function realizarLogout() {
+            await supabaseClient.auth.signOut();
+            localStorage.clear();
+            showToast("Logout realizado com sucesso!", "success");
+            setTimeout(function() { window.location.href = "index.html"; }, 1000);
+        }
+
+        document.getElementById('logoutBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            showLogoutModal();
+        });
+
+        confirmLogout?.addEventListener('click', function() {
+            hideLogoutModal();
+            realizarLogout();
+        });
+
+        cancelLogout?.addEventListener('click', hideLogoutModal);
+        window.addEventListener('click', function(e) { if (e.target === modalLogout) hideLogoutModal(); });
+
+        // ============================================================
+        // CARREGAR USUÁRIO ATUAL
+        // ============================================================
+        async function carregarUsuarioAtual() {
+            var { data: { user } } = await supabaseClient.auth.getUser();
+            if (user) {
+                var { data, error } = await supabaseClient
+                    .from('usuarios')
+                    .select('id, nome, email')
+                    .eq('id', user.id)
+                    .maybeSingle();
+
+                if (error) {
+                    console.error("Erro ao buscar usuário:", error);
+                } else if (data) {
+                    usuarioAtual = data;
+                } else {
+                    var { data: dataByEmail } = await supabaseClient
+                        .from('usuarios')
+                        .select('id, nome, email')
+                        .eq('email', user.email)
+                        .maybeSingle();
+                    usuarioAtual = dataByEmail;
+                }
+            }
+            return usuarioAtual;
+        }
+
+        // ============================================================
+        // SIDEBAR
+        // ============================================================
+        var sidebar = document.getElementById('sidebar');
+        var sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+        var overlay = document.getElementById('sidebarOverlay');
+
+        function isMobile() { return window.innerWidth <= 768; }
+
+        function toggleSidebar() {
+            if (!isMobile()) return;
+            sidebar.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                sidebarToggleBtn.classList.add('opened');
+                sidebarToggleBtn.innerHTML = '◀';
+                if (overlay) overlay.classList.add('active');
+            } else {
+                sidebarToggleBtn.classList.remove('opened');
+                sidebarToggleBtn.innerHTML = '▶';
+                if (overlay) overlay.classList.remove('active');
+            }
+        }
+
+        if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', toggleSidebar);
+        if (overlay) overlay.addEventListener('click', function() {
+            if (isMobile() && sidebar.classList.contains('active')) toggleSidebar();
+        });
+
+        if (isMobile() && localStorage.getItem('sidebarOpen') === 'true') {
+            sidebar.classList.add('active');
+            sidebarToggleBtn.classList.add('opened');
+            sidebarToggleBtn.innerHTML = '◀';
+            if (overlay) overlay.classList.add('active');
+        }
+
+        window.addEventListener('resize', function() {
+            if (!isMobile()) {
+                sidebar.classList.remove('active');
+                sidebarToggleBtn.classList.remove('opened');
+                sidebarToggleBtn.innerHTML = '▶';
+                if (overlay) overlay.classList.remove('active');
+            }
+        });
+
+        // ============================================================
+        // INICIAR
+        // ============================================================
+        async function init() {
+            await carregarUsuarioAtual();
+            if (usuarioAtual) {
+                await carregarNotificacoes();
+            }
+        }
+        init();
+
+        console.log("🚀 Sobre Nós carregado com sucesso!");
+    </script>
 
 </body>
 
