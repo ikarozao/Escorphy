@@ -2,20 +2,480 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre nós | Escorphy</title>
-    <link rel="stylesheet" href="sobrenos/sobrenos.css" />
+    <link rel="stylesheet" href="home/home.css">
+    <link rel="icon" type="image/png" href="img/a.png">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="img/a.png" />
     <style>
-        /* ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA COMUNIDADE) ===== */
+        /* ===== MODAL DE LOGIN ===== */
+        .modal-login-required {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-login-required.active {
+            display: flex;
+        }
+        .modal-login-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        .modal-login-icon {
+            font-size: 64px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .modal-login-content h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .modal-login-content p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        .modal-login-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .btn-login-action {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-login-action:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .btn-cancel-action {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-cancel-action:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* ===== MODAL DE CONFIRMAÇÃO BALÃO ===== */
+        .modal-confirmacao {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 15000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-confirmacao.active {
+            display: flex;
+        }
+        .modal-confirmacao-content {
+            background: white;
+            border-radius: 24px;
+            padding: 30px 35px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalPop 0.3s ease;
+        }
+        @keyframes modalPop {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .modal-confirmacao-icon {
+            font-size: 48px;
+            color: #ef4444;
+            margin-bottom: 16px;
+        }
+        .modal-confirmacao-content h3 {
+            font-size: 20px;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        .modal-confirmacao-content p {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .modal-confirmacao-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .modal-confirmacao-buttons .btn-confirmar {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+        }
+        .modal-confirmacao-buttons .btn-confirmar:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+        .modal-confirmacao-buttons .btn-cancelar {
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+        }
+        .modal-confirmacao-buttons .btn-cancelar:hover {
+            background: #cbd5e1;
+            transform: scale(1.05);
+        }
+
+        /* ===== TELA DE VERIFICANDO LOGIN ===== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f0faf5, #e8f5ee);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.6s ease;
+            opacity: 1;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-screen-content {
+            text-align: center;
+            color: #1a4a2e;
+            padding: 20px;
+        }
+        .loading-screen-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #c8e6d4;
+            border-top: 4px solid #2e7d52;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        .loading-screen-title {
+            font-size: 22px;
+            font-weight: 500;
+            color: #1a4a2e;
+            letter-spacing: 0.5px;
+        }
+        .loading-screen-subtitle {
+            font-size: 14px;
+            color: #4a7a5e;
+            margin-top: 4px;
+            font-weight: 300;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ===== MODAL PDF ===== */
+        .modal-pdf {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 30000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-pdf.active {
+            display: flex;
+        }
+        .modal-pdf-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 95vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+        .modal-pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            flex-shrink: 0;
+        }
+        .modal-pdf-header h2 {
+            font-size: 18px;
+            color: #1a4a2e;
+            margin: 0;
+            font-family: "Staatliches", sans-serif;
+            letter-spacing: 0.5px;
+        }
+        .modal-pdf-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+            padding: 0 8px;
+        }
+        .modal-pdf-close:hover {
+            color: #ef4444;
+            transform: scale(1.1);
+        }
+        .modal-pdf-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            background: #fcfcfc;
+            min-height: 300px;
+            max-height: 70vh;
+        }
+        .modal-pdf-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-pdf-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .modal-pdf-body::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+
+        .pdf-content {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #222;
+            line-height: 1.7;
+        }
+        .pdf-content h1 {
+            font-size: 24px;
+            color: #1a4a2e;
+            text-align: center;
+            margin: 0 0 20px 0;
+            font-family: "Staatliches", sans-serif;
+            letter-spacing: 1px;
+        }
+        .pdf-content h2 {
+            font-size: 17px;
+            color: #1a4a2e;
+            margin: 20px 0 8px 0;
+            font-weight: 600;
+        }
+        .pdf-content h3 {
+            font-size: 15px;
+            color: #2e7d52;
+            margin: 14px 0 6px 0;
+            font-weight: 600;
+        }
+        .pdf-content p {
+            font-size: 14px;
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+        .pdf-content ul {
+            margin: 8px 0 12px 20px;
+            padding: 0;
+        }
+        .pdf-content ul li {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .pdf-content .pdf-footer {
+            font-size: 12px;
+            color: #8aa596;
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e8ece8;
+        }
+        .modal-pdf-footer {
+            padding: 12px 24px;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .modal-pdf-footer .btn-fechar-pdf {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 32px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: "Poppins", sans-serif;
+        }
+        .modal-pdf-footer .btn-fechar-pdf:hover {
+            background: #2e7d52;
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .modal-pdf-content {
+                max-height: 98vh;
+            }
+            .modal-pdf-body {
+                padding: 16px;
+                max-height: 60vh;
+            }
+            .pdf-content h1 {
+                font-size: 20px;
+            }
+            .pdf-content h2 {
+                font-size: 15px;
+            }
+            .pdf-content p,
+            .pdf-content ul li {
+                font-size: 13px;
+            }
+            .modal-login-content {
+                padding: 20px;
+            }
+            .modal-login-content h3 {
+                font-size: 20px;
+            }
+            .modal-confirmacao-content {
+                padding: 24px 20px;
+            }
+            .modal-confirmacao-content h3 {
+                font-size: 18px;
+            }
+        }
+        @media (max-width: 480px) {
+            .modal-pdf-body {
+                padding: 12px;
+                max-height: 50vh;
+            }
+            .pdf-content h1 {
+                font-size: 17px;
+            }
+            .pdf-content h2 {
+                font-size: 14px;
+            }
+            .pdf-content p,
+            .pdf-content ul li {
+                font-size: 12px;
+            }
+            .modal-login-content {
+                padding: 16px;
+            }
+            .modal-login-content h3 {
+                font-size: 18px;
+            }
+            .modal-login-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .modal-confirmacao-content {
+                padding: 20px 16px;
+            }
+            .modal-confirmacao-content h3 {
+                font-size: 16px;
+            }
+            .modal-confirmacao-buttons .btn-confirmar,
+            .modal-confirmacao-buttons .btn-cancelar {
+                padding: 8px 20px;
+                font-size: 13px;
+            }
+        }
+
+        /* ===== FOOTER (IGUAL AO HOME) ===== */
         .footer {
             background: #ffffff;
             padding: 48px 20px 20px;
             margin-top: 40px;
             border-top: 1px solid rgba(0, 0, 0, 0.06);
-            flex-shrink: 0;
             width: 100%;
         }
 
@@ -139,7 +599,6 @@
             color: #1a4a2e;
         }
 
-        /* ===== FOOTER RESPONSIVO ===== */
         @media (max-width: 1024px) {
             .footer-container {
                 grid-template-columns: 1.5fr 1fr 1fr;
@@ -265,259 +724,214 @@
             }
         }
 
-        /* ===== NAVBAR ===== */
-        nav {
-            background-color: #fff;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1001;
-            height: 60px;
-        }
-
-        #logoimg {
-            width: auto;
-            height: 65px;
-            width: 65px;
-            margin-top: 1vh;
-        }
-
-        nav .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100vh;
-            background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
-            color: white;
-            z-index: 1000;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar-nav {
-            padding: 10px 0;
-            display: block;
+        /* ===== ESTILOS ESPECÍFICOS PARA SOBRE NÓS ===== */
+        .main-wrapper {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: margin-left 0.3s ease;
             flex: 1;
-            margin-top: 60px;
-        }
-
-        .sidebar-nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: block;
-        }
-
-        .sidebar-nav li {
-            display: block;
-            width: 100%;
-        }
-
-        .sidebar-link {
-            display: block;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            border-left: 3px solid transparent;
-            transition: all 0.3s;
             width: 100%;
             box-sizing: border-box;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .sidebar-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-left-color: white;
+        .hist {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
         }
 
-        .sidebar-link.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-left-color: white;
-            font-weight: bold;
+        .textttt h1 {
+            font-size: 28px;
+            color: #1a4a2e;
+            margin-bottom: 15px;
+            font-family: "Staatliches", sans-serif;
+            letter-spacing: 0.5px;
         }
 
-        /* ===== BOTAO SIDEBAR ===== */
-        .sidebar-toggle-btn {
-            position: fixed;
-            left: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(4, 71, 0, 0.85);
-            color: white;
-            border: none;
+        .textttt p {
+            font-size: 16px;
+            color: #444;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        #Clique {
+            font-size: 20px;
+            text-align: center;
+            margin-top: 30px;
+            font-family: "Staatliches", sans-serif;
+            color: #1a4a2e;
+        }
+
+        #Clique a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        #Clique a:hover {
+            text-decoration: underline;
+        }
+
+        .cards-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .titulo h1 {
+            font-size: 28px;
+            color: #1a4a2e;
+            text-align: center;
+            font-family: "Staatliches", sans-serif;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid #4CAF50;
+        }
+
+        .card-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a4a2e;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .icon-button {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .icon-button:hover {
+            transform: scale(1.1);
+        }
+
+        .icon-img {
             width: 30px;
             height: 30px;
-            font-size: 16px;
-            cursor: pointer;
-            z-index: 1002;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(4px);
         }
 
-        .sidebar-toggle-btn:hover {
-            background: rgb(2, 51, 0);
-            transform: translateY(-50%) scale(1.05);
-            left: -12px;
+        @media (max-width: 768px) {
+            .main-wrapper {
+                padding: 15px 12px;
+            }
+
+            .cards {
+                gap: 20px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .textttt h1 {
+                font-size: 22px;
+            }
+
+            .textttt p {
+                font-size: 14px;
+            }
+
+            .titulo h1 {
+                font-size: 22px;
+            }
         }
 
-        .sidebar-toggle-btn.opened {
-            left: calc(75% - 15px);
-            background: rgb(2, 51, 0);
+        @media (max-width: 480px) {
+            .main-wrapper {
+                padding: 10px 8px;
+            }
+
+            .hist {
+                padding: 20px;
+            }
+
+            .cards-section {
+                padding: 20px;
+            }
+
+            .card-img {
+                width: 100px;
+                height: 100px;
+            }
         }
 
-        /* ===== OVERLAY ===== */
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 998;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .sidebar-overlay.active {
-            display: block;
-            opacity: 1;
+        /* Desktop com sidebar */
+        @media (min-width: 769px) {
+            .main-wrapper {
+                margin-left: 270px;
+                width: calc(100% - 270px);
+                max-width: 1200px;
+            }
+
+            .footer {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+            }
         }
 
-        /* ===== NOTIFICAÇÕES ===== */
-        .notification-icon {
-            position: relative;
-            cursor: pointer;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .notification-icon i { font-size: 24px; color: #333; transition: color 0.2s; }
-        .notification-icon:hover i { color: #4CAF50; }
-        .notification-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #ef4444;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            min-width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 4px;
+        @media (max-width: 768px) {
+            .main-wrapper {
+                margin-left: 0;
+                padding: 15px 12px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .footer {
+                margin-left: 0;
+                width: 100%;
+            }
         }
 
-        .notification-dropdown {
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            width: 340px;
-            max-height: 450px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 1100;
-            display: none;
-            overflow: hidden;
-        }
-        .notification-dropdown.show { display: block; }
-        .notification-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid #e2e8f0;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .notification-header .btn-apagar-todas {
-            background: none;
-            border: none;
-            color: #ef4444;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: "Poppins", sans-serif;
-            font-weight: 500;
-            padding: 4px 12px;
-            border-radius: 20px;
-            transition: all 0.2s;
-        }
-        .notification-header .btn-apagar-todas:hover {
-            background: #fef2f2;
-        }
-        .notification-list { max-height: 350px; overflow-y: auto; }
-        .notification-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            position: relative;
-        }
-        .notification-item:hover { background: #f8fafc; }
-        .notification-item.unread { background: #ecfdf5; }
-        .notification-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4CAF50, #2e7d32);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            flex-shrink: 0;
-            font-size: 16px;
-        }
-        .notification-content { flex: 1; min-width: 0; }
-        .notification-text { font-size: 13px; color: #1e293b; margin-bottom: 4px; }
-        .notification-time { font-size: 10px; color: #94a3b8; }
-        .notification-empty { text-align: center; padding: 30px; color: #94a3b8; }
-        .btn-delete-notificacao {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 4px;
-            border-radius: 50%;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-        .btn-delete-notificacao:hover {
-            color: #ef4444;
-            background: #fef2f2;
+        @media (max-width: 480px) {
+            .main-wrapper {
+                padding: 10px 8px;
+            }
         }
 
-        /* ===== MODAL LOGOUT ===== */
+        /* ===== LOGOUT MODAL ===== */
         .modal-logout {
             display: none;
             position: fixed;
@@ -583,141 +997,92 @@
             gap: 10px;
             pointer-events: none;
             font-family: 'Poppins', sans-serif;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .toast-msg.success { background: linear-gradient(135deg, #11998e, #38ef7d); }
-        .toast-msg.error { background: linear-gradient(135deg, #cb2d3e, #ef473a); }
-        .toast-msg.warning { background: linear-gradient(135deg, #f2994a, #f2c94c); color: #333; }
-        .toast-msg i { font-size: 16px; }
-
-        /* ===== DESKTOP COM SIDEBAR ===== */
-        @media (min-width: 769px) {
-            body {
-                padding-left: 0;
-            }
-
-            .sidebar {
-                transform: translateX(0) !important;
-                top: 0;
-            }
-
-            .sidebar-toggle-btn {
-                display: none !important;
-            }
-
-            nav {
-                width: calc(100% - 250px);
-                margin-left: 250px;
-            }
-
-            .main-wrapper {
-                margin-left: 270px;
-                width: calc(100% - 270px);
-            }
-
-            .footer {
-                margin-left: 250px;
-                width: calc(100% - 250px);
-            }
-
-            .sidebar-overlay {
-                display: none !important;
-            }
+        .toast-msg.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                width: 75%;
-                max-width: 300px;
-                top: 60px;
-                height: calc(100vh - 60px);
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 1002;
-                position: fixed;
-                left: 0;
-                background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
-                color: white;
-                overflow-y: auto;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .sidebar-toggle-btn {
-                display: flex;
-                left: -15px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 30px;
-                height: 30px;
-                font-size: 14px;
-                border-radius: 50%;
-                background: rgba(4, 71, 0, 0.9);
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-                z-index: 1003;
-            }
-
-            .sidebar-toggle-btn.opened {
-                left: calc(75% - 15px);
-                background: rgb(2, 51, 0);
-                transform: translateY(-50%);
-                border-radius: 50%;
-            }
-
-            nav {
-                width: 100%;
-                margin-left: 0;
-                justify-content: space-between;
-                padding: 8px 16px;
-                z-index: 1001;
-            }
-
-            .main-wrapper {
-                margin-left: 0;
-                padding: 15px 12px;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            .footer {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            .notification-dropdown {
-                right: 10px;
-                width: calc(100% - 20px);
-                max-width: 340px;
-            }
+        .toast-msg.success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
         }
-
-        @media (max-width: 480px) {
-            .sidebar {
-                width: 80%;
-                top: 60px;
-                height: calc(100vh - 60px);
-            }
-
-            .sidebar-toggle-btn {
-                left: -12px;
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
-            }
-
-            .sidebar-toggle-btn.opened {
-                left: calc(80% - 14px);
-            }
+        .toast-msg.error {
+            background: linear-gradient(135deg, #cb2d3e, #ef473a);
+        }
+        .toast-msg.warning {
+            background: linear-gradient(135deg, #f2994a, #f2c94c);
+            color: #333;
+        }
+        .toast-msg i {
+            font-size: 16px;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ===== SIDEBAR ===== -->
+    <!-- ===== TELA DE VERIFICANDO LOGIN ===== -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-screen-content">
+            <div class="loading-screen-spinner"></div>
+            <div class="loading-screen-title">Verificando login...</div>
+            <div class="loading-screen-subtitle">Aguarde um momento</div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE LOGIN ===== -->
+    <div class="modal-login-required" id="modalLoginRequired">
+        <div class="modal-login-content">
+            <div class="modal-login-icon">
+                <i class='bx bx-error-circle'></i>
+            </div>
+            <h3>Usuário não logado!</h3>
+            <p>Você precisa estar logado para acessar esta página. Faça login para continuar.</p>
+            <div class="modal-login-buttons">
+                <button class="btn-login-action" id="btnFazerLogin">Fazer Login</button>
+                <button class="btn-cancel-action" id="btnCancelarLogin">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== NAVEGAÇÃO ===== -->
+    <nav>
+        <a href="home.html">
+            <div class="bar_n"><img id="logoimg" src="img/Figura estilizada em movimento.png" alt=""></div>
+        </a>
+        <div class="nav-right">
+            <div class="notification-icon" id="notificationIcon">
+                <i class="bx bx-bell"></i>
+                <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== NOTIFICAÇÕES ===== -->
+    <div class="notification-dropdown" id="notificationDropdown">
+        <div class="notification-header">
+            <span>Notificações</span>
+            <button class="btn-apagar-todas" id="btnApagarTodasNotificacoes">Apagar todas</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <div class="notification-empty">Carregando...</div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL CONFIRMAÇÃO ===== -->
+    <div id="modalConfirmacao" class="modal-confirmacao">
+        <div class="modal-confirmacao-content">
+            <div class="modal-confirmacao-icon">⚠️</div>
+            <h3 id="modalConfirmacaoTitulo">Tem certeza?</h3>
+            <p id="modalConfirmacaoMensagem">Esta ação não pode ser desfeita.</p>
+            <div class="modal-confirmacao-buttons">
+                <button class="btn-cancelar" id="modalConfirmacaoCancelar">Cancelar</button>
+                <button class="btn-confirmar" id="modalConfirmacaoConfirmar">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SIDEBAR (IGUAL AO HOME) ===== -->
     <button class="sidebar-toggle-btn" id="sidebarToggleBtn">▶</button>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -727,8 +1092,11 @@
                 <li><a href="home.html" class="sidebar-link">Home</a></li>
                 <li><a href="treino1.html" class="sidebar-link">Treinos</a></li>
                 <li><a href="progresso.html" class="sidebar-link">Progresso</a></li>
-                <li><a href="#" class="sidebar-link" id="logoutBtn">Sair</a></li>
+                <li><a href="comunidade.html" class="sidebar-link">Comunidade</a></li>
             </ul>
+        </div>
+        <div class="sidebar-footer">
+            <a href="#" class="sidebar-link" id="logoutBtn">Sair</a>
         </div>
     </div>
 
@@ -749,31 +1117,26 @@
         <span id="toastText"></span>
     </div>
 
-    <!-- ===== NOTIFICAÇÕES ===== -->
-    <div class="notification-dropdown" id="notificationDropdown">
-        <div class="notification-header">
-            <span>Notificações</span>
-            <button class="btn-apagar-todas" id="btnApagarTodasNotificacoes">🗑 Apagar todas</button>
-        </div>
-        <div class="notification-list" id="notificationList">
-            <div class="notification-empty">Carregando...</div>
+    <!-- ===== MODAL PDF (Política de Privacidade e Termos) ===== -->
+    <div id="modalPdf" class="modal-pdf">
+        <div class="modal-pdf-content">
+            <div class="modal-pdf-header">
+                <h2 id="pdfModalTitle">Política de Privacidade e Termos de Uso</h2>
+                <button class="modal-pdf-close" id="fecharModalPdf">&times;</button>
+            </div>
+            <div class="modal-pdf-body" id="pdfBody">
+                <div class="pdf-content">
+                    <!-- O conteúdo será injetado via JavaScript -->
+                </div>
+            </div>
+            <div class="modal-pdf-footer">
+                <button class="btn-fechar-pdf" id="fecharModalPdfBtn">Fechar</button>
+            </div>
         </div>
     </div>
 
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <div class="main-wrapper">
-
-        <!-- ===== NAVBAR ===== -->
-        <nav>
-            <a href="home.html">
-                <div class="bar_n"><img id="logoimg" src="img/Figura estilizada em movimento.png" alt="Logo Escorphy"></div>
-            </a>
-            <div class="nav-right">
-                <div class="notification-icon" id="notificationIcon">
-                    <i class="bx bx-bell"></i>
-                    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
-                </div>
-            </div>
-        </nav>
 
         <article class="hist">
             <div class="textttt">
@@ -819,49 +1182,46 @@
             </div>
         </section>
 
-        <!-- ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA COMUNIDADE) ===== -->
-        <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-brand">
-                    <h2>ESCORPHY</h2>
-                    <p>Transformando vidas através do esporte.</p>
-                    <div class="footer-social">
-                        <a href="https://www.instagram.com/escorphybr" target="_blank" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
-                        <a href="https://www.youtube.com/escorphy" target="_blank" aria-label="YouTube"><i class="bx bxl-youtube"></i></a>
-                        <a href="https://wa.me/+5544998121630" target="_blank" aria-label="WhatsApp"><i class="bx bxl-whatsapp"></i></a>
-                    </div>
-                </div>
+    </div>
 
-                <div class="footer-column">
-                    <h4>Sobre</h4>
-                    <ul>
-                        <li><a href="sobrenos.html">Missão</a></li>
-                        <li><a href="sobrenos.html#cards-section">Equipe</a></li>
-                        <li><a href="#" id="linkPrivacidade">Privacidade</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column">
-                    <h4>Ajuda</h4>
-                    <ul>
-                        <li><a href="suporte.html">Suporte</a></li>
-                        <li><a href="https://wa.me/+5544998121630">Fale Conosco</a></li>
-                        <li><a href="#" id="linkPrivacidade2">Política de Privacidade</a></li>
-                    </ul>
+    <!-- ===== FOOTER MODERNO MINIMALISTA (IGUAL AO HOME) ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2>ESCORPHY</h2>
+                <p>Transformando vidas através do esporte.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/escorphybr" target="_blank" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="https://www.youtube.com/escorphy" target="_blank" aria-label="YouTube"><i class="bx bxl-youtube"></i></a>
+                    <a href="https://wa.me/+5544998121630" target="_blank" aria-label="WhatsApp"><i class="bx bxl-whatsapp"></i></a>
                 </div>
             </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Escorphy</p>
-                <div class="footer-bottom-links">
-                    <a href="#" id="linkPrivacidade3">Privacidade</a>
-                    <a href="#" id="linkTermos">Termos de Uso</a>
-                    <a href="#" id="linkCookies">Cookies</a>
-                </div>
+            <div class="footer-column">
+                <h4>Sobre</h4>
+                <ul>
+                    <li><a href="sobrenos.html">Missão</a></li>
+                    <li><a href="sobrenos.html#cards-section">Equipe</a></li>
+                    <li><a href="#" id="linkPrivacidade">Privacidade</a></li>
+                </ul>
             </div>
-        </footer>
-
-    </div> <!-- FIM DO MAIN-WRAPPER -->
+            <div class="footer-column">
+                <h4>Ajuda</h4>
+                <ul>
+                    <li><a href="suporte.html">Suporte</a></li>
+                    <li><a href="https://wa.me/+5544998121630">Fale Conosco</a></li>
+                    <li><a href="#" id="linkPrivacidade2">Política de Privacidade</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Escorphy</p>
+            <div class="footer-bottom-links">
+                <a href="#" id="linkPrivacidade3">Privacidade</a>
+                <a href="#" id="linkTermos">Termos de Uso</a>
+                <a href="#" id="linkCookies">Cookies</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -869,26 +1229,151 @@
         // CONFIGURAÇÃO SUPABASE
         // ============================================================
         const supabaseUrl = "https://yuupbtrljazrrwizzafd.supabase.co";
-        const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXBidHJsamF6cnJ3aXp6YWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MjIzMzMsImV4cCI6MjA3NjQ5ODMzM30.trZvyDgPnhenuPiKxChZbVLcBQI3rOm8OsjtgAzoAm0";
-        const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXBidHJsamF6cnJ3aXp6YWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MjIzMzMsImV4cCI6MjA3NjQ5ODMzM30.trZvyDgPnhenuPiKxChZbVLcBQI3rOm8OsjtgAzoAm0";
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+        let userEmailGlobal = null;
         let usuarioAtual = null;
+        var acaoConfirmacao = null;
+
+        // ============================================================
+        // CONTEÚDO DO PDF PARA EXIBIÇÃO NO MODAL
+        // ============================================================
+        const pdfContentHTML = `
+            <h1>ESCORPHY</h1>
+            <p style="text-align:center; color:#6b8a76; font-size:14px; margin-top:-10px;">Política de Privacidade e Termos de Uso</p>
+            <p style="text-align:center; color:#8aa596; font-size:13px; margin-bottom:25px;">Última atualização: 23 de junho de 2026.</p>
+
+            <h2>1. INTRODUÇÃO</h2>
+            <p>Este documento estabelece a Política de Privacidade e os Termos de Uso da plataforma Escorply, projeto educacional desenvolvido por Ikaro Lorenzo Oliveira e Antonela Schneider para registro, acompanhamento e compartilhamento de atividades físicas.</p>
+
+            <h2>2. CONTROLADORES DOS DADOS</h2>
+            <p>Os responsáveis pelo tratamento dos dados pessoais coletados pela plataforma são Ikaro Lorenzo Oliveira e Antonela Schneider. Contato: escorplyail@gmail.com</p>
+
+            <h2>3. DADOS COLETADOS</h2>
+            <p>A plataforma poderá coletar nome, endereço de e-mail, senha criptografada, foto de perfil, dados de atividades físicas, localização por GPS, informações de autenticação por conta Google e dados técnicos de navegação.</p>
+
+            <h2>4. FINALIDADE DO TRATAMENTO</h2>
+            <p>Os dados são utilizados para criação de contas, autenticação, cálculo de estatísticas, exibição de rankings, personalização da experiência do usuário e manutenção da segurança da plataforma.</p>
+
+            <h2>5. DADOS DE LOCALIZAÇÃO</h2>
+            <p>O Escorply utiliza geolocalização por GPS para registro das atividades físicas. A localização exata é acessível apenas ao próprio usuário e não é disponibilizada publicamente.</p>
+
+            <h2>6. PUBLICAÇÕES E PRIVACIDADE</h2>
+            <p>Os usuários poderão publicar atividades físicas e fotografias. As publicações poderão ser classificadas como públicas ou privadas, conforme escolha do usuário.</p>
+
+            <h2>7. RANKINGS</h2>
+            <p>O sistema poderá exibir rankings públicos baseados na quilometragem percorrida e na pontuação acumulada, incluindo nome de usuário, foto de perfil e pontuação.</p>
+
+            <h2>8. USO POR MENORES DE IDADE</h2>
+            <p>Usuários menores de 18 anos poderão utilizar a plataforma mediante autorização de seus responsáveis legais.</p>
+
+            <h2>9. COOKIES E TECNOLOGIAS SEMELHANTES</h2>
+            <p>A plataforma utiliza cookies para melhorar a experiência do usuário, autenticação e análise de uso. O usuário pode gerenciar suas preferências de cookies através das configurações do navegador.</p>
+
+            <h2>10. SEGURANÇA DA INFORMAÇÃO</h2>
+            <p>São adotadas medidas técnicas e administrativas razoáveis para proteção dos dados pessoais contra acessos não autorizados, perda, alteração ou divulgação indevida.</p>
+
+            <h2>11. DIREITOS DOS TITULARES</h2>
+            <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), os usuários poderão solicitar acesso, correção ou exclusão de seus dados pessoais mediante contato pelo endereço eletrônico informado.</p>
+
+            <h2>12. EXCLUSÃO DE CONTA</h2>
+            <p>A exclusão de contas deverá ser solicitada por e-mail. Após validação da solicitação, os dados serão removidos permanentemente, observadas as exigências legais aplicáveis.</p>
+
+            <h2>13. PROPRIEDADE INTELECTUAL</h2>
+            <p>Os conteúdos publicados permanecem de propriedade de seus respectivos autores. Ao publicar conteúdo na plataforma, o usuário autoriza sua exibição dentro do ambiente do Escorply.</p>
+
+            <h2>14. CONDUTAS PROIBIDAS</h2>
+            <p>É vedado publicar conteúdo ilícito, fraudar pontuações, utilizar informações falsas, acessar contas de terceiros ou praticar qualquer atividade que comprometa o funcionamento da plataforma.</p>
+
+            <h2>15. LIMITAÇÃO DE RESPONSABILIDADE</h2>
+            <p>As informações de desempenho, distância e calorias possuem caráter informativo. O Escorply não garante precisão absoluta dos cálculos apresentados.</p>
+
+            <h2>16. ALTERAÇÕES</h2>
+            <p>Este documento poderá ser atualizado periodicamente. A continuidade do uso da plataforma após alterações implicará concordância com os termos atualizados.</p>
+
+            <h2>17. LEGISLAÇÃO APLICÁVEL</h2>
+            <p>Este documento é regido pela legislação brasileira, especialmente pela Lei Geral de Proteção de Dados (LGPD).</p>
+
+            <div class="pdf-footer">Documento atualizado em 23 de junho de 2026. © 2025 Escorphy - Todos os direitos reservados.</div>
+        `;
+
+        // ============================================================
+        // MODAL PDF
+        // ============================================================
+        function abrirModalPdf(titulo) {
+            const modal = document.getElementById('modalPdf');
+            const title = document.getElementById('pdfModalTitle');
+            const body = document.getElementById('pdfBody');
+
+            if (titulo) {
+                title.textContent = titulo;
+            } else {
+                title.textContent = 'Política de Privacidade e Termos de Uso';
+            }
+
+            body.innerHTML = `<div class="pdf-content">${pdfContentHTML}</div>`;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModalPdf() {
+            document.getElementById('modalPdf').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ============================================================
+        // EVENTOS DO MODAL PDF
+        // ============================================================
+        document.getElementById('linkPrivacidade')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Privacidade');
+        });
+
+        document.getElementById('linkPrivacidade2')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Privacidade');
+        });
+
+        document.getElementById('linkPrivacidade3')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Privacidade');
+        });
+
+        document.getElementById('linkTermos')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Termos de Uso');
+        });
+
+        document.getElementById('linkCookies')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Cookies');
+        });
+
+        document.getElementById('fecharModalPdf')?.addEventListener('click', fecharModalPdf);
+        document.getElementById('fecharModalPdfBtn')?.addEventListener('click', fecharModalPdf);
+        document.getElementById('modalPdf')?.addEventListener('click', function(e) {
+            if (e.target === this) fecharModalPdf();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('modalPdf').classList.contains('active')) {
+                    fecharModalPdf();
+                }
+            }
+        });
 
         // ============================================================
         // TOAST
         // ============================================================
         function showToast(message, type) {
             type = type || "success";
-            let toast = document.getElementById('toastMessage');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'toastMessage';
-                toast.className = 'toast-msg';
-                toast.innerHTML = '<i class="bx"></i><span id="toastText"></span>';
-                document.body.appendChild(toast);
-            }
+            const toast = document.getElementById('toastMessage');
             const toastText = document.getElementById('toastText');
             const toastIcon = toast.querySelector('i');
+
             toast.classList.remove('show', 'success', 'error', 'warning');
 
             if (type === 'success') {
@@ -908,6 +1393,98 @@
         }
 
         // ============================================================
+        // MODAL DE CONFIRMAÇÃO
+        // ============================================================
+        function mostrarModalConfirmacao(titulo, mensagem, aoConfirmar) {
+            document.getElementById('modalConfirmacaoTitulo').textContent = titulo;
+            document.getElementById('modalConfirmacaoMensagem').textContent = mensagem;
+            acaoConfirmacao = aoConfirmar;
+            document.getElementById('modalConfirmacao').classList.add('active');
+        }
+
+        function fecharModalConfirmacao() {
+            document.getElementById('modalConfirmacao').classList.remove('active');
+            acaoConfirmacao = null;
+        }
+
+        document.getElementById('modalConfirmacaoCancelar').addEventListener('click', fecharModalConfirmacao);
+        document.getElementById('modalConfirmacaoConfirmar').addEventListener('click', function() {
+            if (typeof acaoConfirmacao === 'function') {
+                acaoConfirmacao();
+            }
+            fecharModalConfirmacao();
+        });
+        document.getElementById('modalConfirmacao').addEventListener('click', function(e) {
+            if (e.target === this) fecharModalConfirmacao();
+        });
+
+        // ============================================================
+        // MODAL LOGIN
+        // ============================================================
+        function showLoginRequiredModal() {
+            document.getElementById('modalLoginRequired').classList.add('active');
+        }
+
+        function hideLoginRequiredModal() {
+            document.getElementById('modalLoginRequired').classList.remove('active');
+        }
+
+        function redirectToLogin() {
+            hideLoginRequiredModal();
+            showToast("Redirecionando para o login...", "warning");
+            setTimeout(function() { window.location.href = "index.html"; }, 1000);
+        }
+
+        function cancelAndStay() {
+            hideLoginRequiredModal();
+            showToast("Por favor, faça login para acessar o conteúdo.", "warning");
+        }
+
+        document.getElementById('btnFazerLogin')?.addEventListener('click', redirectToLogin);
+        document.getElementById('btnCancelarLogin')?.addEventListener('click', cancelAndStay);
+
+        // ============================================================
+        // ESCONDER TELA DE LOADING
+        // ============================================================
+        function esconderLoading() {
+            var el = document.getElementById('loadingScreen');
+            if (el) el.classList.add('hidden');
+            setTimeout(function() {
+                if (el) el.style.display = 'none';
+            }, 700);
+        }
+
+        // ============================================================
+        // CARREGAR USUÁRIO ATUAL
+        // ============================================================
+        async function carregarUsuarioAtual() {
+            var { data: { user } } = await supabaseClient.auth.getUser();
+            if (user) {
+                var { data, error } = await supabaseClient
+                    .from('usuarios')
+                    .select('id, nome, email')
+                    .eq('id', user.id)
+                    .maybeSingle();
+
+                if (error) {
+                    console.error("Erro ao buscar usuário:", error);
+                } else if (data) {
+                    usuarioAtual = data;
+                    userEmailGlobal = user.email;
+                } else {
+                    var { data: dataByEmail } = await supabaseClient
+                        .from('usuarios')
+                        .select('id, nome, email')
+                        .eq('email', user.email)
+                        .maybeSingle();
+                    usuarioAtual = dataByEmail;
+                    userEmailGlobal = user.email;
+                }
+            }
+            return usuarioAtual;
+        }
+
+        // ============================================================
         // NOTIFICAÇÕES
         // ============================================================
         function formatarTempo(data) {
@@ -920,26 +1497,71 @@
             return Math.floor(diff / 86400) + ' d';
         }
 
-        async function carregarNotificacoes() {
+        async function apagarNotificacao(id) {
+            if (!userEmailGlobal) return;
+
+            const { data: usuarioAtual } = await supabaseClient.from('usuarios').select('id').eq('email', userEmailGlobal)
+                .maybeSingle();
             if (!usuarioAtual) return;
 
             var result = await supabaseClient
                 .from('notificacoes')
+                .delete()
+                .eq('id', id)
+                .eq('usuario_id', usuarioAtual.id);
+
+            if (!result.error) {
+                showToast('Notificação apagada!', 'success');
+                carregarNotificacoes();
+            } else {
+                showToast('Erro ao apagar notificação', 'error');
+            }
+        }
+
+        async function apagarTodasNotificacoes() {
+            if (!userEmailGlobal) return;
+
+            const { data: usuarioAtual } = await supabaseClient.from('usuarios').select('id').eq('email', userEmailGlobal)
+                .maybeSingle();
+            if (!usuarioAtual) return;
+
+            mostrarModalConfirmacao(
+                'Apagar todas as notificações?',
+                'Tem certeza que deseja apagar todas as notificações? Esta ação não pode ser desfeita.',
+                async function() {
+                    var result = await supabaseClient
+                        .from('notificacoes')
+                        .delete()
+                        .eq('usuario_id', usuarioAtual.id);
+
+                    if (!result.error) {
+                        showToast('Todas as notificações foram apagadas!', 'success');
+                        carregarNotificacoes();
+                    } else {
+                        showToast('Erro ao apagar notificações', 'error');
+                    }
+                }
+            );
+        }
+
+        async function carregarNotificacoes() {
+            if (!usuarioAtual) return;
+
+            const { data: notificacoes, error } = await supabaseClient
+                .from('notificacoes')
                 .select('*, remetente:remetente_id(id, nome, foto_perfil_url)')
                 .eq('usuario_id', usuarioAtual.id)
                 .order('created_at', { ascending: false })
-                .limit(30);
+                .limit(20);
 
-            if (result.error) return;
+            if (error) return;
 
-            var notificacoes = result.data;
             var naoLidas = 0;
             if (notificacoes) {
                 for (var i = 0; i < notificacoes.length; i++) {
                     if (!notificacoes[i].lida) naoLidas++;
                 }
             }
-
             var badge = document.getElementById('notificationBadge');
             if (naoLidas > 0) {
                 badge.style.display = 'flex';
@@ -959,11 +1581,18 @@
                 var n = notificacoes[j];
                 var nomeRemetente = n.remetente?.nome || 'Alguém';
                 var texto = '';
-                switch(n.tipo) {
-                    case 'seguidor': texto = nomeRemetente + ' começou a te seguir!'; break;
-                    case 'curtida': texto = nomeRemetente + ' curtiu seu treino!'; break;
-                    case 'comentario': texto = nomeRemetente + ' comentou no seu treino!'; break;
-                    default: texto = 'Nova notificação';
+                switch (n.tipo) {
+                    case 'seguidor':
+                        texto = nomeRemetente + ' começou a te seguir!';
+                        break;
+                    case 'curtida':
+                        texto = nomeRemetente + ' curtiu seu treino!';
+                        break;
+                    case 'comentario':
+                        texto = nomeRemetente + ' comentou no seu treino!';
+                        break;
+                    default:
+                        texto = 'Nova notificação';
                 }
                 var unreadClass = n.lida ? '' : 'unread';
                 var inicial = nomeRemetente.charAt(0).toUpperCase();
@@ -982,10 +1611,10 @@
             var items = document.querySelectorAll('.notification-item');
             for (var k = 0; k < items.length; k++) {
                 (function(item) {
-                    item.addEventListener('click', function(e) {
+                    item.addEventListener('click', async function(e) {
                         if (e.target.classList.contains('btn-delete-notificacao')) return;
                         var id = item.dataset.id;
-                        supabaseClient.from('notificacoes').update({ lida: true }).eq('id', id);
+                        await supabaseClient.from('notificacoes').update({ lida: true }).eq('id', id);
                         carregarNotificacoes();
                     });
                 })(items[k]);
@@ -997,53 +1626,40 @@
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
                         var id = btn.dataset.id;
-                        apagarNotificacao(id);
+                        mostrarModalConfirmacao(
+                            'Apagar notificação?',
+                            'Tem certeza que deseja apagar esta notificação?',
+                            function() { apagarNotificacao(id); }
+                        );
                     });
                 })(deleteBtns[l]);
             }
         }
 
-        async function apagarNotificacao(id) {
-            if (!usuarioAtual) return;
-            var result = await supabaseClient
-                .from('notificacoes')
-                .delete()
-                .eq('id', id)
-                .eq('usuario_id', usuarioAtual.id);
-
-            if (!result.error) {
-                showToast('Notificação apagada!', 'success');
-                carregarNotificacoes();
-            } else {
-                showToast('Erro ao apagar notificação', 'error');
-            }
-        }
+        document.getElementById('btnApagarTodasNotificacoes')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            apagarTodasNotificacoes();
+        });
 
         document.getElementById('notificationIcon')?.addEventListener('click', function(e) {
             e.stopPropagation();
-            var dropdown = document.getElementById('notificationDropdown');
-            dropdown.classList.toggle('show');
+            if (!userEmailGlobal) { showToast("Faça login para ver notificações!", "warning"); return; }
+            document.getElementById('notificationDropdown').classList.toggle('show');
             carregarNotificacoes();
         });
-        document.addEventListener('click', function() {
-            var dropdown = document.getElementById('notificationDropdown');
-            if (dropdown) dropdown.classList.remove('show');
-        });
+
+        document.addEventListener('click', function() { document.getElementById('notificationDropdown')?.classList.remove('show'); });
 
         // ============================================================
         // LOGOUT
         // ============================================================
-        var modalLogout = document.getElementById('modalLogout');
-        var confirmLogout = document.getElementById('confirmLogout');
-        var cancelLogout = document.getElementById('cancelLogout');
+        const modalLogout = document.getElementById('modalLogout');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
 
-        function showLogoutModal() {
-            modalLogout.style.display = 'flex';
-        }
+        function showLogoutModal() { modalLogout.style.display = 'flex'; }
 
-        function hideLogoutModal() {
-            modalLogout.style.display = 'none';
-        }
+        function hideLogoutModal() { modalLogout.style.display = 'none'; }
 
         async function realizarLogout() {
             await supabaseClient.auth.signOut();
@@ -1052,46 +1668,18 @@
             setTimeout(function() { window.location.href = "index.html"; }, 1000);
         }
 
-        document.getElementById('logoutBtn')?.addEventListener('click', function(e) {
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
             e.preventDefault();
             showLogoutModal();
         });
 
-        confirmLogout?.addEventListener('click', function() {
+        confirmLogout.addEventListener('click', function() {
             hideLogoutModal();
             realizarLogout();
         });
 
-        cancelLogout?.addEventListener('click', hideLogoutModal);
+        cancelLogout.addEventListener('click', hideLogoutModal);
         window.addEventListener('click', function(e) { if (e.target === modalLogout) hideLogoutModal(); });
-
-        // ============================================================
-        // CARREGAR USUÁRIO ATUAL
-        // ============================================================
-        async function carregarUsuarioAtual() {
-            var { data: { user } } = await supabaseClient.auth.getUser();
-            if (user) {
-                var { data, error } = await supabaseClient
-                    .from('usuarios')
-                    .select('id, nome, email')
-                    .eq('id', user.id)
-                    .maybeSingle();
-
-                if (error) {
-                    console.error("Erro ao buscar usuário:", error);
-                } else if (data) {
-                    usuarioAtual = data;
-                } else {
-                    var { data: dataByEmail } = await supabaseClient
-                        .from('usuarios')
-                        .select('id, nome, email')
-                        .eq('email', user.email)
-                        .maybeSingle();
-                    usuarioAtual = dataByEmail;
-                }
-            }
-            return usuarioAtual;
-        }
 
         // ============================================================
         // SIDEBAR
@@ -1109,19 +1697,28 @@
                 sidebarToggleBtn.classList.add('opened');
                 sidebarToggleBtn.innerHTML = '◀';
                 if (overlay) overlay.classList.add('active');
+                localStorage.setItem('sidebarOpen', 'true');
             } else {
                 sidebarToggleBtn.classList.remove('opened');
                 sidebarToggleBtn.innerHTML = '▶';
                 if (overlay) overlay.classList.remove('active');
+                localStorage.setItem('sidebarOpen', 'false');
             }
         }
 
         if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', toggleSidebar);
         if (overlay) overlay.addEventListener('click', function() {
-            if (isMobile() && sidebar.classList.contains('active')) toggleSidebar();
+            if (isMobile() && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                sidebarToggleBtn.classList.remove('opened');
+                sidebarToggleBtn.innerHTML = '▶';
+                overlay.classList.remove('active');
+                localStorage.setItem('sidebarOpen', 'false');
+            }
         });
 
-        if (isMobile() && localStorage.getItem('sidebarOpen') === 'true') {
+        var sidebarState = localStorage.getItem('sidebarOpen');
+        if (isMobile() && sidebarState === 'true') {
             sidebar.classList.add('active');
             sidebarToggleBtn.classList.add('opened');
             sidebarToggleBtn.innerHTML = '◀';
@@ -1138,14 +1735,16 @@
         });
 
         // ============================================================
-        // INICIAR
+        // INICIALIZAÇÃO
         // ============================================================
         async function init() {
             await carregarUsuarioAtual();
             if (usuarioAtual) {
                 await carregarNotificacoes();
             }
+            esconderLoading();
         }
+
         init();
 
         console.log("🚀 Sobre Nós carregado com sucesso!");

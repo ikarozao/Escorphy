@@ -679,6 +679,273 @@
         }
         .btn-criar-desafio i { font-size: 20px; }
 
+        /* ===== MODAL RANKING ===== */
+        .modal-ranking {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 18000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+        .modal-ranking.active { display: flex; }
+        .modal-ranking-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px 35px;
+            animation: modalPop 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .modal-ranking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-ranking-header h2 {
+            font-size: 22px;
+            color: #1a4a2e;
+            font-family: "Staatliches", sans-serif;
+            margin: 0;
+        }
+        .modal-ranking-header h2 i {
+            color: #f1c40f;
+        }
+        .modal-ranking-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .modal-ranking-close:hover { color: #ef4444; }
+
+        .ranking-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        .ranking-card:hover { background: #f1f5f9; }
+        .ranking-card .ranking-posicao {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a4a2e;
+            min-width: 35px;
+            text-align: center;
+        }
+        .ranking-card .ranking-posicao.top1 { color: #f1c40f; font-size: 28px; }
+        .ranking-card .ranking-posicao.top2 { color: #bdc3c7; font-size: 24px; }
+        .ranking-card .ranking-posicao.top3 { color: #e67e22; font-size: 22px; }
+        .ranking-card .ranking-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: linear-gradient(135deg, #4CAF50, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .ranking-card .ranking-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .ranking-card .ranking-info {
+            flex: 1;
+        }
+        .ranking-card .ranking-info .ranking-nome {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 15px;
+        }
+        .ranking-card .ranking-info .ranking-pontos {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .ranking-card .ranking-info .ranking-pontos strong {
+            color: #1a4a2e;
+        }
+        .ranking-card .ranking-medalha {
+            font-size: 28px;
+        }
+
+        /* ===== MODAL PDF ===== */
+        .modal-pdf {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 30000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-pdf.active {
+            display: flex;
+        }
+        .modal-pdf-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 95vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        .modal-pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            flex-shrink: 0;
+        }
+        .modal-pdf-header h2 {
+            font-size: 18px;
+            color: #1a4a2e;
+            margin: 0;
+            font-family: "Staatliches", sans-serif;
+            letter-spacing: 0.5px;
+        }
+        .modal-pdf-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+            padding: 0 8px;
+        }
+        .modal-pdf-close:hover {
+            color: #ef4444;
+            transform: scale(1.1);
+        }
+        .modal-pdf-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            background: #fcfcfc;
+            min-height: 300px;
+            max-height: 70vh;
+        }
+        .modal-pdf-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-pdf-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .modal-pdf-body::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+        .pdf-content {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #222;
+            line-height: 1.7;
+        }
+        .pdf-content h1 {
+            font-size: 24px;
+            color: #1a4a2e;
+            text-align: center;
+            margin: 0 0 20px 0;
+            font-family: "Staatliches", sans-serif;
+            letter-spacing: 1px;
+        }
+        .pdf-content h2 {
+            font-size: 17px;
+            color: #1a4a2e;
+            margin: 20px 0 8px 0;
+            font-weight: 600;
+        }
+        .pdf-content h3 {
+            font-size: 15px;
+            color: #2e7d52;
+            margin: 14px 0 6px 0;
+            font-weight: 600;
+        }
+        .pdf-content p {
+            font-size: 14px;
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+        .pdf-content ul {
+            margin: 8px 0 12px 20px;
+            padding: 0;
+        }
+        .pdf-content ul li {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .pdf-content .pdf-footer {
+            font-size: 12px;
+            color: #8aa596;
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e8ece8;
+        }
+        .modal-pdf-footer {
+            padding: 12px 24px;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .modal-pdf-footer .btn-fechar-pdf {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 32px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: "Poppins", sans-serif;
+        }
+        .modal-pdf-footer .btn-fechar-pdf:hover {
+            background: #2e7d52;
+            transform: scale(1.02);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         /* ===== CONTEÚDO DA COMUNIDADE ===== */
         .comunidade-container {
             max-width: 900px;
@@ -724,6 +991,37 @@
         }
 
         /* ===== FEED ===== */
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-ranking {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Poppins", sans-serif;
+            box-shadow: 0 2px 10px rgba(241, 196, 15, 0.3);
+        }
+        .btn-ranking:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(241, 196, 15, 0.5);
+        }
+        .btn-ranking i { font-size: 18px; }
+
         .feed-post {
             background: white;
             border-radius: 20px;
@@ -754,6 +1052,12 @@
             font-weight: bold;
             font-size: 18px;
             flex-shrink: 0;
+        }
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .post-user-info {
@@ -893,6 +1197,12 @@
             font-size: 18px;
             flex-shrink: 0;
         }
+        .seguidor-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
         .seguidor-info { flex: 1; min-width: 0; }
         .seguidor-nome { font-weight: 600; color: #1e293b; }
@@ -990,6 +1300,12 @@
             font-weight: bold;
             font-size: 18px;
             flex-shrink: 0;
+        }
+        .search-result-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .search-result-info { flex: 1; min-width: 0; }
@@ -1113,7 +1429,6 @@
             margin-top: 12px;
         }
 
-        /* ÍCONES DE DESAFIO */
         .desafio-icon {
             display: inline-flex;
             align-items: center;
@@ -1467,6 +1782,14 @@
             }
             .tab-btn i { font-size: 16px; }
 
+            .feed-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-ranking {
+                justify-content: center;
+            }
+
             .feed-post {
                 border-radius: 16px;
                 margin-bottom: 14px;
@@ -1609,6 +1932,21 @@
             .modal-comentarios-footer button {
                 justify-content: center;
             }
+
+            .modal-ranking-content {
+                padding: 20px;
+            }
+            .ranking-card {
+                padding: 12px 14px;
+            }
+            .ranking-card .ranking-posicao {
+                font-size: 16px;
+                min-width: 28px;
+            }
+            .ranking-card .ranking-posicao.top1 { font-size: 22px; }
+            .ranking-card .ranking-posicao.top2 { font-size: 20px; }
+            .ranking-card .ranking-posicao.top3 { font-size: 18px; }
+            .ranking-card .ranking-medalha { font-size: 22px; }
         }
 
         @media (max-width: 480px) {
@@ -1773,6 +2111,33 @@
                 font-size: 13px;
                 padding: 8px 16px;
             }
+
+            .modal-ranking-content {
+                padding: 16px;
+            }
+            .ranking-card {
+                padding: 10px 12px;
+                gap: 10px;
+            }
+            .ranking-card .ranking-posicao {
+                font-size: 14px;
+                min-width: 24px;
+            }
+            .ranking-card .ranking-posicao.top1 { font-size: 18px; }
+            .ranking-card .ranking-posicao.top2 { font-size: 16px; }
+            .ranking-card .ranking-posicao.top3 { font-size: 15px; }
+            .ranking-card .ranking-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            .ranking-card .ranking-info .ranking-nome {
+                font-size: 13px;
+            }
+            .ranking-card .ranking-info .ranking-pontos {
+                font-size: 11px;
+            }
+            .ranking-card .ranking-medalha { font-size: 18px; }
         }
 
         @media (min-width: 769px) {
@@ -2072,6 +2437,35 @@
         </div>
     </div>
 
+    <!-- ===== MODAL RANKING ===== -->
+    <div id="modalRanking" class="modal-ranking">
+        <div class="modal-ranking-content">
+            <div class="modal-ranking-header">
+                <h2><i class="bx bx-trophy"></i> Ranking do Mês</h2>
+                <button class="modal-ranking-close" id="fecharModalRanking">&times;</button>
+            </div>
+            <div id="rankingBody">
+                <div class="loading-spinner"><i class="bx bx-loader-alt"></i><br>Carregando ranking...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL PDF (Política de Privacidade) ===== -->
+    <div id="modalPdf" class="modal-pdf">
+        <div class="modal-pdf-content">
+            <div class="modal-pdf-header">
+                <h2 id="pdfModalTitle">Política de Privacidade e Termos de Uso</h2>
+                <button class="modal-pdf-close" id="fecharModalPdf">&times;</button>
+            </div>
+            <div class="modal-pdf-body" id="pdfBody">
+                <div class="pdf-content"></div>
+            </div>
+            <div class="modal-pdf-footer">
+                <button class="btn-fechar-pdf" id="fecharModalPdfBtn">Fechar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== TOAST ===== -->
     <div id="toastMessage" class="toast-msg">
         <i class="bx"></i>
@@ -2089,6 +2483,11 @@
 
         <!-- Feed -->
         <div id="feedTab" class="tab-content">
+            <div class="feed-header">
+                <button class="btn-ranking" id="btnAbrirRanking">
+                    <i class="bx bx-trophy"></i> Ranking
+                </button>
+            </div>
             <div id="feedList"></div>
         </div>
 
@@ -2183,6 +2582,132 @@
         var atividadeComentarioId = null;
 
         // ============================================================
+        // CONTEÚDO DO PDF PARA EXIBIÇÃO NO MODAL
+        // ============================================================
+        const pdfContentHTML = `
+            <h1>ESCORPHY</h1>
+            <p style="text-align:center; color:#6b8a76; font-size:14px; margin-top:-10px;">Política de Privacidade e Termos de Uso</p>
+            <p style="text-align:center; color:#8aa596; font-size:13px; margin-bottom:25px;">Última atualização: 23 de junho de 2026.</p>
+
+            <h2>1. INTRODUÇÃO</h2>
+            <p>Este documento estabelece a Política de Privacidade e os Termos de Uso da plataforma Escorply, projeto educacional desenvolvido por Ikaro Lorenzo Oliveira e Antonela Schneider para registro, acompanhamento e compartilhamento de atividades físicas.</p>
+
+            <h2>2. CONTROLADORES DOS DADOS</h2>
+            <p>Os responsáveis pelo tratamento dos dados pessoais coletados pela plataforma são Ikaro Lorenzo Oliveira e Antonela Schneider. Contato: escorplyail@gmail.com</p>
+
+            <h2>3. DADOS COLETADOS</h2>
+            <p>A plataforma poderá coletar nome, endereço de e-mail, senha criptografada, foto de perfil, dados de atividades físicas, localização por GPS, informações de autenticação por conta Google e dados técnicos de navegação.</p>
+
+            <h2>4. FINALIDADE DO TRATAMENTO</h2>
+            <p>Os dados são utilizados para criação de contas, autenticação, cálculo de estatísticas, exibição de rankings, personalização da experiência do usuário e manutenção da segurança da plataforma.</p>
+
+            <h2>5. DADOS DE LOCALIZAÇÃO</h2>
+            <p>O Escorply utiliza geolocalização por GPS para registro das atividades físicas. A localização exata é acessível apenas ao próprio usuário e não é disponibilizada publicamente.</p>
+
+            <h2>6. PUBLICAÇÕES E PRIVACIDADE</h2>
+            <p>Os usuários poderão publicar atividades físicas e fotografias. As publicações poderão ser classificadas como públicas ou privadas, conforme escolha do usuário.</p>
+
+            <h2>7. RANKINGS</h2>
+            <p>O sistema poderá exibir rankings públicos baseados na quilometragem percorrida e na pontuação acumulada, incluindo nome de usuário, foto de perfil e pontuação.</p>
+
+            <h2>8. USO POR MENORES DE IDADE</h2>
+            <p>Usuários menores de 18 anos poderão utilizar a plataforma mediante autorização de seus responsáveis legais.</p>
+
+            <h2>9. COOKIES E TECNOLOGIAS SEMELHANTES</h2>
+            <p>A plataforma utiliza cookies para melhorar a experiência do usuário, autenticação e análise de uso. O usuário pode gerenciar suas preferências de cookies através das configurações do navegador.</p>
+
+            <h2>10. SEGURANÇA DA INFORMAÇÃO</h2>
+            <p>São adotadas medidas técnicas e administrativas razoáveis para proteção dos dados pessoais contra acessos não autorizados, perda, alteração ou divulgação indevida.</p>
+
+            <h2>11. DIREITOS DOS TITULARES</h2>
+            <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), os usuários poderão solicitar acesso, correção ou exclusão de seus dados pessoais mediante contato pelo endereço eletrônico informado.</p>
+
+            <h2>12. EXCLUSÃO DE CONTA</h2>
+            <p>A exclusão de contas deverá ser solicitada por e-mail. Após validação da solicitação, os dados serão removidos permanentemente, observadas as exigências legais aplicáveis.</p>
+
+            <h2>13. PROPRIEDADE INTELECTUAL</h2>
+            <p>Os conteúdos publicados permanecem de propriedade de seus respectivos autores. Ao publicar conteúdo na plataforma, o usuário autoriza sua exibição dentro do ambiente do Escorply.</p>
+
+            <h2>14. CONDUTAS PROIBIDAS</h2>
+            <p>É vedado publicar conteúdo ilícito, fraudar pontuações, utilizar informações falsas, acessar contas de terceiros ou praticar qualquer atividade que comprometa o funcionamento da plataforma.</p>
+
+            <h2>15. LIMITAÇÃO DE RESPONSABILIDADE</h2>
+            <p>As informações de desempenho, distância e calorias possuem caráter informativo. O Escorply não garante precisão absoluta dos cálculos apresentados.</p>
+
+            <h2>16. ALTERAÇÕES</h2>
+            <p>Este documento poderá ser atualizado periodicamente. A continuidade do uso da plataforma após alterações implicará concordância com os termos atualizados.</p>
+
+            <h2>17. LEGISLAÇÃO APLICÁVEL</h2>
+            <p>Este documento é regido pela legislação brasileira, especialmente pela Lei Geral de Proteção de Dados (LGPD).</p>
+
+            <div class="pdf-footer">Documento atualizado em 23 de junho de 2026. © 2025 Escorphy - Todos os direitos reservados.</div>
+        `;
+
+        // ============================================================
+        // MODAL PDF
+        // ============================================================
+        function abrirModalPdf(titulo) {
+            const modal = document.getElementById('modalPdf');
+            const title = document.getElementById('pdfModalTitle');
+            const body = document.getElementById('pdfBody');
+
+            if (titulo) {
+                title.textContent = titulo;
+            } else {
+                title.textContent = 'Política de Privacidade e Termos de Uso';
+            }
+
+            body.innerHTML = `<div class="pdf-content">${pdfContentHTML}</div>`;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModalPdf() {
+            document.getElementById('modalPdf').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('linkPrivacidade')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Privacidade');
+        });
+
+        document.getElementById('linkPrivacidade2')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Privacidade');
+        });
+
+        document.getElementById('linkPrivacidade3')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Privacidade');
+        });
+
+        document.getElementById('linkTermos')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Termos de Uso');
+        });
+
+        document.getElementById('linkCookies')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            abrirModalPdf('Política de Cookies');
+        });
+
+        document.getElementById('fecharModalPdf')?.addEventListener('click', fecharModalPdf);
+        document.getElementById('fecharModalPdfBtn')?.addEventListener('click', fecharModalPdf);
+        document.getElementById('modalPdf')?.addEventListener('click', function(e) {
+            if (e.target === this) fecharModalPdf();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('modalPdf').classList.contains('active')) {
+                    fecharModalPdf();
+                }
+            }
+        });
+
+        // ============================================================
         // TOAST
         // ============================================================
         function showToast(message, type) {
@@ -2242,6 +2767,125 @@
         });
 
         // ============================================================
+        // MODAL RANKING
+        // ============================================================
+        document.getElementById('btnAbrirRanking')?.addEventListener('click', function() {
+            document.getElementById('modalRanking').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            carregarRanking();
+        });
+
+        document.getElementById('fecharModalRanking')?.addEventListener('click', function() {
+            document.getElementById('modalRanking').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        document.getElementById('modalRanking')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                document.getElementById('modalRanking').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        async function carregarRanking() {
+            const body = document.getElementById('rankingBody');
+            body.innerHTML = '<div class="loading-spinner"><i class="bx bx-loader-alt"></i><br>Carregando ranking...</div>';
+
+            try {
+                // Buscar todos os usuários com pontos
+                const { data: usuarios, error } = await supabaseClient
+                    .from('usuarios')
+                    .select('id, nome, email, pontos_mes, foto_perfil_url')
+                    .order('pontos_mes', { ascending: false })
+                    .limit(20);
+
+                if (error) {
+                    console.error("Erro ao carregar ranking:", error);
+                    body.innerHTML = '<div style="text-align:center; padding:30px; color:#94a3b8;">Erro ao carregar ranking</div>';
+                    return;
+                }
+
+                if (!usuarios || usuarios.length === 0) {
+                    body.innerHTML = '<div style="text-align:center; padding:30px; color:#94a3b8;">Nenhum usuário encontrado</div>';
+                    return;
+                }
+
+                // Filtrar usuários com pontos > 0
+                const comPontos = usuarios.filter(u => u.pontos_mes > 0);
+
+                if (comPontos.length === 0) {
+                    body.innerHTML = '<div style="text-align:center; padding:30px; color:#94a3b8;">Nenhum usuário com pontos este mês</div>';
+                    return;
+                }
+
+                let html = '';
+
+                // Top 3 com medalhas
+                const top3 = comPontos.slice(0, 3);
+                const medals = ['🥇', '🥈', '🥉'];
+                const posClasses = ['top1', 'top2', 'top3'];
+
+                for (let i = 0; i < top3.length; i++) {
+                    const u = top3[i];
+                    const avatarHtml = criarAvatarComFoto(u.foto_perfil_url, u.nome || u.email.split('@')[0]);
+
+                    html += `
+                        <div class="ranking-card">
+                            <div class="ranking-posicao ${posClasses[i]}">${i + 1}</div>
+                            ${avatarHtml}
+                            <div class="ranking-info">
+                                <div class="ranking-nome">${u.nome || u.email.split('@')[0]}</div>
+                                <div class="ranking-pontos"><strong>${u.pontos_mes}</strong> pontos</div>
+                            </div>
+                            <div class="ranking-medalha">${medals[i]}</div>
+                        </div>
+                    `;
+                }
+
+                // Restante dos usuários
+                const restante = comPontos.slice(3);
+                if (restante.length > 0) {
+                    html += `<div style="margin-top:15px; border-top:1px solid #e2e8f0; padding-top:15px;">`;
+                    for (let i = 0; i < restante.length; i++) {
+                        const u = restante[i];
+                        const pos = i + 4;
+                        const avatarHtml = criarAvatarComFoto(u.foto_perfil_url, u.nome || u.email.split('@')[0]);
+
+                        html += `
+                            <div class="ranking-card" style="background: transparent; border: none; padding: 8px 0;">
+                                <div class="ranking-posicao" style="font-size:14px; min-width:30px;">${pos}º</div>
+                                ${avatarHtml}
+                                <div class="ranking-info">
+                                    <div class="ranking-nome">${u.nome || u.email.split('@')[0]}</div>
+                                    <div class="ranking-pontos"><strong>${u.pontos_mes}</strong> pontos</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    html += `</div>`;
+                }
+
+                body.innerHTML = html;
+
+            } catch (err) {
+                console.error("Erro no ranking:", err);
+                body.innerHTML = '<div style="text-align:center; padding:30px; color:#94a3b8;">Erro ao carregar ranking</div>';
+            }
+        }
+
+        function criarAvatarComFoto(fotoUrl, nome) {
+            if (fotoUrl && fotoUrl !== 'null' && fotoUrl !== '') {
+                let url = fotoUrl;
+                if (!url.startsWith('http')) {
+                    const fileName = url.split('/').pop();
+                    url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                }
+                return `<div class="ranking-avatar"><img src="${url}" alt="${nome}"></div>`;
+            }
+            return `<div class="ranking-avatar">${nome.charAt(0).toUpperCase()}</div>`;
+        }
+
+        // ============================================================
         // MODAL DESAFIO
         // ============================================================
         document.getElementById('btnAbrirCriarDesafio')?.addEventListener('click', function() {
@@ -2295,7 +2939,7 @@
 
             var { data: comentarios, error } = await supabaseClient
                 .from('comentarios')
-                .select('*, usuario:usuarios(id, nome)')
+                .select('*, usuario:usuarios(id, nome, foto_perfil_url)')
                 .eq('atividade_id', atividadeId)
                 .order('created_at', { ascending: true });
 
@@ -2316,10 +2960,20 @@
                 var inicial = nome.charAt(0).toUpperCase();
                 var data = new Date(c.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
+                var avatarHtml = '';
+                if (c.usuario?.foto_perfil_url && c.usuario.foto_perfil_url !== 'null' && c.usuario.foto_perfil_url !== '') {
+                    let url = c.usuario.foto_perfil_url;
+                    if (!url.startsWith('http')) {
+                        const fileName = url.split('/').pop();
+                        url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                    }
+                    avatarHtml = `<img src="${url}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`;
+                }
+
                 var div = document.createElement('div');
                 div.className = 'comentario-item';
                 div.innerHTML = `
-                    <div class="comentario-avatar">${inicial}</div>
+                    <div class="comentario-avatar">${avatarHtml || inicial}</div>
                     <div class="comentario-info">
                         <div class="comentario-nome">${nome}</div>
                         <div class="comentario-texto">${c.texto}</div>
@@ -2329,125 +2983,93 @@
                 body.appendChild(div);
             }
         }
-// ============================================================
-// ENVIAR COMENTÁRIO - CORRIGIDO (com notificação)
-// ============================================================
-document.getElementById('btnEnviarComentario')?.addEventListener('click', async function() {
-    if (!usuarioAtual) {
-        showToast("Faça login para comentar!", "error");
-        return;
-    }
 
-    var input = document.getElementById('comentarioInput');
-    var texto = input.value.trim();
+        // ============================================================
+        // ENVIAR COMENTÁRIO
+        // ============================================================
+        document.getElementById('btnEnviarComentario')?.addEventListener('click', async function() {
+            if (!usuarioAtual) {
+                showToast("Faça login para comentar!", "error");
+                return;
+            }
 
-    if (!texto) {
-        showToast("Digite um comentário!", "warning");
-        return;
-    }
+            var input = document.getElementById('comentarioInput');
+            var texto = input.value.trim();
 
-    if (!atividadeComentarioId) {
-        showToast("Erro: atividade não identificada!", "error");
-        return;
-    }
+            if (!texto) {
+                showToast("Digite um comentário!", "warning");
+                return;
+            }
 
-    this.disabled = true;
-    this.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i>';
+            if (!atividadeComentarioId) {
+                showToast("Erro: atividade não identificada!", "error");
+                return;
+            }
 
-    var { data: novoComentario, error } = await supabaseClient
-        .from('comentarios')
-        .insert({
-            atividade_id: atividadeComentarioId,
-            usuario_id: usuarioAtual.id,
-            texto: texto
-        })
-        .select();
+            this.disabled = true;
+            this.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i>';
 
-    this.disabled = false;
-    this.innerHTML = '<i class="bx bx-send"></i> Enviar';
+            var { data: novoComentario, error } = await supabaseClient
+                .from('comentarios')
+                .insert({
+                    atividade_id: atividadeComentarioId,
+                    usuario_id: usuarioAtual.id,
+                    texto: texto
+                })
+                .select();
 
-    if (error) {
-        console.error("Erro ao enviar comentário:", error);
-        showToast("Erro ao enviar comentário!", "error");
-        return;
-    }
+            this.disabled = false;
+            this.innerHTML = '<i class="bx bx-send"></i> Enviar';
 
-    input.value = '';
-    showToast("Comentário enviado!", "success");
+            if (error) {
+                console.error("Erro ao enviar comentário:", error);
+                showToast("Erro ao enviar comentário!", "error");
+                return;
+            }
 
-    // ============================================================
-    // CORREÇÃO: Buscar o dono da atividade corretamente
-    // ============================================================
-    var { data: atividade, error: atividadeError } = await supabaseClient
-        .from('atividades')
-        .select('usuario_id, email_usuario')
-        .eq('id', atividadeComentarioId)
-        .single();
+            input.value = '';
+            showToast("Comentário enviado!", "success");
 
-    if (atividadeError) {
-        console.error("Erro ao buscar atividade:", atividadeError);
-        carregarComentarios(atividadeComentarioId);
-        return;
-    }
+            var { data: atividade, error: atividadeError } = await supabaseClient
+                .from('atividades')
+                .select('usuario_id, email_usuario')
+                .eq('id', atividadeComentarioId)
+                .single();
 
-    console.log("📝 Atividade encontrada:", atividade);
+            if (atividadeError) {
+                console.error("Erro ao buscar atividade:", atividadeError);
+                carregarComentarios(atividadeComentarioId);
+                return;
+            }
 
-    var donoId = null;
+            var donoId = null;
 
-    // Primeiro, tentar pegar o usuario_id da atividade
-    if (atividade.usuario_id) {
-        donoId = atividade.usuario_id;
-        console.log("✅ Dono encontrado por usuario_id:", donoId);
-    } 
-    // Se não tiver usuario_id, buscar pelo email
-    else if (atividade.email_usuario) {
-        var { data: userInfo, error: userError } = await supabaseClient
-            .from('usuarios')
-            .select('id')
-            .eq('email', atividade.email_usuario)
-            .maybeSingle();
+            if (atividade.usuario_id) {
+                donoId = atividade.usuario_id;
+            } else if (atividade.email_usuario) {
+                var { data: userInfo } = await supabaseClient
+                    .from('usuarios')
+                    .select('id')
+                    .eq('email', atividade.email_usuario)
+                    .maybeSingle();
+                if (userInfo) {
+                    donoId = userInfo.id;
+                }
+            }
 
-        if (userError) {
-            console.error("Erro ao buscar usuário por email:", userError);
-        }
+            if (donoId && donoId !== usuarioAtual.id) {
+                await supabaseClient.from('notificacoes').insert({
+                    usuario_id: donoId,
+                    tipo: 'comentario',
+                    remetente_id: usuarioAtual.id,
+                    atividade_id: atividadeComentarioId,
+                    lida: false
+                });
+                carregarNotificacoes();
+            }
 
-        if (userInfo) {
-            donoId = userInfo.id;
-            console.log("✅ Dono encontrado por email:", donoId);
-        } else {
-            console.log("⚠️ Usuário não encontrado para o email:", atividade.email_usuario);
-        }
-    }
-
-    // Enviar notificação se o dono for diferente do usuário que comentou
-    if (donoId && donoId !== usuarioAtual.id) {
-        console.log("📨 Enviando notificação para:", donoId);
-        
-        var { data: notificacao, error: notifError } = await supabaseClient
-            .from('notificacoes')
-            .insert({
-                usuario_id: donoId,
-                tipo: 'comentario',
-                remetente_id: usuarioAtual.id,
-                atividade_id: atividadeComentarioId,
-                lida: false
-            })
-            .select();
-
-        if (notifError) {
-            console.error("❌ Erro ao enviar notificação:", notifError);
-        } else {
-            console.log("✅ Notificação enviada:", notificacao);
-            carregarNotificacoes();
-        }
-    } else if (donoId === usuarioAtual.id) {
-        console.log("ℹ️ Você comentou no seu próprio post, não enviando notificação.");
-    } else {
-        console.log("⚠️ Não foi possível identificar o dono do post.");
-    }
-
-    carregarComentarios(atividadeComentarioId);
-});
+            carregarComentarios(atividadeComentarioId);
+        });
 
         document.getElementById('comentarioInput')?.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -2679,6 +3301,27 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
         }
 
         // ============================================================
+        // FUNÇÃO PARA CRIAR AVATAR COM FOTO
+        // ============================================================
+        function criarAvatarComFotoPerfil(fotoUrl, nome, className = 'post-avatar') {
+            const div = document.createElement('div');
+            div.className = className;
+
+            if (fotoUrl && fotoUrl !== 'null' && fotoUrl !== '') {
+                let url = fotoUrl;
+                if (!url.startsWith('http')) {
+                    const fileName = url.split('/').pop();
+                    url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                }
+                div.innerHTML = `<img src="${url}" alt="${nome}">`;
+            } else {
+                div.textContent = nome.charAt(0).toUpperCase();
+            }
+
+            return div;
+        }
+
+        // ============================================================
         // FUNÇÃO PARA SEGUIR/DEIXAR DE SEGUIR
         // ============================================================
         async function toggleSeguir(usuarioId, btnElement) {
@@ -2774,7 +3417,7 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
             if (user) {
                 var { data, error } = await supabaseClient
                     .from('usuarios')
-                    .select('id, nome, email')
+                    .select('id, nome, email, foto_perfil_url')
                     .eq('id', user.id)
                     .maybeSingle();
 
@@ -2785,7 +3428,7 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 } else {
                     var { data: dataByEmail } = await supabaseClient
                         .from('usuarios')
-                        .select('id, nome, email')
+                        .select('id, nome, email, foto_perfil_url')
                         .eq('email', user.email)
                         .maybeSingle();
                     usuarioAtual = dataByEmail;
@@ -2803,7 +3446,7 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
             try {
                 var { data: usuarios, error } = await supabaseClient
                     .from('usuarios')
-                    .select('id, nome, email')
+                    .select('id, nome, email, foto_perfil_url')
                     .order('nome');
 
                 if (error) {
@@ -2827,7 +3470,7 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
         }
 
         // ============================================================
-        // CARREGAR FEED - CORRIGIDO COM NOME DO USUÁRIO
+        // CARREGAR FEED
         // ============================================================
         async function carregarFeed() {
             var feedDiv = document.getElementById('feedList');
@@ -2837,8 +3480,6 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Faça login para ver o feed!</div>';
                 return;
             }
-
-            console.log("📡 Carregando feed para usuário:", usuarioAtual.email);
 
             try {
                 var { data: seguindo, error: followError } = await supabaseClient
@@ -2860,8 +3501,6 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 }
 
                 seguindoIds.push(usuarioAtual.id);
-
-                console.log("👥 IDs seguidos:", seguindoIds);
 
                 var { data: usuariosInfo, error: usersError } = await supabaseClient
                     .from('usuarios')
@@ -2885,14 +3524,11 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                     emailsSeguidos.push(usuarioAtual.email);
                 }
 
-                console.log("📧 Emails para buscar:", emailsSeguidos);
-
                 if (emailsSeguidos.length === 0) {
                     feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Siga outros usuários para ver o feed!</div>';
                     return;
                 }
 
-                // Buscar atividades com visibilidade = 'público' OU 'publico'
                 var { data: atividades1, error: error1 } = await supabaseClient
                     .from('atividades')
                     .select('*')
@@ -2937,8 +3573,6 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                     return new Date(b.data) - new Date(a.data);
                 });
 
-                console.log("📊 Atividades encontradas:", atividades.length);
-
                 if (!atividades || atividades.length === 0) {
                     feedDiv.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhum treino público dos seus seguidores.</div>';
                     return;
@@ -2949,52 +3583,65 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 for (var a = 0; a < atividades.length; a++) {
                     var atividade = atividades[a];
 
-                    // CORREÇÃO: Buscar nome do usuário corretamente
                     var nomeUsuario = 'Usuário';
                     var usuarioId = atividade.usuario_id;
+                    var fotoPerfil = null;
 
-                    // Primeiro, tentar buscar pelo usuario_id
+                    // Buscar informações do usuário
                     if (usuarioId) {
                         var { data: userInfo } = await supabaseClient
                             .from('usuarios')
-                            .select('id, nome')
+                            .select('id, nome, foto_perfil_url')
                             .eq('id', usuarioId)
                             .maybeSingle();
 
                         if (userInfo && userInfo.nome) {
                             nomeUsuario = userInfo.nome;
+                            fotoPerfil = userInfo.foto_perfil_url;
                         } else if (atividade.email_usuario) {
-                            // Se não encontrou pelo ID, tentar pelo email
                             var { data: userInfo2 } = await supabaseClient
                                 .from('usuarios')
-                                .select('id, nome')
+                                .select('id, nome, foto_perfil_url')
                                 .eq('email', atividade.email_usuario)
                                 .maybeSingle();
 
                             if (userInfo2 && userInfo2.nome) {
                                 nomeUsuario = userInfo2.nome;
                                 usuarioId = userInfo2.id;
+                                fotoPerfil = userInfo2.foto_perfil_url;
                             } else {
                                 nomeUsuario = atividade.email_usuario.split('@')[0] || 'Usuário';
                             }
                         }
                     } else if (atividade.email_usuario) {
-                        // Buscar pelo email
                         var { data: userInfo3 } = await supabaseClient
                             .from('usuarios')
-                            .select('id, nome')
+                            .select('id, nome, foto_perfil_url')
                             .eq('email', atividade.email_usuario)
                             .maybeSingle();
 
                         if (userInfo3 && userInfo3.nome) {
                             nomeUsuario = userInfo3.nome;
                             usuarioId = userInfo3.id;
+                            fotoPerfil = userInfo3.foto_perfil_url;
                         } else {
                             nomeUsuario = atividade.email_usuario.split('@')[0] || 'Usuário';
                         }
                     }
 
-                    // Contar curtidas
+                    // Criar avatar com foto
+                    var avatarHtml = '';
+                    if (fotoPerfil && fotoPerfil !== 'null' && fotoPerfil !== '') {
+                        let url = fotoPerfil;
+                        if (!url.startsWith('http')) {
+                            const fileName = url.split('/').pop();
+                            url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                        }
+                        avatarHtml = `<img src="${url}" alt="${nomeUsuario}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+                    } else {
+                        avatarHtml = nomeUsuario.charAt(0).toUpperCase();
+                    }
+
                     var { count: curtidasCount } = await supabaseClient
                         .from('curtidas')
                         .select('*', { count: 'exact', head: true })
@@ -3050,7 +3697,7 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
 
                     postDiv.innerHTML = `
                         <div class="post-header">
-                            <div class="post-avatar">${nomeUsuario.charAt(0).toUpperCase()}</div>
+                            <div class="post-avatar">${avatarHtml}</div>
                             <div class="post-user-info">
                                 <div class="post-user-name">${nomeUsuario}</div>
                                 <div class="post-user-email"><i class="bx bx-time"></i> ${dataFormatada}</div>
@@ -3229,8 +3876,20 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
 
                 var btn = criarBotaoSeguir(u2.id, false, 'small');
 
+                var avatarHtml = '';
+                if (u2.foto_perfil_url && u2.foto_perfil_url !== 'null' && u2.foto_perfil_url !== '') {
+                    let url = u2.foto_perfil_url;
+                    if (!url.startsWith('http')) {
+                        const fileName = url.split('/').pop();
+                        url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                    }
+                    avatarHtml = `<img src="${url}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">`;
+                } else {
+                    avatarHtml = u2.nome?.charAt(0).toUpperCase() || 'U';
+                }
+
                 div.innerHTML = `
-                    <div class="post-avatar" style="width: 40px; height: 40px; font-size: 14px;">${u2.nome?.charAt(0).toUpperCase() || 'U'}</div>
+                    <div class="post-avatar" style="width: 40px; height: 40px; font-size: 14px;">${avatarHtml}</div>
                     <div style="flex:1;">
                         <strong>${u2.nome || 'Usuário'}</strong>
                         <div style="font-size: 11px; color: #94a3b8;"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
@@ -3269,7 +3928,7 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 var s = seguindo[i];
                 var { data: user, error: userError } = await supabaseClient
                     .from('usuarios')
-                    .select('id, nome, email')
+                    .select('id, nome, foto_perfil_url')
                     .eq('id', s.seguindo_id)
                     .maybeSingle();
                 if (user && !userError) {
@@ -3288,8 +3947,20 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
 
                 var btn = criarBotaoSeguir(user.id, true, 'small');
 
+                var avatarHtml = '';
+                if (user.foto_perfil_url && user.foto_perfil_url !== 'null' && user.foto_perfil_url !== '') {
+                    let url = user.foto_perfil_url;
+                    if (!url.startsWith('http')) {
+                        const fileName = url.split('/').pop();
+                        url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                    }
+                    avatarHtml = `<img src="${url}" style="width:45px;height:45px;border-radius:50%;object-fit:cover;">`;
+                } else {
+                    avatarHtml = user.nome?.charAt(0).toUpperCase() || 'U';
+                }
+
                 div.innerHTML = `
-                    <div class="seguidor-avatar">${user.nome?.charAt(0).toUpperCase() || 'U'}</div>
+                    <div class="seguidor-avatar">${avatarHtml}</div>
                     <div class="seguidor-info">
                         <div class="seguidor-nome">${user.nome || 'Usuário'}</div>
                         <div class="seguidor-email"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
@@ -3328,7 +3999,7 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 var s = seguidores[i];
                 var { data: user, error: userError } = await supabaseClient
                     .from('usuarios')
-                    .select('id, nome, email')
+                    .select('id, nome, foto_perfil_url')
                     .eq('id', s.seguidor_id)
                     .maybeSingle();
                 if (user && !userError) {
@@ -3358,8 +4029,20 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
 
                 var btn = criarBotaoSeguir(user.id, isFollowing, 'small');
 
+                var avatarHtml = '';
+                if (user.foto_perfil_url && user.foto_perfil_url !== 'null' && user.foto_perfil_url !== '') {
+                    let url = user.foto_perfil_url;
+                    if (!url.startsWith('http')) {
+                        const fileName = url.split('/').pop();
+                        url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                    }
+                    avatarHtml = `<img src="${url}" style="width:45px;height:45px;border-radius:50%;object-fit:cover;">`;
+                } else {
+                    avatarHtml = user.nome?.charAt(0).toUpperCase() || 'U';
+                }
+
                 div.innerHTML = `
-                    <div class="seguidor-avatar">${user.nome?.charAt(0).toUpperCase() || 'U'}</div>
+                    <div class="seguidor-avatar">${avatarHtml}</div>
                     <div class="seguidor-info">
                         <div class="seguidor-nome">${user.nome || 'Usuário'}</div>
                         <div class="seguidor-email"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
@@ -3432,11 +4115,23 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 }
                 var btn = criarBotaoSeguir(u2.id, isFollowing, 'small');
 
+                var avatarHtml = '';
+                if (u2.foto_perfil_url && u2.foto_perfil_url !== 'null' && u2.foto_perfil_url !== '') {
+                    let url = u2.foto_perfil_url;
+                    if (!url.startsWith('http')) {
+                        const fileName = url.split('/').pop();
+                        url = 'https://yuupbtrljazrrwizzafd.supabase.co/storage/v1/object/public/perfil/' + fileName;
+                    }
+                    avatarHtml = `<img src="${url}" style="width:45px;height:45px;border-radius:50%;object-fit:cover;">`;
+                } else {
+                    avatarHtml = u2.nome?.charAt(0).toUpperCase() || 'U';
+                }
+
                 var div = document.createElement('div');
                 div.className = 'search-result-item';
 
                 div.innerHTML = `
-                    <div class="search-result-avatar">${u2.nome?.charAt(0).toUpperCase() || 'U'}</div>
+                    <div class="search-result-avatar">${avatarHtml}</div>
                     <div class="search-result-info">
                         <div class="search-result-name">${u2.nome || 'Usuário'}</div>
                         <div style="font-size: 11px; color: #94a3b8;"><i class="bx bx-group"></i> ${seguidoresCount} seguidores</div>
@@ -3584,7 +4279,6 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 return;
             }
 
-            // Verificar se o usuário já criou um desafio este mês
             var mesAtual = new Date().getMonth();
             var anoAtual = new Date().getFullYear();
 
@@ -3640,14 +4334,12 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
             document.getElementById('modalCriarDesafio').classList.remove('active');
             document.body.style.overflow = '';
 
-            // Limpar campos
             document.getElementById('desafio-titulo').value = '';
             document.getElementById('desafio-descricao').value = '';
             document.getElementById('desafio-meta').value = '';
             document.getElementById('desafio-data-inicio').value = '';
             document.getElementById('desafio-data-fim').value = '';
 
-            // Notificar seguidores
             var { data: seguidores } = await supabaseClient
                 .from('seguidores')
                 .select('seguidor_id')
@@ -3665,7 +4357,6 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
                 carregarNotificacoes();
             }
 
-            // Auto-participar
             await participarDesafio(novoDesafio[0].id);
             await carregarDesafios();
         });
@@ -4101,34 +4792,6 @@ document.getElementById('btnEnviarComentario')?.addEventListener('click', async 
         if (tabsContainer) {
             observer.observe(tabsContainer, { childList: true, subtree: true, attributes: true });
         }
-
-        // ============================================================
-        // POLÍTICA DE PRIVACIDADE
-        // ============================================================
-        function abrirModalPrivacidade() {
-            showToast("Política de Privacidade disponível em breve.", "warning");
-        }
-
-        document.getElementById('linkPrivacidade')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkPrivacidade2')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkPrivacidade3')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkTermos')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
-        document.getElementById('linkCookies')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            abrirModalPrivacidade();
-        });
 
         // ============================================================
         // INICIAR
