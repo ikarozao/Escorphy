@@ -8,10 +8,10 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_forward" />
   <title>Treinos | Escorphy</title>
 
-  <link rel="stylesheet" href="treinos/treinos.css" />
+  <link rel="stylesheet" href="../../../../../../OneDrive/Documentos/IFPR/Projeto%20Integrador/Escophy%20-%20mobile/treinos/treinos.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="img/a.png">
+  <link rel="icon" type="image/png" href="../../../../../../OneDrive/Documentos/IFPR/Projeto%20Integrador/Escophy%20-%20mobile/img/a.png">
 
   <style>
     .toast-msg {
@@ -39,7 +39,7 @@
     .toast-msg.warning { background: linear-gradient(135deg, #f2994a, #f2c94c); }
     .toast-msg.i { font-size: 20px; }
 
-    /* Modal personalizado para adicionar acessório */
+    /* Modal personalizado */
     .modal-custom {
       display: none;
       position: fixed;
@@ -214,6 +214,23 @@
       box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
     }
 
+    /* Botão de modo manual */
+    .btn-manual-mode {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+    }
+    .btn-manual-mode:hover {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+    }
+    .btn-manual-mode.active-mode {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    }
+    .btn-manual-mode.active-mode:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+
     /* Modal de logout */
     .modal-logout {
       display: none;
@@ -291,7 +308,7 @@
       50% { opacity: 0.85; }
     }
 
-    /* ===== ESTILOS DO FORMULÁRIO CENTRALIZADO E CARD DE CALORIAS ===== */
+    /* ===== ESTILOS DO FORMULÁRIO ===== */
     .infos_treinos {
       display: none;
       flex-direction: column;
@@ -611,7 +628,127 @@
       box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
     }
 
-    /* ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA HOME) ===== */
+    /* ===== BADGE DE TREINO INSERIDO ===== */
+    .badge-treino-inserido {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #fbbf24 !important;
+      color: #78350f !important;
+      border-radius: 50% !important;
+      width: 22px !important;
+      height: 22px !important;
+      font-size: 12px !important;
+      margin-left: 6px !important;
+      cursor: help !important;
+      box-shadow: 0 2px 6px rgba(251, 191, 36, 0.4) !important;
+      transition: all 0.2s ease !important;
+      flex-shrink: 0 !important;
+      vertical-align: middle !important;
+      position: relative !important;
+      top: -1px !important;
+    }
+
+    .badge-treino-inserido:hover {
+      transform: scale(1.15) !important;
+      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.6) !important;
+    }
+
+    .badge-treino-inserido::after {
+      content: attr(title);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #1e293b;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 400;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+    }
+
+    .badge-treino-inserido:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .badge-treino-inserido::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      border: 6px solid transparent;
+      border-top-color: #1e293b;
+      opacity: 0;
+      transition: all 0.2s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .badge-treino-inserido:hover::before {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* ===== ESTILOS PARA O MODO MANUAL ===== */
+    .manual-mode-indicator {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: #fef3c7;
+      border-radius: 50px;
+      color: #92400e;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      border: 2px dashed #f59e0b;
+    }
+    .manual-mode-indicator.active {
+      display: flex;
+    }
+
+    .distancia-manual-input {
+      display: none;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px auto;
+    }
+    .distancia-manual-input.active {
+      display: block;
+    }
+    .distancia-manual-input input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 60px;
+      border: 2px solid #f59e0b;
+      font-size: 16px;
+      text-align: center;
+      background: #fffbeb;
+    }
+    .distancia-manual-input input:focus {
+      outline: none;
+      border-color: #d97706;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+    .distancia-manual-input .input-hint {
+      text-align: center;
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    /* ===== FOOTER ===== */
     .footer {
       background: #ffffff;
       padding: 40px 20px 16px;
@@ -724,7 +861,7 @@
       color: #1a4a2e;
     }
 
-    /* ===== FOOTER RESPONSIVO ===== */
+    /* ===== RESPONSIVO ===== */
     @media (max-width: 1024px) {
       .footer-container {
         grid-template-columns: 1.5fr 1fr 1fr;
@@ -736,60 +873,48 @@
         padding: 28px 16px 12px;
         margin-top: 24px;
       }
-
       .footer-container {
         grid-template-columns: 1fr 1fr;
         gap: 18px;
         padding-bottom: 16px;
       }
-
       .footer-brand {
         grid-column: 1 / -1;
         text-align: center;
       }
-
       .footer-brand p {
         max-width: 100%;
         font-size: 12px;
         margin: 0 auto 8px;
       }
-
       .footer-brand h2 {
         font-size: 20px;
       }
-
       .footer-social {
         justify-content: center;
       }
-
       .footer-column {
         text-align: center;
       }
-
       .footer-column h4 {
         font-size: 11px;
         margin-bottom: 6px;
       }
-
       .footer-column ul li a {
         font-size: 12px;
       }
-
       .footer-bottom {
         flex-direction: column;
         text-align: center;
         gap: 4px;
         padding-top: 10px;
       }
-
       .footer-bottom p {
         font-size: 11px;
       }
-
       .footer-bottom-links {
         gap: 12px;
       }
-
       .footer-bottom-links a {
         font-size: 11px;
       }
@@ -800,48 +925,38 @@
         padding: 20px 12px 10px;
         margin-top: 16px;
       }
-
       .footer-container {
         grid-template-columns: 1fr 1fr;
         gap: 12px;
         padding-bottom: 12px;
       }
-
       .footer-brand h2 {
         font-size: 18px;
       }
-
       .footer-brand p {
         font-size: 11px;
       }
-
       .footer-social a {
         font-size: 16px;
       }
-
       .footer-column h4 {
         font-size: 10px;
         margin-bottom: 4px;
       }
-
       .footer-column ul li a {
         font-size: 11px;
       }
-
       .footer-bottom p {
         font-size: 10px;
       }
-
       .footer-bottom-links a {
         font-size: 10px;
       }
-
       .footer-bottom-links {
         gap: 10px;
       }
     }
 
-    /* Desktop com sidebar */
     @media (min-width: 769px) {
       .footer {
         margin-left: 250px;
@@ -892,7 +1007,7 @@
   <!-- NAVBAR -->
   <nav>
     <a href="home.html">
-      <div class="bar_n"><img id="logoimg" src="img/Figura estilizada em movimento.png" alt=""></div>
+      <div class="bar_n"><img id="logoimg" src="../../../../../../OneDrive/Documentos/IFPR/Projeto%20Integrador/Escophy%20-%20mobile/img/Figura%20estilizada%20em%20movimento.png" alt=""></div>
     </a>
     <div class="nav-right"></div>
   </nav>
@@ -957,6 +1072,18 @@
       <span id="distance">0 km</span>
     </div>
 
+    <!-- Indicador de modo manual -->
+    <div id="manualModeIndicator" class="manual-mode-indicator">
+      <i class="bx bx-edit-alt"></i>
+      <span>Modo Manual - Insira a distância abaixo</span>
+    </div>
+
+    <!-- Input de distância manual -->
+    <div id="distanciaManualInput" class="distancia-manual-input">
+      <input type="number" id="distanciaManualKm" step="0.1" min="0" placeholder="Digite a distância em km...">
+      <div class="input-hint">Digite a distância percorrida em quilômetros</div>
+    </div>
+
     <!-- Indicador de gravação -->
     <div id="recordingIndicator" class="recording-indicator">
       <span class="dot"></span>
@@ -971,6 +1098,9 @@
     <div class="control-icons">
       <button id="startBtn" class="control-btn btn-play" title="Iniciar rota">
         <i class="bx bx-play"></i>
+      </button>
+      <button id="manualModeBtn" class="control-btn btn-manual-mode" title="Modo Manual">
+        <i class="bx bx-edit-alt"></i>
       </button>
       <button id="endBtn" class="control-btn btn-stop" title="Finalizar rota">
         <i class="bx bx-stop"></i>
@@ -1044,13 +1174,25 @@
         </div>
       </div>
 
+      <!-- Campo: Este treino já foi realizado? -->
+      <div class="form-group">
+        <label>Este treino já foi realizado?</label>
+        <div class="visibilidade" id="treinoRealizadoContainer" style="display:flex; justify-content:center; gap:12px;">
+          <a href="#" role="menuitem" tabindex="0" data-treino-realizado="false">Não</a>
+          <a href="#" role="menuitem" tabindex="0" data-treino-realizado="true">Sim</a>
+        </div>
+        <p style="font-size:11px; color:#94a3b8; margin-top:6px; text-align:center;">
+          <i class="bx bx-info-circle"></i> Se selecionar "Sim", o treino aparecerá com um marcador amarelo
+        </p>
+      </div>
+
       <div class="botao-salvar">
         <button id="salvarBtn">Salvar treino</button>
       </div>
     </article>
   </div>
 
-  <!-- ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA HOME) ===== -->
+  <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-brand">
@@ -1117,7 +1259,7 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // Configuração do Supabase
+    // ========== SUPABASE ==========
     const supabaseUrl = "https://yuupbtrljazrrwizzafd.supabase.co";
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXBidHJsamF6cnJ3aXp6YWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MjIzMzMsImV4cCI6MjA3NjQ5ODMzM30.trZvyDgPnhenuPiKxChZbVLcBQI3rOm8OsjtgAzoAm0";
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
@@ -1158,7 +1300,7 @@
       if (e.target === modalLogout) hideLogoutModal();
     });
 
-    // ========== WAKELOCK PARA MANTER A TELA LIGADA ==========
+    // ========== WAKELOCK ==========
     let wakeLock = null;
 
     async function requestWakeLock() {
@@ -1167,7 +1309,6 @@
           wakeLock = await navigator.wakeLock.request('screen');
           showToast("Tela mantida ativa para gravação!", "success");
           console.log("WakeLock ativado!");
-          
           wakeLock.addEventListener('release', () => {
             console.log('WakeLock foi liberado');
           });
@@ -1250,6 +1391,8 @@
     let endMarker;
     let watchId;
     let tracking = false;
+    let manualMode = false;
+    let distanciaManualKm = 0;
 
     function calcularDistanciaTotal(positions) {
       if (positions.length < 2) return 0;
@@ -1284,7 +1427,61 @@
       }
     }
 
+    // ========== MODO MANUAL ==========
+    function toggleManualMode() {
+      manualMode = !manualMode;
+      const btn = document.getElementById('manualModeBtn');
+      const indicator = document.getElementById('manualModeIndicator');
+      const input = document.getElementById('distanciaManualInput');
+      const distanciaInput = document.getElementById('distanciaManualKm');
+      
+      if (manualMode) {
+        btn.classList.add('active-mode');
+        btn.innerHTML = '<i class="bx bx-x"></i>';
+        indicator.classList.add('active');
+        input.classList.add('active');
+        distanciaInput.value = '';
+        showToast('Modo manual ativado! Insira a distância em km.', 'warning');
+        
+        // Se estiver gravando, para a gravação
+        if (tracking) {
+          endTracking();
+        }
+      } else {
+        btn.classList.remove('active-mode');
+        btn.innerHTML = '<i class="bx bx-edit-alt"></i>';
+        indicator.classList.remove('active');
+        input.classList.remove('active');
+        showToast('Modo manual desativado.', 'success');
+      }
+      
+      // Atualiza a distância
+      atualizarDistanciaManual();
+    }
+
+    function atualizarDistanciaManual() {
+      const input = document.getElementById('distanciaManualKm');
+      if (manualMode && input.value) {
+        distanciaManualKm = parseFloat(input.value) || 0;
+        atualizarDistanciaECalorias(distanciaManualKm);
+      } else if (!manualMode) {
+        // Se não estiver em modo manual, usa a distância do GPS
+        if (userPositions.length > 0) {
+          const dist = calcularDistanciaTotal(userPositions) / 1000;
+          atualizarDistanciaECalorias(dist);
+        }
+      }
+    }
+
+    document.getElementById('manualModeBtn').addEventListener('click', toggleManualMode);
+    document.getElementById('distanciaManualKm').addEventListener('input', atualizarDistanciaManual);
+
+    // ========== FUNÇÕES DE RASTREAMENTO ==========
     function startTracking() {
+      if (manualMode) {
+        showToast("Desative o modo manual primeiro!", "warning");
+        return;
+      }
       if (navigator.geolocation) {
         if (tracking) {
           showToast("Rota já está sendo gravada!", "warning");
@@ -1297,7 +1494,6 @@
         if (endMarker) endMarker.remove();
         
         requestWakeLock();
-        
         atualizarIndicador();
 
         watchId = navigator.geolocation.watchPosition(
@@ -1353,9 +1549,7 @@
       if (tracking) {
         navigator.geolocation.clearWatch(watchId);
         tracking = false;
-        
         releaseWakeLock();
-        
         atualizarIndicador();
         
         if (userPositions.length > 0) {
@@ -1436,7 +1630,30 @@
       showToast(`Acessório "${nome}" removido!`, 'success');
     }
 
-    // Modal personalizado
+    // ========== FUNÇÕES PARA TREINO INSERIDO ==========
+    function marcarTreinoInserido(treinoId, usuarioEmail) {
+      try {
+        const treinosInseridos = JSON.parse(localStorage.getItem('treinosInseridos') || '[]');
+        if (!treinosInseridos.includes(treinoId)) {
+          treinosInseridos.push(treinoId);
+          localStorage.setItem('treinosInseridos', JSON.stringify(treinosInseridos));
+          console.log('Treino marcado como inserido:', treinoId);
+        }
+      } catch (e) {
+        console.error('Erro ao marcar treino inserido:', e);
+      }
+    }
+
+    function isTreinoInserido(treinoId) {
+      try {
+        const treinosInseridos = JSON.parse(localStorage.getItem('treinosInseridos') || '[]');
+        return treinosInseridos.includes(treinoId);
+      } catch (e) {
+        return false;
+      }
+    }
+
+    // ========== MODAL PERSONALIZADO ==========
     const modalCustom = document.getElementById('modalCustom');
     const modalInput = document.getElementById('modalAcessorioInput');
     
@@ -1465,16 +1682,13 @@
     modalCustom.addEventListener('click', (e) => { if (e.target === modalCustom) fecharModal(); });
     modalInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') confirmarModal(); });
 
-    // Botão principal para adicionar acessório
     document.getElementById('abrirModalBtn').addEventListener('click', () => {
       abrirModalPersonalizado();
     });
 
+    // ========== DOMContentLoaded ==========
     document.addEventListener('DOMContentLoaded', function () {
-      // Buscar dados do usuário para calorias
       buscarDadosUsuario();
-      
-      // Inicializar calorias
       atualizarCalorias(0);
 
       window.mainMap = L.map('map').setView([-24.740387, -53.767403], 16);
@@ -1505,6 +1719,21 @@
       setupSingleSelection('.tipo');
       setupSingleSelection('.visibilidade');
 
+      // Setup para o campo "treino já realizado"
+      const treinoRealizadoContainer = document.getElementById('treinoRealizadoContainer');
+      if (treinoRealizadoContainer) {
+        const links = treinoRealizadoContainer.querySelectorAll('a');
+        links.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            links.forEach(l => l.classList.remove('active-option'));
+            this.classList.add('active-option');
+          });
+        });
+        const naoOption = treinoRealizadoContainer.querySelector('[data-treino-realizado="false"]');
+        if (naoOption) naoOption.classList.add('active-option');
+      }
+
       document.getElementById("startBtn").addEventListener("click", startTracking);
       document.getElementById("endBtn").addEventListener("click", endTracking);
 
@@ -1515,15 +1744,71 @@
           showToast("Usuário não logado! Faça login novamente.", "error");
           return;
         }
-        if (userPositions.length === 0) {
-          showToast("Nenhum trajeto registrado! Inicie uma rota primeiro.", "warning");
-          return;
+
+        // Verifica se tem dados para salvar (GPS ou manual)
+        let distanciaKm = 0;
+        let positions = [];
+        let startPoint = null;
+        let endPoint = null;
+
+        if (manualMode) {
+          // Modo manual
+          const inputDistancia = document.getElementById('distanciaManualKm');
+          distanciaKm = parseFloat(inputDistancia.value) || 0;
+          
+          if (distanciaKm <= 0) {
+            showToast("Digite uma distância válida em km!", "warning");
+            return;
+          }
+          
+          // Cria um trajeto simulado com base na distância
+          // Usa a localização atual do mapa como referência
+          const center = window.mainMap.getCenter();
+          // Cria pontos fictícios para simular um trajeto linear
+          const numPoints = Math.min(Math.max(Math.round(distanciaKm * 10), 2), 50);
+          positions = [];
+          for (let i = 0; i < numPoints; i++) {
+            const progress = i / (numPoints - 1);
+            // Cria uma linha reta com pequena variação
+            const latOffset = (progress - 0.5) * distanciaKm * 0.008;
+            const lngOffset = (progress - 0.5) * distanciaKm * 0.008 * 0.5;
+            positions.push({
+              lat: center.lat + latOffset + (Math.random() - 0.5) * 0.0005,
+              lng: center.lng + lngOffset + (Math.random() - 0.5) * 0.0005,
+              timestamp: new Date(Date.now() - (numPoints - i) * 1000).toISOString(),
+              accuracy: 10
+            });
+          }
+          startPoint = positions[0];
+          endPoint = positions[positions.length - 1];
+          
+          // Desenha no mapa
+          const latLngs = positions.map(pos => [pos.lat, pos.lng]);
+          if (polyline) polyline.remove();
+          polyline = L.polyline(latLngs, { color: '#f59e0b', weight: 4, opacity: 0.8, dashArray: '8, 6' }).addTo(window.mainMap);
+          window.mainMap.fitBounds(polyline.getBounds(), { padding: [50, 50] });
+          
+        } else {
+          // Modo GPS
+          if (userPositions.length === 0) {
+            showToast("Nenhum trajeto registrado! Inicie uma rota primeiro.", "warning");
+            return;
+          }
+          positions = userPositions;
+          startPoint = positions[0];
+          endPoint = positions[positions.length - 1];
+          distanciaKm = calcularDistanciaTotal(positions) / 1000;
         }
+
         const titulo = document.querySelector("input[name='titulo']").value;
         const descricao = document.querySelector("input[name='descricao']").value;
         const tipo = document.querySelector(".tipo .active-option")?.innerText || "";
         const intensidade = document.querySelector(".rangezao").value;
         const visibilidade = document.querySelector(".visibilidade .active-option")?.innerText || "";
+        
+        const treinoRealizadoEl = document.querySelector('#treinoRealizadoContainer [data-treino-realizado="true"].active-option');
+        const treinoRealizado = !!treinoRealizadoEl;
+        
         if (!titulo || !descricao || !tipo || !visibilidade) {
           showToast("Preencha todos os campos!", "warning");
           return;
@@ -1531,9 +1816,16 @@
         
         const acessoriosJSON = acessoriosSelecionados;
         
-        const startPoint = userPositions[0];
-        const endPoint = userPositions[userPositions.length - 1];
-        const trajetoCompleto = { positions: userPositions, summary: { totalPoints: userPositions.length, startTime: userPositions[0]?.timestamp, endTime: userPositions[userPositions.length - 1]?.timestamp, distance: calcularDistanciaTotal(userPositions) } };
+        const trajetoCompleto = { 
+          positions: positions, 
+          summary: { 
+            totalPoints: positions.length, 
+            startTime: positions[0]?.timestamp || new Date().toISOString(), 
+            endTime: positions[positions.length - 1]?.timestamp || new Date().toISOString(), 
+            distance: Math.round(distanciaKm * 1000)
+          },
+          manual: manualMode
+        };
 
         const { data, error } = await supabaseClient
           .from("atividades")
@@ -1550,7 +1842,10 @@
             trajeto_inicial2: startPoint.lng,
             trajeto_final1: endPoint.lat,
             trajeto_final2: endPoint.lng,
-            data: new Date().toISOString()
+            data: new Date().toISOString(),
+            treino_realizado: treinoRealizado,
+            distancia_km: distanciaKm,
+            modo_manual: manualMode
           }])
           .select();
 
@@ -1559,11 +1854,24 @@
           showToast("Erro ao salvar: " + error.message, "error");
           return;
         }
-        showToast("Treino salvo com sucesso!", "success");
+        
+        if (treinoRealizado && data && data.length > 0) {
+          const treinoId = data[0].id;
+          marcarTreinoInserido(treinoId, usuarioEmail);
+          showToast(`Treino salvo! ${distanciaKm.toFixed(2)} km - Marcado como já realizado!`, "success");
+        } else {
+          showToast(`Treino salvo com sucesso! ${distanciaKm.toFixed(2)} km`, "success");
+        }
+        
+        // Reset do formulário
         document.querySelector("input[name='titulo']").value = "";
         document.querySelector("input[name='descricao']").value = "";
         document.querySelector(".rangezao").value = "5";
         document.querySelectorAll('.active-option').forEach(el => el.classList.remove('active-option'));
+        
+        const naoOptionReset = treinoRealizadoContainer?.querySelector('[data-treino-realizado="false"]');
+        if (naoOptionReset) naoOptionReset.classList.add('active-option');
+        
         acessoriosSelecionados = [];
         renderizarAcessorios();
         userPositions = [];
@@ -1573,12 +1881,17 @@
         document.getElementById("distance").innerText = "0 km";
         atualizarCalorias(0);
         atualizarIndicador();
+        
+        // Reset do modo manual
+        if (manualMode) {
+          toggleManualMode();
+        }
       });
       
       renderizarAcessorios();
     });
 
-    // Sidebar
+    // ========== SIDEBAR ==========
     const sidebar = document.getElementById('sidebar');
     const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
     const overlay = document.getElementById('sidebarOverlay');
