@@ -1335,3 +1335,41 @@ a.active-option {
 }
 
 }
+
+@media (min-width: 769px) {
+  .carrosel-total .org {
+    flex: 0 0 calc(33.333% - 14px);
+    max-width: calc(33.333% - 14px);
+  }
+}
+
+.carrosel-total .org {
+  flex: 0 0 calc(33.333% - 14px);
+  max-width: calc(33.333% - 14px);
+}
+/* ===== SIDEBAR - CORREÇÃO ===== */
+.sidebar {
+    z-index: 1002 !important; /* Maior que a navbar */
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+    .sidebar {
+        top: 0;
+        height: 100vh;
+        z-index: 1002 !important;
+    }
+    
+    nav {
+        z-index: 1001;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        top: 60px;
+        height: calc(100vh - 60px);
+        z-index: 1002 !important;
+    }
+}

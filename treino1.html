@@ -14,6 +14,31 @@
   <link rel="icon" type="image/png" href="img/a.png">
 
   <style>
+    /* ===== CORREÇÃO DA SIDEBAR ===== */
+    .sidebar {
+      z-index: 1002 !important;
+    }
+
+    @media (min-width: 769px) {
+      .sidebar {
+        top: 0 !important;
+        height: 100vh !important;
+        z-index: 1002 !important;
+      }
+      
+      nav {
+        z-index: 1001 !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        top: 60px !important;
+        height: calc(100vh - 60px) !important;
+        z-index: 1002 !important;
+      }
+    }
+
     .toast-msg {
       position: fixed;
       bottom: 30px;
@@ -38,6 +63,196 @@
     .toast-msg.error { background: linear-gradient(135deg, #cb2d3e, #ef473a); }
     .toast-msg.warning { background: linear-gradient(135deg, #f2994a, #f2c94c); }
     .toast-msg.i { font-size: 20px; }
+
+    /* ===== MODAL PDF ===== */
+    .modal-pdf {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 30000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    .modal-pdf.active {
+      display: flex;
+    }
+    .modal-pdf-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 95vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    }
+    .modal-pdf-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+      flex-shrink: 0;
+    }
+    .modal-pdf-header h2 {
+      font-size: 18px;
+      color: #1a4a2e;
+      margin: 0;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .modal-pdf-close {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.2s;
+      padding: 0 8px;
+    }
+    .modal-pdf-close:hover {
+      color: #ef4444;
+      transform: scale(1.1);
+    }
+    .modal-pdf-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+      background: #fcfcfc;
+      min-height: 300px;
+      max-height: 70vh;
+    }
+    .modal-pdf-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .modal-pdf-body::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .modal-pdf-body::-webkit-scrollbar-thumb {
+      background: #4CAF50;
+      border-radius: 10px;
+    }
+
+    .pdf-content {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #222;
+      line-height: 1.7;
+    }
+    .pdf-content h1 {
+      font-size: 24px;
+      color: #1a4a2e;
+      text-align: center;
+      margin: 0 0 20px 0;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 1px;
+    }
+    .pdf-content h2 {
+      font-size: 17px;
+      color: #1a4a2e;
+      margin: 20px 0 8px 0;
+      font-weight: 600;
+    }
+    .pdf-content h3 {
+      font-size: 15px;
+      color: #2e7d52;
+      margin: 14px 0 6px 0;
+      font-weight: 600;
+    }
+    .pdf-content p {
+      font-size: 14px;
+      color: #333;
+      margin: 0 0 10px 0;
+    }
+    .pdf-content ul {
+      margin: 8px 0 12px 20px;
+      padding: 0;
+    }
+    .pdf-content ul li {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .pdf-content .pdf-footer {
+      font-size: 12px;
+      color: #8aa596;
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 15px;
+      border-top: 1px solid #e8ece8;
+    }
+    .modal-pdf-footer {
+      padding: 12px 24px;
+      border-top: 1px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .modal-pdf-footer .btn-fechar-pdf {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: "Poppins", sans-serif;
+    }
+    .modal-pdf-footer .btn-fechar-pdf:hover {
+      background: #2e7d32;
+      transform: scale(1.02);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .modal-pdf-content {
+        max-height: 98vh;
+      }
+      .modal-pdf-body {
+        padding: 16px;
+        max-height: 60vh;
+      }
+      .pdf-content h1 {
+        font-size: 20px;
+      }
+      .pdf-content h2 {
+        font-size: 15px;
+      }
+      .pdf-content p,
+      .pdf-content ul li {
+        font-size: 13px;
+      }
+    }
+    @media (max-width: 480px) {
+      .modal-pdf-body {
+        padding: 12px;
+        max-height: 50vh;
+      }
+      .pdf-content h1 {
+        font-size: 17px;
+      }
+      .pdf-content h2 {
+        font-size: 14px;
+      }
+      .pdf-content p,
+      .pdf-content ul li {
+        font-size: 12px;
+      }
+    }
 
     /* Modal personalizado para adicionar acessório */
     .modal-custom {
@@ -170,6 +385,189 @@
       vertical-align: middle;
     }
 
+    /* ===== MODO ÁGUA - CORES AZUIS ===== */
+    .modo-agua .distancia-card-moderno {
+      border-color: rgba(33, 150, 243, 0.5) !important;
+    }
+    .modo-agua .distancia-card-moderno p {
+      color: #1565C0 !important;
+    }
+    .modo-agua .distancia-card-moderno span {
+      background: linear-gradient(135deg, #0d47a1, #2196F3) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      color: transparent !important;
+    }
+    .modo-agua .distancia-card-moderno i {
+      color: #2196F3 !important;
+    }
+
+    .modo-agua .carrosel-total::-webkit-scrollbar-thumb {
+      background: #2196F3 !important;
+    }
+    .modo-agua .carrossel-nav-arrow {
+      background: #2196F3 !important;
+      color: white !important;
+      box-shadow: 0 4px 20px rgba(33, 150, 243, 0.3) !important;
+    }
+    .modo-agua .carrossel-nav-arrow:hover {
+      background: #0d47a1 !important;
+    }
+    .modo-agua .control-btn.btn-play {
+      background: linear-gradient(135deg, #2196F3, #0d47a1) !important;
+      box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4) !important;
+    }
+    .modo-agua .control-btn.btn-play:hover {
+      background: linear-gradient(135deg, #1e88e5, #0a3d7a) !important;
+      box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5) !important;
+    }
+    .modo-agua .treinos .cima h1 {
+      color: #0d47a1 !important;
+    }
+    .modo-agua .treinos .cima h1::after {
+      background: linear-gradient(90deg, #0d47a1, #2196F3) !important;
+    }
+    .modo-agua .infos_treinos h1 {
+      color: #0d47a1 !important;
+    }
+    .modo-agua .rangezao::-webkit-slider-track {
+      background: linear-gradient(90deg, #2196F3, #64B5F6, #0d47a1) !important;
+    }
+    .modo-agua .rangezao::-webkit-slider-thumb {
+      border-color: #2196F3 !important;
+    }
+    .modo-agua .rangezao::-webkit-slider-thumb:hover {
+      background: #2196F3 !important;
+    }
+    .modo-agua .botao-salvar button {
+      background: linear-gradient(135deg, #2196F3, #0d47a1) !important;
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3) !important;
+    }
+    .modo-agua .botao-salvar button:hover {
+      box-shadow: 0 10px 25px rgba(33, 150, 243, 0.4) !important;
+    }
+    .modo-agua .btn-adicionar-acessorio-principal {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb) !important;
+      border-color: #2196F3 !important;
+      color: #0d47a1 !important;
+    }
+    .modo-agua .btn-adicionar-acessorio-principal:hover {
+      background: linear-gradient(135deg, #bbdefb, #90caf9) !important;
+    }
+    .modo-agua .infos_treinos .input-rounded:focus {
+      border-color: #2196F3 !important;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1) !important;
+    }
+    .modo-agua a.active-option {
+      background: linear-gradient(135deg, #2196F3, #0d47a1) !important;
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.25) !important;
+    }
+    .modo-agua .acessorio-item-custom:hover {
+      border-color: #2196F3 !important;
+    }
+    .modo-agua .acessorio-nome-custom {
+      color: #0d47a1 !important;
+      background: rgba(33, 150, 243, 0.1) !important;
+    }
+    .modo-agua .acessorio-espec-custom:focus {
+      border-color: #2196F3 !important;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.15) !important;
+    }
+
+    /* ===== SIDEBAR MODO ÁGUA ===== */
+    .modo-agua .sidebar {
+      background: linear-gradient(135deg, #0d47a1, rgba(13, 71, 161, 0.8)) !important;
+    }
+    .modo-agua .sidebar-toggle-btn {
+      background: rgba(13, 71, 161, 0.85) !important;
+    }
+    .modo-agua .sidebar-toggle-btn:hover {
+      background: #0a3d7a !important;
+    }
+
+    /* ===== FOOTER MODO ÁGUA ===== */
+    .modo-agua .footer-brand h2 {
+      color: #0d47a1 !important;
+    }
+    .modo-agua .footer-brand p {
+      color: #1565C0 !important;
+    }
+    .modo-agua .footer-social a {
+      color: #1565C0 !important;
+    }
+    .modo-agua .footer-social a:hover {
+      color: #0d47a1 !important;
+    }
+    .modo-agua .footer-column h4 {
+      color: #0d47a1 !important;
+    }
+    .modo-agua .footer-column ul li a {
+      color: #1565C0 !important;
+    }
+    .modo-agua .footer-column ul li a:hover {
+      color: #0d47a1 !important;
+    }
+    .modo-agua .footer-bottom p {
+      color: #1565C0 !important;
+    }
+    .modo-agua .footer-bottom-links a {
+      color: #1565C0 !important;
+    }
+    .modo-agua .footer-bottom-links a:hover {
+      color: #0d47a1 !important;
+    }
+    .modo-agua .footer {
+      border-top-color: rgba(13, 71, 161, 0.15) !important;
+    }
+    .modo-agua .footer-container {
+      border-bottom-color: rgba(13, 71, 161, 0.1) !important;
+    }
+
+    /* ===== CORES DOS ESPORTES AQUÁTICOS (AZUL) ===== */
+    .carrossel.agua {
+      border-color: #2196F3 !important;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb) !important;
+      box-shadow: 0 8px 20px rgba(33, 150, 243, 0.25) !important;
+    }
+    .carrossel.agua i {
+      color: #0d47a1 !important;
+    }
+    .carrossel.agua.selected {
+      border-color: #0d47a1 !important;
+      background: linear-gradient(135deg, #bbdefb, #90caf9) !important;
+      box-shadow: 0 8px 25px rgba(33, 150, 243, 0.35) !important;
+    }
+    .carrossel.agua.selected i {
+      color: #0d47a1 !important;
+    }
+    .carrossel.agua:hover {
+      border-color: #2196F3 !important;
+      background: linear-gradient(135deg, #bbdefb, #90caf9) !important;
+      box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2) !important;
+    }
+
+    /* Cores verdes padrão */
+    .carrossel {
+      border-color: transparent;
+      background: #f8f9fa;
+    }
+    .carrossel i {
+      color: #044700 !important;
+    }
+    .carrossel.selected {
+      border-color: #4CAF50;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+    }
+    .carrossel.selected i {
+      color: #4CAF50 !important;
+    }
+    .carrossel:hover {
+      border-color: rgba(76, 175, 80, 0.3);
+      background: #e8f5e9;
+      box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
+    }
+
     /* Botões com ícones */
     .control-icons {
       display: flex;
@@ -214,7 +612,7 @@
       box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
     }
 
-    /* Modal de logout */
+    /* ===== MODAL DE LOGOUT ===== */
     .modal-logout {
       display: none;
       position: fixed;
@@ -291,7 +689,7 @@
       50% { opacity: 0.85; }
     }
 
-    /* ===== ESTILOS DO FORMULÁRIO CENTRALIZADO E CARD DE CALORIAS ===== */
+    /* ===== ESTILOS DO FORMULÁRIO ===== */
     .infos_treinos {
       display: none;
       flex-direction: column;
@@ -302,7 +700,6 @@
       padding: 0 10px;
       animation: fadeInScale 0.4s ease;
     }
-
     .infos_treinos h1 {
       font-family: "Staatliches", sans-serif;
       font-weight: 500;
@@ -312,7 +709,6 @@
       text-align: center;
       width: 100%;
     }
-
     .form-group {
       width: 100%;
       max-width: 500px;
@@ -321,7 +717,6 @@
       flex-direction: column;
       align-items: center;
     }
-
     .form-group label {
       font-weight: 600;
       font-size: 14px;
@@ -331,7 +726,6 @@
       text-align: left;
       padding-left: 4px;
     }
-
     .infos_treinos .input-rounded {
       width: 100%;
       padding: 14px 20px;
@@ -343,13 +737,11 @@
       transition: all 0.2s ease;
       font-family: "Poppins", sans-serif;
     }
-
     .infos_treinos .input-rounded:focus {
       border-color: #4CAF50;
       background: white;
       box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
     }
-
     .tipo, .visibilidade {
       display: flex;
       flex-wrap: wrap;
@@ -357,7 +749,6 @@
       gap: 12px;
       width: 100%;
     }
-
     .tipo a, .visibilidade a {
       text-decoration: none;
       color: #475569;
@@ -372,24 +763,20 @@
       min-width: 80px;
       text-align: center;
     }
-
     .tipo a:hover, .visibilidade a:hover {
       background-color: #e2e8f0;
       transform: translateY(-2px);
     }
-
     a.active-option {
       background: linear-gradient(135deg, #4CAF50, #2e7d32) !important;
       color: white !important;
       box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25) !important;
     }
-
     .range-container {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
     }
-
     .rangezi {
       display: flex;
       justify-content: space-between;
@@ -399,7 +786,6 @@
       flex-wrap: wrap;
       gap: 5px;
     }
-
     .rangezao {
       -webkit-appearance: none;
       width: 100%;
@@ -408,13 +794,11 @@
       border-radius: 10px;
       outline: none;
     }
-
     .rangezao::-webkit-slider-track {
       background: linear-gradient(90deg, #4CAF50, #ff9800, #ef4444);
       height: 6px;
       border-radius: 10px;
     }
-
     .rangezao::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 18px;
@@ -427,17 +811,14 @@
       transition: all 0.2s;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
-
     .rangezao::-webkit-slider-thumb:hover {
       transform: scale(1.2);
       background: #4CAF50;
     }
-
     .tooltip {
       position: relative;
       cursor: default;
     }
-
     .tooltip .tip {
       visibility: hidden;
       opacity: 0;
@@ -455,7 +836,6 @@
       z-index: 1;
       pointer-events: none;
     }
-
     .tooltip:hover .tip {
       visibility: visible;
       opacity: 1;
@@ -474,12 +854,10 @@
       border: 1px solid rgba(239, 68, 68, 0.2);
       transition: all 0.3s ease;
     }
-
     .calorias-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(239, 68, 68, 0.1);
     }
-
     .calorias-header {
       display: flex;
       align-items: center;
@@ -490,11 +868,9 @@
       color: #dc2626;
       margin-bottom: 6px;
     }
-
     .calorias-header i {
       font-size: 22px;
     }
-
     .calorias-valor {
       font-size: 2rem;
       font-weight: 800;
@@ -503,19 +879,18 @@
       background-clip: text;
       color: transparent;
     }
-
     .calorias-detalhes {
       font-size: 11px;
       color: #94a3b8;
       margin-top: 4px;
     }
 
+    /* Acessórios */
     .acessorios-container {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
     }
-
     .acessorios-lista {
       display: flex;
       flex-direction: column;
@@ -523,7 +898,6 @@
       margin: 20px 0;
       width: 100%;
     }
-
     .acessorio-item-custom {
       background: #f8fafc;
       border-radius: 16px;
@@ -531,19 +905,10 @@
       border: 1px solid #e2e8f0;
       transition: all 0.3s ease;
     }
-
     .acessorio-item-custom:hover {
       border-color: #4CAF50;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
-
-    .acessorio-header-custom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
     .acessorio-nome-custom {
       font-weight: 700;
       color: #044700;
@@ -552,7 +917,6 @@
       padding: 4px 12px;
       border-radius: 20px;
     }
-
     .btn-remover-acessorio {
       background: none;
       border: none;
@@ -563,12 +927,10 @@
       border-radius: 50%;
       transition: all 0.2s ease;
     }
-
     .btn-remover-acessorio:hover {
       background: rgba(244, 67, 54, 0.1);
       transform: scale(1.1);
     }
-
     .acessorio-espec-custom {
       width: 100%;
       padding: 10px 15px;
@@ -579,20 +941,17 @@
       transition: all 0.3s ease;
       background: white;
     }
-
     .acessorio-espec-custom:focus {
       outline: none;
       border-color: #4CAF50;
       box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
-
     .botao-salvar {
       display: flex;
       justify-content: center;
       margin-top: 35px;
       width: 100%;
     }
-
     .botao-salvar button {
       padding: 14px 45px;
       font-size: 16px;
@@ -605,20 +964,19 @@
       transition: all 0.3s ease;
       box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
     }
-
     .botao-salvar button:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
     }
 
-    /* ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA HOME) ===== */
+    /* ===== FOOTER ===== */
     .footer {
       background: #ffffff;
       padding: 40px 20px 16px;
       margin-top: 40px;
       border-top: 1px solid rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
     }
-
     .footer-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -627,41 +985,38 @@
       gap: 32px;
       padding-bottom: 24px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
     }
-
     .footer-brand h2 {
       font-family: "Staatliches", sans-serif;
       font-size: 24px;
       color: #1a4a2e;
       margin: 0 0 4px 0;
       letter-spacing: 0.5px;
+      transition: all 0.3s ease;
     }
-
     .footer-brand p {
       font-size: 13px;
       color: #6b8a76;
       margin: 0 0 12px 0;
       line-height: 1.4;
       max-width: 260px;
+      transition: all 0.3s ease;
     }
-
     .footer-social {
       display: flex;
       gap: 8px;
     }
-
     .footer-social a {
       color: #6b8a76;
       font-size: 18px;
-      transition: color 0.2s;
+      transition: all 0.3s ease;
       text-decoration: none;
       padding: 4px;
     }
-
     .footer-social a:hover {
       color: #1a4a2e;
     }
-
     .footer-column h4 {
       font-size: 12px;
       font-weight: 600;
@@ -669,8 +1024,8 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin: 0 0 10px 0;
+      transition: all 0.3s ease;
     }
-
     .footer-column ul {
       list-style: none;
       padding: 0;
@@ -679,18 +1034,15 @@
       flex-direction: column;
       gap: 4px;
     }
-
     .footer-column ul li a {
       color: #6b8a76;
       text-decoration: none;
       font-size: 13px;
-      transition: color 0.2s;
+      transition: all 0.3s ease;
     }
-
     .footer-column ul li a:hover {
       color: #1a4a2e;
     }
-
     .footer-bottom {
       max-width: 1200px;
       margin: 0 auto;
@@ -701,164 +1053,305 @@
       flex-wrap: wrap;
       gap: 6px;
     }
-
     .footer-bottom p {
       font-size: 12px;
       color: #8aa596;
       margin: 0;
+      transition: all 0.3s ease;
     }
-
     .footer-bottom-links {
       display: flex;
       gap: 16px;
     }
-
     .footer-bottom-links a {
       font-size: 12px;
       color: #8aa596;
       text-decoration: none;
-      transition: color 0.2s;
+      transition: all 0.3s ease;
     }
-
     .footer-bottom-links a:hover {
       color: #1a4a2e;
     }
 
-    /* ===== FOOTER RESPONSIVO ===== */
     @media (max-width: 1024px) {
       .footer-container {
         grid-template-columns: 1.5fr 1fr 1fr;
       }
     }
-
     @media (max-width: 768px) {
       .footer {
         padding: 28px 16px 12px;
         margin-top: 24px;
       }
-
       .footer-container {
         grid-template-columns: 1fr 1fr;
         gap: 18px;
         padding-bottom: 16px;
       }
-
       .footer-brand {
         grid-column: 1 / -1;
         text-align: center;
       }
-
       .footer-brand p {
         max-width: 100%;
         font-size: 12px;
         margin: 0 auto 8px;
       }
-
       .footer-brand h2 {
         font-size: 20px;
       }
-
       .footer-social {
         justify-content: center;
       }
-
       .footer-column {
         text-align: center;
       }
-
       .footer-column h4 {
         font-size: 11px;
         margin-bottom: 6px;
       }
-
       .footer-column ul li a {
         font-size: 12px;
       }
-
       .footer-bottom {
         flex-direction: column;
         text-align: center;
         gap: 4px;
         padding-top: 10px;
       }
-
       .footer-bottom p {
         font-size: 11px;
       }
-
       .footer-bottom-links {
         gap: 12px;
       }
-
       .footer-bottom-links a {
         font-size: 11px;
       }
     }
-
     @media (max-width: 480px) {
       .footer {
         padding: 20px 12px 10px;
         margin-top: 16px;
       }
-
       .footer-container {
         grid-template-columns: 1fr 1fr;
         gap: 12px;
         padding-bottom: 12px;
       }
-
       .footer-brand h2 {
         font-size: 18px;
       }
-
       .footer-brand p {
         font-size: 11px;
       }
-
       .footer-social a {
         font-size: 16px;
       }
-
       .footer-column h4 {
         font-size: 10px;
         margin-bottom: 4px;
       }
-
       .footer-column ul li a {
         font-size: 11px;
       }
-
       .footer-bottom p {
         font-size: 10px;
       }
-
       .footer-bottom-links a {
         font-size: 10px;
       }
-
       .footer-bottom-links {
         gap: 10px;
       }
     }
-
-    /* Desktop com sidebar */
     @media (min-width: 769px) {
       .footer {
         margin-left: 250px;
         width: calc(100% - 250px);
       }
     }
-
     @media (max-width: 768px) {
       .footer {
         margin-left: 0;
         width: 100%;
       }
     }
+
+    /* ===== CARROSSEL ===== */
+    .carrosel-total {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 20px 10px;
+      justify-content: flex-start;
+      list-style: none;
+      margin: 10px 0;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .carrosel-total .org {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      flex: 0 0 calc(33.333% - 14px);
+      max-width: calc(33.333% - 14px);
+    }
+    .carrosel-total::-webkit-scrollbar {
+      height: 4px;
+    }
+    .carrosel-total::-webkit-scrollbar-track {
+      background: #e0e0e0;
+      border-radius: 10px;
+    }
+    .carrosel-total::-webkit-scrollbar-thumb {
+      background: #4CAF50;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .carrossel-nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-size: 20px;
+      color: #1e293b;
+    }
+    .carrossel-nav-arrow:hover {
+      background: #4CAF50;
+      color: white;
+      box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+    }
+    .carrossel-nav-arrow:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    .carrossel-nav-arrow.prev {
+      left: -15px;
+    }
+    .carrossel-nav-arrow.next {
+      right: -15px;
+    }
+    @media (max-width: 480px) {
+      .carrossel-nav-arrow {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+      }
+      .carrossel-nav-arrow.prev {
+        left: -8px;
+      }
+      .carrossel-nav-arrow.next {
+        right: -8px;
+      }
+    }
+    @media (max-width: 400px) {
+      .carrossel-nav-arrow {
+        display: none !important;
+      }
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: linear-gradient(135deg, rgb(4, 71, 0), rgba(4, 71, 0, 0.712));
+      color: white;
+      z-index: 1000;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-toggle-btn {
+      position: fixed;
+      left: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(4, 71, 0, 0.85);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 1002;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(4px);
+    }
+    .sidebar-toggle-btn:hover {
+      background: rgb(2, 51, 0);
+      transform: translateY(-50%) scale(1.05);
+      left: -12px;
+    }
+
+    /* ===== SCROLLBAR GLOBAL ===== */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #4CAF50;
+      border-radius: 10px;
+      border: 2px solid #f0f0f0;
+      transition: all 0.3s ease;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #388E3C;
+    }
+    .modo-agua ::-webkit-scrollbar-thumb {
+      background-color: #2196F3 !important;
+    }
+    .modo-agua ::-webkit-scrollbar-thumb:hover {
+      background-color: #0d47a1 !important;
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- ===== MODAL PDF ===== -->
+  <div id="modalPdf" class="modal-pdf">
+    <div class="modal-pdf-content">
+      <div class="modal-pdf-header">
+        <h2 id="pdfModalTitle">Política de Privacidade e Termos de Uso</h2>
+        <button class="modal-pdf-close" id="fecharModalPdf">&times;</button>
+      </div>
+      <div class="modal-pdf-body" id="pdfBody">
+        <div class="pdf-content">
+          <!-- O conteúdo será injetado via JavaScript -->
+        </div>
+      </div>
+      <div class="modal-pdf-footer">
+        <button class="btn-fechar-pdf" id="fecharModalPdfBtn">Fechar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- TOAST -->
   <div id="toastMessage" class="toast-msg">
@@ -919,37 +1412,83 @@
       <h1>Registre seu treino!</h1>
     </div>
 
-    <!-- Carrossel de tipos de treino -->
-    <ul class="carrosel-total">
-      <div class="org">
-        <li class="carrossel">
-          <i class="bx bx-cycling" style="font-size: 55px; color: #044700;"></i>
-        </li>
-        <p>Ciclismo</p>
-      </div>
-      <div class="org">
-        <li class="carrossel">
-          <i class="bx bx-run" style="font-size: 55px; color: #044700;"></i>
-        </li>
-        <p>Corrida</p>
-      </div>
-      <div class="org">
-        <li class="carrossel">
-          <i class="bx bx-walk" style="font-size: 55px; color: #044700;"></i>
-        </li>
-        <p>Caminhada</p>
-      </div>
-    </ul>
+    <!-- ===== CARROSSEL DE ESPORTES COM SETAS ===== -->
+    <div style="position: relative; width: 100%; max-width: 700px; margin: 0 auto;">
 
-    <script>
-      const buttons = document.querySelectorAll('.carrossel');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          buttons.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-        });
-      });
-    </script>
+      <!-- Seta Esquerda -->
+      <button class="carrossel-nav-arrow prev" id="carrosselPrev" aria-label="Anterior">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+
+      <!-- Seta Direita -->
+      <button class="carrossel-nav-arrow next" id="carrosselNext" aria-label="Próximo">
+        <i class="bx bx-chevron-right"></i>
+      </button>
+
+      <!-- Lista de Esportes -->
+      <ul class="carrosel-total" id="carrosselList">
+        <div class="org">
+          <li class="carrossel" data-esporte="Ciclismo" data-tipo="terra">
+            <i class="bx bx-cycling" style="font-size: 55px;"></i>
+          </li>
+          <p>Ciclismo</p>
+        </div>
+        <div class="org">
+          <li class="carrossel" data-esporte="Corrida" data-tipo="terra">
+            <i class="bx bx-run" style="font-size: 55px;"></i>
+          </li>
+          <p>Corrida</p>
+        </div>
+        <div class="org">
+          <li class="carrossel" data-esporte="Caminhada" data-tipo="terra">
+            <i class="bx bx-walk" style="font-size: 55px;"></i>
+          </li>
+          <p>Caminhada</p>
+        </div>
+        <div class="org">
+          <li class="carrossel" data-esporte="Trilha" data-tipo="terra">
+            <i class='bx bx-tree' style="font-size: 55px;"></i>
+          </li>
+          <p>Trilha</p>
+        </div>
+        <div class="org">
+          <li class="carrossel" data-esporte="Trail Run" data-tipo="terra">
+            <i class="bx bx-run" style="font-size: 55px;"></i>
+          </li>
+          <p>Trail Run</p>
+        </div>
+        <div class="org">
+          <li class="carrossel" data-esporte="Mountain Bike" data-tipo="terra">
+            <i class="bx bx-cycling" style="font-size: 55px;"></i>
+          </li>
+          <p>Mountain Bike</p>
+        </div>
+        <div class="org">
+          <li class="carrossel agua" data-esporte="Natação" data-tipo="agua">
+            <i class='bx bx-swim' style="font-size: 55px;"></i>
+          </li>
+          <p>Natação</p>
+        </div>
+        <div class="org">
+          <li class="carrossel agua" data-esporte="Remo" data-tipo="agua">
+            <i class='bx bx-boat' style="font-size: 55px;"></i>
+          </li>
+          <p>Remo</p>
+        </div>
+        <div class="org">
+          <li class="carrossel agua" data-esporte="Surf" data-tipo="agua">
+            <i class='bx bx-water' style="font-size: 55px;"></i>
+          </li>
+          <p>Surf</p>
+        </div>
+        <div class="org">
+          <li class="carrossel" data-esporte="Skate/Longboard" data-tipo="terra">
+            <i class='bx bx-skateboard' style="font-size: 55px;"></i>
+          </li>
+          <p>Skate/Long</p>
+        </div>
+      </ul>
+    </div>
 
     <!-- Card de distância moderno -->
     <div class="distancia-card-moderno">
@@ -1050,7 +1589,7 @@
     </article>
   </div>
 
-  <!-- ===== FOOTER MODERNO MINIMALISTA (IGUAL AO DA HOME) ===== -->
+  <!-- ===== FOOTER MODERNO MINIMALISTA ===== -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-brand">
@@ -1093,6 +1632,129 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
+    // ========== CONTEÚDO DO PDF ==========
+    const pdfContentHTML = `
+      <h1>ESCORPHY</h1>
+      <p style="text-align:center; color:#6b8a76; font-size:14px; margin-top:-10px;">Política de Privacidade e Termos de Uso</p>
+      <p style="text-align:center; color:#8aa596; font-size:13px; margin-bottom:25px;">Última atualização: 23 de junho de 2026.</p>
+
+      <h2>1. INTRODUÇÃO</h2>
+      <p>Este documento estabelece a Política de Privacidade e os Termos de Uso da plataforma Escorply, projeto educacional desenvolvido por Ikaro Lorenzo Oliveira e Antonela Schneider para registro, acompanhamento e compartilhamento de atividades físicas.</p>
+
+      <h2>2. CONTROLADORES DOS DADOS</h2>
+      <p>Os responsáveis pelo tratamento dos dados pessoais coletados pela plataforma são Ikaro Lorenzo Oliveira e Antonela Schneider. Contato: escorplyail@gmail.com</p>
+
+      <h2>3. DADOS COLETADOS</h2>
+      <p>A plataforma poderá coletar nome, endereço de e-mail, senha criptografada, foto de perfil, dados de atividades físicas, localização por GPS, informações de autenticação por conta Google e dados técnicos de navegação.</p>
+
+      <h2>4. FINALIDADE DO TRATAMENTO</h2>
+      <p>Os dados são utilizados para criação de contas, autenticação, cálculo de estatísticas, exibição de rankings, personalização da experiência do usuário e manutenção da segurança da plataforma.</p>
+
+      <h2>5. DADOS DE LOCALIZAÇÃO</h2>
+      <p>O Escorply utiliza geolocalização por GPS para registro das atividades físicas. A localização exata é acessível apenas ao próprio usuário e não é disponibilizada publicamente.</p>
+
+      <h2>6. PUBLICAÇÕES E PRIVACIDADE</h2>
+      <p>Os usuários poderão publicar atividades físicas e fotografias. As publicações poderão ser classificadas como públicas ou privadas, conforme escolha do usuário.</p>
+
+      <h2>7. RANKINGS</h2>
+      <p>O sistema poderá exibir rankings públicos baseados na quilometragem percorrida e na pontuação acumulada, incluindo nome de usuário, foto de perfil e pontuação.</p>
+
+      <h2>8. USO POR MENORES DE IDADE</h2>
+      <p>Usuários menores de 18 anos poderão utilizar a plataforma mediante autorização de seus responsáveis legais.</p>
+
+      <h2>9. COOKIES E TECNOLOGIAS SEMELHANTES</h2>
+      <p>A plataforma utiliza cookies para melhorar a experiência do usuário, autenticação e análise de uso. O usuário pode gerenciar suas preferências de cookies através das configurações do navegador.</p>
+
+      <h2>10. SEGURANÇA DA INFORMAÇÃO</h2>
+      <p>São adotadas medidas técnicas e administrativas razoáveis para proteção dos dados pessoais contra acessos não autorizados, perda, alteração ou divulgação indevida.</p>
+
+      <h2>11. DIREITOS DOS TITULARES</h2>
+      <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), os usuários poderão solicitar acesso, correção ou exclusão de seus dados pessoais mediante contato pelo endereço eletrônico informado.</p>
+
+      <h2>12. EXCLUSÃO DE CONTA</h2>
+      <p>A exclusão de contas deverá ser solicitada por e-mail. Após validação da solicitação, os dados serão removidos permanentemente, observadas as exigências legais aplicáveis.</p>
+
+      <h2>13. PROPRIEDADE INTELECTUAL</h2>
+      <p>Os conteúdos publicados permanecem de propriedade de seus respectivos autores. Ao publicar conteúdo na plataforma, o usuário autoriza sua exibição dentro do ambiente do Escorply.</p>
+
+      <h2>14. CONDUTAS PROIBIDAS</h2>
+      <p>É vedado publicar conteúdo ilícito, fraudar pontuações, utilizar informações falsas, acessar contas de terceiros ou praticar qualquer atividade que comprometa o funcionamento da plataforma.</p>
+
+      <h2>15. LIMITAÇÃO DE RESPONSABILIDADE</h2>
+      <p>As informações de desempenho, distância e calorias possuem caráter informativo. O Escorply não garante precisão absoluta dos cálculos apresentados.</p>
+
+      <h2>16. ALTERAÇÕES</h2>
+      <p>Este documento poderá ser atualizado periodicamente. A continuidade do uso da plataforma após alterações implicará concordância com os termos atualizados.</p>
+
+      <h2>17. LEGISLAÇÃO APLICÁVEL</h2>
+      <p>Este documento é regido pela legislação brasileira, especialmente pela Lei Geral de Proteção de Dados (LGPD).</p>
+
+      <div class="pdf-footer">Documento atualizado em 23 de junho de 2026. © 2025 Escorphy - Todos os direitos reservados.</div>
+    `;
+
+    // ========== FUNÇÕES DO MODAL PDF ==========
+    function abrirModalPdf(titulo) {
+      const modal = document.getElementById('modalPdf');
+      const title = document.getElementById('pdfModalTitle');
+      const body = document.getElementById('pdfBody');
+      
+      if (titulo) {
+        title.textContent = titulo;
+      } else {
+        title.textContent = 'Política de Privacidade e Termos de Uso';
+      }
+      
+      body.innerHTML = `<div class="pdf-content">${pdfContentHTML}</div>`;
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModalPdf() {
+      document.getElementById('modalPdf').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ========== EVENT LISTENERS DO FOOTER ==========
+    document.getElementById('linkPrivacidade')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      abrirModalPdf('Política de Privacidade');
+    });
+
+    document.getElementById('linkPrivacidade2')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      abrirModalPdf('Política de Privacidade');
+    });
+
+    document.getElementById('linkPrivacidade3')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      abrirModalPdf('Política de Privacidade');
+    });
+
+    document.getElementById('linkTermos')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      abrirModalPdf('Termos de Uso');
+    });
+
+    document.getElementById('linkCookies')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      abrirModalPdf('Política de Cookies');
+    });
+
+    document.getElementById('fecharModalPdf')?.addEventListener('click', fecharModalPdf);
+    document.getElementById('fecharModalPdfBtn')?.addEventListener('click', fecharModalPdf);
+    document.getElementById('modalPdf')?.addEventListener('click', function(e) {
+      if (e.target === this) fecharModalPdf();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (document.getElementById('modalPdf').classList.contains('active')) {
+          fecharModalPdf();
+        }
+      }
+    });
+
     // ========== TOAST FUNCTION ==========
     function showToast(message, type = "success") {
       const toast = document.getElementById('toastMessage');
@@ -1158,7 +1820,7 @@
       if (e.target === modalLogout) hideLogoutModal();
     });
 
-    // ========== WAKELOCK PARA MANTER A TELA LIGADA ==========
+    // ========== WAKELOCK ==========
     let wakeLock = null;
 
     async function requestWakeLock() {
@@ -1243,7 +1905,7 @@
       atualizarCalorias(distanciaKm);
     }
 
-    // ========== VARIÁVEIS DE RASTREAMENTO ==========
+    // ========== RASTREAMENTO ==========
     let userPositions = [];
     let polyline;
     let startMarker;
@@ -1371,7 +2033,7 @@
       }
     }
 
-    // ========== SISTEMA DE ACESSÓRIOS ==========
+    // ========== ACESSÓRIOS ==========
     let acessoriosSelecionados = [];
 
     function escapeHtml(text) {
@@ -1465,30 +2127,102 @@
     modalCustom.addEventListener('click', (e) => { if (e.target === modalCustom) fecharModal(); });
     modalInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') confirmarModal(); });
 
-    // Botão principal para adicionar acessório
     document.getElementById('abrirModalBtn').addEventListener('click', () => {
       abrirModalPersonalizado();
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-      // Buscar dados do usuário para calorias
+    // ========== CARROSSEL COM SETAS E CORES ==========
+    document.addEventListener('DOMContentLoaded', function() {
+      const list = document.getElementById('carrosselList');
+      const prevBtn = document.getElementById('carrosselPrev');
+      const nextBtn = document.getElementById('carrosselNext');
+      const botoes = document.querySelectorAll('.carrossel');
+      const info = document.querySelector('.infos_treinos');
+
+      function scrollCarrossel(direction) {
+        if (!list) return;
+        const scrollAmount = list.clientWidth * 0.85;
+        const currentScroll = list.scrollLeft;
+        let targetScroll;
+
+        if (direction === 'next') {
+          targetScroll = currentScroll + scrollAmount;
+          if (targetScroll >= list.scrollWidth - list.clientWidth) {
+            targetScroll = list.scrollWidth - list.clientWidth;
+          }
+        } else {
+          targetScroll = currentScroll - scrollAmount;
+          if (targetScroll < 0) targetScroll = 0;
+        }
+
+        list.scrollTo({
+          left: targetScroll,
+          behavior: 'smooth'
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          scrollCarrossel('prev');
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          scrollCarrossel('next');
+        });
+      }
+
+      function alternarCores(tipo) {
+        const isAgua = tipo === 'agua';
+        const treinosContainer = document.querySelector('.treinos');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarBtn = document.getElementById('sidebarToggleBtn');
+        const footer = document.querySelector('.footer');
+        const body = document.body;
+        
+        if (isAgua) {
+          treinosContainer?.classList.add('modo-agua');
+          list?.classList.add('modo-agua');
+          sidebar?.classList.add('modo-agua');
+          sidebarBtn?.classList.add('modo-agua');
+          footer?.classList.add('modo-agua');
+          body?.classList.add('modo-agua');
+        } else {
+          treinosContainer?.classList.remove('modo-agua');
+          list?.classList.remove('modo-agua');
+          sidebar?.classList.remove('modo-agua');
+          sidebarBtn?.classList.remove('modo-agua');
+          footer?.classList.remove('modo-agua');
+          body?.classList.remove('modo-agua');
+        }
+      }
+
+      botoes.forEach((botao) => {
+        botao.addEventListener('click', function() {
+          botoes.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          
+          const esporte = this.dataset.esporte || 'Esporte';
+          const tipo = this.dataset.tipo || 'terra';
+          
+          if (info) info.style.display = 'block';
+          
+          alternarCores(tipo);
+          
+          showToast(`${esporte} selecionado!`, 'success');
+        });
+      });
+
       buscarDadosUsuario();
-      
-      // Inicializar calorias
       atualizarCalorias(0);
 
       window.mainMap = L.map('map').setView([-24.740387, -53.767403], 16);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(window.mainMap);
-
-      const botoes = document.querySelectorAll(".carrossel");
-      const info = document.querySelector(".infos_treinos");
-      botoes.forEach((botao) => {
-        botao.addEventListener("click", () => {
-          info.style.display = info.style.display === "none" ? "block" : "none";
-          botoes.forEach(b => b.classList.remove('selected'));
-          botao.classList.add('selected');
-        });
-      });
 
       function setupSingleSelection(containerSelector) {
         const container = document.querySelector(containerSelector);
@@ -1529,6 +2263,9 @@
           return;
         }
         
+        const esporteSelecionado = document.querySelector('.carrossel.selected')?.dataset.esporte || '';
+        const tipoEsporte = document.querySelector('.carrossel.selected')?.dataset.tipo || 'terra';
+        
         const acessoriosJSON = acessoriosSelecionados;
         
         const startPoint = userPositions[0];
@@ -1544,6 +2281,8 @@
             tipo: tipo,
             intensidade: parseInt(intensidade),
             visibilidade: visibilidade.toLowerCase(),
+            esporte: esporteSelecionado,
+            tipo_esporte: tipoEsporte,
             acessorios: acessoriosJSON,
             trajeto: trajetoCompleto,
             trajeto_inicial1: startPoint.lat,
@@ -1564,6 +2303,7 @@
         document.querySelector("input[name='descricao']").value = "";
         document.querySelector(".rangezao").value = "5";
         document.querySelectorAll('.active-option').forEach(el => el.classList.remove('active-option'));
+        document.querySelectorAll('.carrossel').forEach(el => el.classList.remove('selected'));
         acessoriosSelecionados = [];
         renderizarAcessorios();
         userPositions = [];
@@ -1573,12 +2313,15 @@
         document.getElementById("distance").innerText = "0 km";
         atualizarCalorias(0);
         atualizarIndicador();
+        if (info) info.style.display = 'none';
+        
+        alternarCores('terra');
       });
       
       renderizarAcessorios();
     });
 
-    // Sidebar
+    // ========== SIDEBAR ==========
     const sidebar = document.getElementById('sidebar');
     const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
     const overlay = document.getElementById('sidebarOverlay');
