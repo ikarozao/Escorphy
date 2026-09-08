@@ -1854,9 +1854,41 @@
       }
     }
 
-    // ========== CÁLCULO DE CALORIAS ==========
+    // ========== CÁLCULO DE CALORIAS (FÓRMULA MET CORRETA) ==========
     let pesoUsuario = 70;
     let alturaUsuario = 170;
+    let idadeUsuario = 25;
+    let sexoUsuario = 'M'; // 'M' ou 'F'
+
+    // MET (Metabolic Equivalent of Task) por esporte
+    const MET_POR_ESPORTE = {
+        'Ciclismo': 6.0,
+        'Corrida': 8.0,
+        'Caminhada': 3.5,
+        'Trilha': 6.0,
+        'Trail Run': 7.0,
+        'Mountain Bike': 7.0,
+        'Natação': 7.0,
+        'Remo': 6.0,
+        'Surf': 5.0,
+        'Skate/Longboard': 5.0,
+        'default': 4.0
+    };
+
+    // Velocidade estimada (km/h) por esporte (intensidade média)
+    const VELOCIDADE_POR_ESPORTE = {
+        'Ciclismo': 20,
+        'Corrida': 10,
+        'Caminhada': 5,
+        'Trilha': 5,
+        'Trail Run': 6,
+        'Mountain Bike': 15,
+        'Natação': 3,
+        'Remo': 5,
+        'Surf': 4,
+        'Skate/Longboard': 6,
+        'default': 5
+    };
 
     async function buscarDadosUsuario() {
       try {
@@ -1865,26 +1897,84 @@
 
         const { data, error } = await supabaseClient
           .from('usuarios')
-          .select('peso, altura')
+          .select('peso, altura, idade, sexo')
           .eq('email', usuarioEmail)
           .maybeSingle();
 
         if (data) {
           pesoUsuario = data.peso || 70;
           alturaUsuario = data.altura || 170;
-          console.log("Dados do usuário carregados:", { peso: pesoUsuario, altura: alturaUsuario });
+          idadeUsuario = data.idade || 25;
+          sexoUsuario = data.sexo || 'M';
+          console.log("Dados do usuário carregados:", { 
+            peso: pesoUsuario, 
+            altura: alturaUsuario,
+            idade: idadeUsuario,
+            sexo: sexoUsuario
+          });
         }
       } catch (err) {
         console.error("Erro ao buscar dados do usuário:", err);
       }
     }
 
+    function calcularCaloriasComMet({
+      distanciaKm,
+      peso,
+      idade,
+      sexo,
+      esporte,
+      intensidade, // 1-10
+      velocidade // opcional
+    }) {
+      // 1. Validação
+      if (!distanciaKm || distanciaKm === 0 || isNaN(distanciaKm)) return 0;
+      if (!peso || peso === 0) return 0;
+
+      // 2. Obter MET do esporte
+      let met = MET_POR_ESPORTE[esporte] || MET_POR_ESPORTE['default'];
+      
+      // 3. Ajustar MET pela intensidade (1-10)
+      // Intensidade 5 = padrão, 10 = +50%, 1 = -50%
+      if (intensidade) {
+        const fatorIntensidade = 0.5 + (intensidade / 10);
+        met = met * fatorIntensidade;
+      }
+
+      // 4. Calcular tempo estimado
+      const velocidadeUsada = velocidade || VELOCIDADE_POR_ESPORTE[esporte] || VELOCIDADE_POR_ESPORTE['default'];
+      const tempoHoras = distanciaKm / velocidadeUsada;
+
+      // 5. Fórmula MET: Calorias = MET × Peso(kg) × Tempo(horas)
+      let calorias = met * peso * tempoHoras;
+
+      // 6. Ajuste por sexo (homens queimam ~10% mais calorias)
+      const fatorSexo = sexo === 'M' ? 1.1 : 1.0;
+      calorias = calorias * fatorSexo;
+
+      // 7. Ajuste por idade (metabolismo diminui ~0.2% ao ano após os 20)
+      const fatorIdade = 1 - Math.max(0, (idade - 20) * 0.002);
+      calorias = calorias * Math.max(fatorIdade, 0.7);
+
+      // 8. Arredondar para inteiro
+      return Math.round(calorias);
+    }
+
+    // Função de compatibilidade com o código existente
     function calcularCalorias(distanciaKm, peso, altura) {
       if (!distanciaKm || distanciaKm === 0 || isNaN(distanciaKm)) return 0;
-      const fatorBase = 0.9;
-      const fatorAltura = 1 + (altura - 170) / 1000;
-      const calorias = distanciaKm * peso * fatorBase * fatorAltura;
-      return Math.round(calorias);
+      if (!peso || peso === 0) return 0;
+      
+      // Usar a função nova com valores padrão
+      return calcularCaloriasComMet({
+        distanciaKm: distanciaKm,
+        peso: peso,
+        idade: idadeUsuario || 25,
+        sexo: sexoUsuario || 'M',
+        esporte: document.querySelector('.carrossel.selected')?.dataset.esporte || 'Caminhada',
+        intensidade: parseInt(document.getElementById('rangeIntensidade')?.value || 5),
+        velocidade: null // será calculado automaticamente
+      });
     }
 
     function atualizarCalorias(distanciaKm) {
@@ -1896,8 +1986,30 @@
         return;
       }
       
-      const calorias = calcularCalorias(distanciaKm, pesoUsuario, alturaUsuario);
+      // Buscar o esporte selecionado
+      const esporteSelecionado = document.querySelector('.carrossel.selected')?.dataset.esporte || 'Caminhada';
+      const intensidade = parseInt(document.getElementById('rangeIntensidade')?.value || 5);
+      
+      // Calcular com a nova fórmula
+      const calorias = calcularCaloriasComMet({
+        distanciaKm: distanciaKm,
+        peso: pesoUsuario,
+        idade: idadeUsuario,
+        sexo: sexoUsuario,
+        esporte: esporteSelecionado,
+        intensidade: intensidade
+      });
+      
       caloriasElement.textContent = `${calorias} kcal`;
+      
+      // Atualizar tooltip com detalhes
+      const detalhes = document.querySelector('.calorias-detalhes');
+      if (detalhes) {
+        const met = MET_POR_ESPORTE[esporteSelecionado] || MET_POR_ESPORTE['default'];
+        const fatorIntensidade = 0.5 + (intensidade / 10);
+        const metAjustado = (met * fatorIntensidade).toFixed(1);
+        detalhes.innerHTML = `MET ${metAjustado} · ${esporteSelecionado} · Intensidade ${intensidade}/10`;
+      }
     }
 
     function atualizarDistanciaECalorias(distanciaKm) {
@@ -2215,8 +2327,21 @@
           alternarCores(tipo);
           
           showToast(`${esporte} selecionado!`, 'success');
+
+          // Atualizar calorias com o novo esporte
+          const distancia = parseFloat(document.getElementById('distance').innerText) || 0;
+          atualizarCalorias(distancia);
         });
       });
+
+      // Adicionar listener para atualizar calorias quando a intensidade mudar
+      const rangeIntensidade = document.getElementById('rangeIntensidade');
+      if (rangeIntensidade) {
+        rangeIntensidade.addEventListener('input', function() {
+          const distancia = parseFloat(document.getElementById('distance').innerText) || 0;
+          atualizarCalorias(distancia);
+        });
+      }
 
       buscarDadosUsuario();
       atualizarCalorias(0);
