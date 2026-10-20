@@ -2367,6 +2367,7 @@
       document.getElementById("startBtn").addEventListener("click", startTracking);
       document.getElementById("endBtn").addEventListener("click", endTracking);
 
+      // ========== SALVAR TREINO (CORRIGIDO) ==========
       const salvarBtn = document.getElementById('salvarBtn');
       salvarBtn.addEventListener('click', async () => {
         const usuarioEmail = localStorage.getItem("usuarioEmail");
@@ -2388,15 +2389,34 @@
           return;
         }
         
+        // Obter o esporte selecionado
         const esporteSelecionado = document.querySelector('.carrossel.selected')?.dataset.esporte || '';
         const tipoEsporte = document.querySelector('.carrossel.selected')?.dataset.tipo || 'terra';
         
+        // Preparar os acessórios (array de objetos para JSONB)
         const acessoriosJSON = acessoriosSelecionados;
         
+        // Preparar pontos de início e fim
         const startPoint = userPositions[0];
         const endPoint = userPositions[userPositions.length - 1];
-        const trajetoCompleto = { positions: userPositions, summary: { totalPoints: userPositions.length, startTime: userPositions[0]?.timestamp, endTime: userPositions[userPositions.length - 1]?.timestamp, distance: calcularDistanciaTotal(userPositions) } };
+        
+        // Montar o objeto 'trajeto' (JSONB) com informações completas
+        const trajetoCompleto = {
+          positions: userPositions,
+          summary: {
+            totalPoints: userPositions.length,
+            startTime: userPositions[0]?.timestamp,
+            endTime: userPositions[userPositions.length - 1]?.timestamp,
+            distance: calcularDistanciaTotal(userPositions)
+          },
+          esporte: esporteSelecionado,
+          tipo_esporte: tipoEsporte
+        };
 
+        // Criar string de descrição dos acessórios (TEXT)
+        const acessoriosDesc = acessoriosSelecionados.map(a => a.nome).join(', ') || null;
+
+        // Inserir no Supabase (apenas colunas que existem na tabela)
         const { data, error } = await supabaseClient
           .from("atividades")
           .insert([{
@@ -2404,10 +2424,9 @@
             titulo: titulo,
             descricao: descricao,
             tipo: tipo,
-            intensidade: parseInt(intensidade),
+            intensidade: parseInt(intensidade) || null,
             visibilidade: visibilidade.toLowerCase(),
-            esporte: esporteSelecionado,
-            tipo_esporte: tipoEsporte,
+            acessorios_desc: acessoriosDesc,
             acessorios: acessoriosJSON,
             trajeto: trajetoCompleto,
             trajeto_inicial1: startPoint.lat,
@@ -2420,10 +2439,13 @@
 
         if (error) {
           console.error("Erro Supabase:", error);
-          showToast("Erro ao salvar: " + error.message, "error");
+          showToast("Erro ao salvar: " + (error.message || "Verifique o console"), "error");
           return;
         }
+        
         showToast("Treino salvo com sucesso!", "success");
+        
+        // Limpar formulário
         document.querySelector("input[name='titulo']").value = "";
         document.querySelector("input[name='descricao']").value = "";
         document.querySelector(".rangezao").value = "5";

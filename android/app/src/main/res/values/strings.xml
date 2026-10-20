@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Escorphy</string>
+    <string name="title_activity_main">Escorphy</string>
+    <string name="package_name">com.escorphy.app</string>
+    <string name="custom_url_scheme">com.escorphy.app</string>
+</resources>
